@@ -31,3 +31,14 @@ C:\Users\jonat\Downloads\MyClinicApp_corrigido\MyClinicApp\Shared\obj\Debug\net8
 C:\Users\jonat\Downloads\MyClinicApp_corrigido\MyClinicApp\Shared\obj\Debug\net8.0\refint\Shared.dll
 C:\Users\jonat\Downloads\MyClinicApp_corrigido\MyClinicApp\Shared\obj\Debug\net8.0\Shared.pdb
 C:\Users\jonat\Downloads\MyClinicApp_corrigido\MyClinicApp\Shared\obj\Debug\net8.0\ref\Shared.dll
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\bin\Debug\net8.0\Shared.deps.json
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\bin\Debug\net8.0\Shared.dll
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\bin\Debug\net8.0\Shared.pdb
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.AssemblyInfoInputs.cache
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.AssemblyInfo.cs
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.csproj.CoreCompileInputs.cache
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.dll
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\refint\Shared.dll
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\Shared.pdb
+C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\Shared\obj\Debug\net8.0\ref\Shared.dll

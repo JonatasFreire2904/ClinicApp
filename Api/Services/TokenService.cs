@@ -20,7 +20,8 @@ namespace Api.Services
 
         public string GenerateToken(User user)
         {
-            var key = Encoding.ASCII.GetBytes(_config["Jwt:Key"]);
+            var jwtKey = _config["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key não configurada");
+            var key = Encoding.ASCII.GetBytes(jwtKey);
 
             var claims = new[]
             {
@@ -32,7 +33,7 @@ namespace Api.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:ExpiresMinutes"])),
+                Expires = DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:ExpiresMinutes"] ?? "120")),
                 SigningCredentials = new SigningCredentials(
                     new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature
