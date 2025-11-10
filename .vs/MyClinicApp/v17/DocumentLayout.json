@@ -3,16 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\auth\\customauthstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\auth\\customauthstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\core\\core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\shared\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\sharedclient\\redirecttologin.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -35,10 +55,6 @@
       "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\github\\clinicapp\\client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -58,7 +74,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,7 +86,59 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "LoginLayout.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Layout\\LoginLayout.razor",
+              "RelativeDocumentMoniker": "Client\\Layout\\LoginLayout.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Layout\\LoginLayout.razor",
+              "RelativeToolTip": "Client\\Layout\\LoginLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T16:42:22.868Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Pages\\Home.razor",
+              "RelativeToolTip": "Client\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-10T14:56:11.94Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Core",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Core\\Core.csproj",
+              "RelativeDocumentMoniker": "Core\\Core.csproj",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Core\\Core.csproj",
+              "RelativeToolTip": "Core\\Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-10T14:55:55.512Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeDocumentMoniker": "Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "RelativeToolTip": "Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-10T14:52:34.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "RedirectToLogin.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Auth\\RedirectToLogin.razor",
               "RelativeDocumentMoniker": "Client\\Auth\\RedirectToLogin.razor",
@@ -78,8 +146,7 @@
               "RelativeToolTip": "Client\\Auth\\RedirectToLogin.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T14:07:03.894Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T14:07:03.894Z"
             },
             {
               "$type": "Document",
@@ -89,14 +156,14 @@
               "RelativeDocumentMoniker": "Client\\Pages\\Login.razor",
               "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Pages\\Login.razor",
               "RelativeToolTip": "Client\\Pages\\Login.razor",
-              "ViewState": "AgIAADcAAAAAAAAAAAAkwEYAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-10T14:05:12.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 4,
               "Title": "_Imports.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\_Imports.razor",
               "RelativeDocumentMoniker": "Client\\_Imports.razor",
@@ -109,7 +176,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "RedirectToLogin.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\SharedClient\\RedirectToLogin.razor",
               "RelativeDocumentMoniker": "Client\\SharedClient\\RedirectToLogin.razor",
@@ -117,12 +184,11 @@
               "RelativeToolTip": "Client\\SharedClient\\RedirectToLogin.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T13:44:15.094Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T13:44:15.094Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Program.cs",
               "RelativeDocumentMoniker": "Client\\Program.cs",
@@ -130,12 +196,11 @@
               "RelativeToolTip": "Client\\Program.cs",
               "ViewState": "AgIAABMAAAAAAAAAAAAowCsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T13:38:30.851Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T13:38:30.851Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "App.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\App.razor",
               "RelativeDocumentMoniker": "Client\\App.razor",
@@ -143,25 +208,24 @@
               "RelativeToolTip": "Client\\App.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-10T13:32:46.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T13:32:46.858Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CustomAuthStateProvider.cs",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Auth\\CustomAuthStateProvider.cs",
               "RelativeDocumentMoniker": "Client\\Auth\\CustomAuthStateProvider.cs",
               "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Auth\\CustomAuthStateProvider.cs",
               "RelativeToolTip": "Client\\Auth\\CustomAuthStateProvider.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAIwF8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAIwGgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-07T10:10:30.704Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 14,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Core\\Entities\\Enums\\UserRole.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\Enums\\UserRole.cs",
@@ -173,7 +237,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "NavMenu.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Layout\\NavMenu.razor",
               "RelativeDocumentMoniker": "Client\\Layout\\NavMenu.razor",
@@ -181,12 +245,11 @@
               "RelativeToolTip": "Client\\Layout\\NavMenu.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-07T10:07:11.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-07T10:07:11.083Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 15,
               "Title": "Clinicas.razor",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Pages\\Clinicas.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\Clinicas.razor",
@@ -198,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Client\\Services\\AuthService.cs",
@@ -211,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "JwtParser.cs",
               "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\GitHub\\ClinicApp\\Client\\Utils\\JwtParser.cs",
               "RelativeDocumentMoniker": "Client\\Utils\\JwtParser.cs",
@@ -219,8 +282,7 @@
               "RelativeToolTip": "Client\\Utils\\JwtParser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-10T14:07:56.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-10T14:07:56.003Z"
             }
           ]
         },

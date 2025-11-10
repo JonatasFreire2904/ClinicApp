@@ -9,6 +9,7 @@ namespace Client.Auth
     public class CustomAuthStateProvider : AuthenticationStateProvider
     {
         private readonly IJSRuntime _js;
+        private bool _isInitialized = false;
 
         public CustomAuthStateProvider(IJSRuntime js)
         {
@@ -17,23 +18,32 @@ namespace Client.Auth
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            try
+            // 🔹 PROTEÇÃO CONTRA LOOP: Só tenta ler do localStorage após o primeiro render
+            if (!_isInitialized)
             {
-                var token = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+                _isInitialized = true;
 
-                if (string.IsNullOrWhiteSpace(token))
+                try
+                {
+                    var token = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+
+                    if (string.IsNullOrWhiteSpace(token))
+                        return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+
+                    var claims = ParseClaimsFromJwt(token);
+                    var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
+
+                    return new AuthenticationState(user);
+                }
+                catch
+                {
+                    // ⚠️ Evita loops infinitos caso algo dê errado no carregamento do estado
                     return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-
-                var claims = ParseClaimsFromJwt(token);
-                var user = new ClaimsPrincipal(new ClaimsIdentity(claims, "jwt"));
-
-                return new AuthenticationState(user);
+                }
             }
-            catch
-            {
-                // ⚠️ Evita loops infinitos caso algo dê errado no carregamento do estado
-                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
-            }
+
+            // Retorna usuário anônimo durante a inicialização
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
         // 🔹 Notifica autenticação (login)

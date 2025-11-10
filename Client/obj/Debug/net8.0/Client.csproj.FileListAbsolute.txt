@@ -4229,6 +4229,6 @@ C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\comp
 C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\57dl9aqnm8-1bto85djbh.gz
 C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\abwxjcuutf-nvqlrfgnbz.gz
 C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\ubeprb3sa1-bqy8ia0vuj.gz
-C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\kb90l4x90i-w9w3vqct0f.gz
-C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\nrce2f7bjz-mfcu7o43dl.gz
-C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\0kih5qk3hm-g08cx67qsz.gz
+C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\kb90l4x90i-r6z13s5pv8.gz
+C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\nrce2f7bjz-jitdksu725.gz
+C:\Users\login\OneDrive\Documentos\GitHub\ClinicApp\Client\obj\Debug\net8.0\compressed\0kih5qk3hm-hergyw28r4.gz
