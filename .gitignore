@@ -456,10 +456,10 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-/.vs/MyClinicApp/DesignTimeBuild/.dtbcache.v2
-/.vs/MyClinicApp/v17/.futdcache.v2
-/.vs/MyClinicApp/v17/.suo
-/.vs/MyClinicApp/v17/DocumentLayout.backup.json
-/.vs/MyClinicApp/v17/DocumentLayout.json
-/.vs/ClinicApp/v17/.wsuo
-/.vs/ClinicApp/v17/DocumentLayout.json
+
+/Api/Data/myclinicapp.db-shm
+/Api/Data/myclinicapp.db-wal
+*.suo
+*.wsuo
+*DocumentLayout.json
+*DocumentLayout.backup.json
