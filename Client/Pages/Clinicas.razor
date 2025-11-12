@@ -3,79 +3,236 @@
 @using Shared.DTOs
 @attribute [Authorize(Roles = "Master")]
 @inject ClinicService ClinicService
-@inject DashboardService DashboardService
+@inject MaterialService MaterialService
+@inject IJSRuntime JS
 
 <h3>Gerenciar Clínicas</h3>
 
-@if (clinics == null)
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (clinics == null || materials == null)
 {
     <p>Carregando...</p>
 }
 else
 {
-    <div class="btn-group mb-3">
+    <div class="d-flex align-items-center gap-2 mb-3 flex-wrap">
+        <span class="fw-semibold">Clínicas:</span>
         @foreach (var c in clinics)
         {
-            <button class="btn btn-outline-primary" @onclick="() => SelectClinic(c)">@c.Name</button>
+            <button class="btn @(selectedClinic?.Id == c.Id ? "btn-primary" : "btn-outline-primary")"
+                    @onclick="() => SelectClinic(c)">
+                @c.Name
+            </button>
         }
     </div>
 
+    <h4>Estoque Geral</h4>
+    @if (!materials.Any())
+    {
+        <p>Nenhum material cadastrado.</p>
+    }
+    else
+    {
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Categoria</th>
+                    <th class="text-center">Disponível</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var material in materials)
+                {
+                    <tr>
+                        <td>@material.Name</td>
+                        <td>@material.Category</td>
+                        <td class="text-center">@material.Quantity</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary"
+                                    disabled="@(selectedClinic == null || material.Quantity <= 0)"
+                                    title="Distribuir para clínica selecionada"
+                                    @onclick="() => AllocateMaterial(material)">
+                                Distribuir
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p class="text-muted small">
+            @(selectedClinic == null
+                ? "Selecione uma clínica para distribuir materiais."
+                : $"Distribuir materiais para {selectedClinic.Name}.")
+        </p>
+    }
+
     @if (selectedClinic != null)
     {
-        <h4>Relatório: @selectedClinic.Name</h4>
-        <div>
-            <!-- chama API para detalhes -->
+        <section class="mt-4">
+            <h4>Estoque de @selectedClinic.Name</h4>
             @if (clinicDetails == null)
             {
                 <p>Carregando detalhes...</p>
             }
             else
             {
-                <!-- exibe stocks e movimentos -->
-                <h5>Estoque</h5>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Material</th>
-                            <th>Qtd</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var s in clinicDetails.Stocks)
-                        {
+                if (!clinicDetails.Stocks.Any())
+                {
+                    <p>Esta clínica ainda não possui materiais.</p>
+                }
+                else
+                {
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td>@s.MaterialName</td>
-                                <td>@s.QuantityAvailable</td>
+                                <th>Material</th>
+                                <th>Categoria</th>
+                                <th>Quantidade</th>
+                                <th class="text-center">Aberto?</th>
+                                <th>Desde</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var s in clinicDetails.Stocks)
+                            {
+                                <tr>
+                                    <td>@s.MaterialName</td>
+                                    <td>@s.Category</td>
+                                    <td>@s.QuantityAvailable</td>
+                                    <td class="text-center">
+                                        @if (s.Category == "MateriaisDeUso")
+                                        {
+                                            <input type="checkbox" checked="@s.IsOpen" @onchange="(e) => ToggleOpen(s, e)" />
+                                        }
+                                        else
+                                        {
+                                            <span>-</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (s.IsOpen && s.OpenedAt is not null)
+                                        {
+                                            @s.OpenedAt.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
 
                 <h5>Últimas Movimentações</h5>
-                <ul>
-                    @foreach (var m in clinicDetails.Movements)
-                    {
-                        <li>@m.CreatedAt.ToLocalTime(): @m.MovementType - @m.Quantity - por @m.PerformedBy</li>
-                    }
-                </ul>
+                @if (!clinicDetails.Movements.Any())
+                {
+                    <p>Nenhuma movimentação registrada.</p>
+                }
+                else
+                {
+                    <ul class="list-unstyled">
+                        @foreach (var m in clinicDetails.Movements)
+                        {
+                            <li>
+                                <strong>@m.CreatedAt.ToLocalTime():</strong>
+                                @m.MovementType - @m.Quantity - por @m.PerformedBy
+                            </li>
+                        }
+                    </ul>
+                }
             }
-        </div>
+        </section>
     }
 }
 
 @code {
     List<ClinicDto>? clinics;
+    List<MaterialDto>? materials;
     ClinicDto? selectedClinic;
-    dynamic? clinicDetails;
+    ClinicDetailDto? clinicDetails;
+    string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
         clinics = await ClinicService.GetAll();
+        materials = await MaterialService.GetAll();
     }
 
     async Task SelectClinic(ClinicDto c)
     {
         selectedClinic = c;
+        errorMessage = null;
         clinicDetails = await ClinicService.Get(c.Id);
+        if (clinicDetails == null)
+        {
+            errorMessage = "Não foi possível carregar os detalhes da clínica selecionada.";
+        }
+    }
+
+    async Task AllocateMaterial(MaterialDto material)
+    {
+        errorMessage = null;
+
+        if (selectedClinic == null)
+            return;
+
+        var input = await JS.InvokeAsync<string?>("prompt", $"Quantidade para enviar '{material.Name}' a {selectedClinic.Name}", "1");
+        if (string.IsNullOrWhiteSpace(input))
+            return;
+
+        if (!int.TryParse(input, out var quantity) || quantity <= 0)
+        {
+            errorMessage = "Informe uma quantidade válida.";
+            return;
+        }
+
+        var response = await ClinicService.Allocate(selectedClinic.Id, new ClinicAllocateRequest(material.Id, quantity));
+        if (!response.IsSuccessStatusCode)
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            return;
+        }
+
+        clinicDetails = await ClinicService.Get(selectedClinic.Id);
+        if (clinicDetails == null)
+        {
+            errorMessage = "Não foi possível atualizar os dados da clínica após a distribuição.";
+        }
+        materials = await MaterialService.GetAll();
+    }
+
+    async Task ToggleOpen(ClinicStockDto stock, ChangeEventArgs e)
+    {
+        errorMessage = null;
+
+        if (selectedClinic == null)
+            return;
+
+        var isChecked = false;
+        if (e.Value is bool b)
+        {
+            isChecked = b;
+        }
+        else if (e.Value is string str && bool.TryParse(str, out var parsed))
+        {
+            isChecked = parsed;
+        }
+
+        var response = await ClinicService.SetStockOpen(selectedClinic.Id, stock.MaterialId, isChecked);
+        if (!response.IsSuccessStatusCode)
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+            return;
+        }
+
+        clinicDetails = await ClinicService.Get(selectedClinic.Id);
+        if (clinicDetails == null)
+        {
+            errorMessage = "Não foi possível atualizar os dados da clínica.";
+        }
     }
 }

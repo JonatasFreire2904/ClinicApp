@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using Shared.DTOs.Auth;
 using System.Net.Http.Json;
+using System.Net.Http.Headers;
 
 namespace Client.Services
 {
@@ -36,6 +37,10 @@ namespace Client.Services
             (_authStateProvider as CustomAuthStateProvider)?
                 .NotifyUserAuthentication(response.Token);
 
+            // 🔹 Adiciona o token nas requisições subsequentes
+            _http.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", response.Token);
+
             return response.Token;
         }
 
@@ -44,11 +49,28 @@ namespace Client.Services
             await _js.InvokeVoidAsync("localStorage.removeItem", "authToken");
             if (_authStateProvider is CustomAuthStateProvider customProvider)
                 await customProvider.LogoutAsync();
+
+            _http.DefaultRequestHeaders.Authorization = null;
         }
 
         public async Task<string?> GetToken()
         {
             return await _js.InvokeAsync<string?>("localStorage.getItem", "authToken");
+        }
+
+        public async Task InitializeAsync()
+        {
+            var savedToken = await GetToken();
+            if (string.IsNullOrWhiteSpace(savedToken))
+                return;
+
+            _http.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", savedToken);
+
+            if (_authStateProvider is CustomAuthStateProvider customProvider)
+            {
+                customProvider.NotifyUserAuthentication(savedToken);
+            }
         }
     }
 }

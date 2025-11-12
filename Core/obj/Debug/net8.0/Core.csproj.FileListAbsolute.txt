@@ -78,3 +78,15 @@ C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Core\ob
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Core\obj\Debug\net8.0\refint\Core.dll
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.pdb
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Core\obj\Debug\net8.0\ref\Core.dll
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\bin\Debug\net8.0\Core.deps.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\bin\Debug\net8.0\Core.dll
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\bin\Debug\net8.0\Core.pdb
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.AssemblyInfoInputs.cache
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.AssemblyInfo.cs
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.csproj.CoreCompileInputs.cache
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.sourcelink.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.dll
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\refint\Core.dll
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\Core.pdb
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Core\obj\Debug\net8.0\ref\Core.dll

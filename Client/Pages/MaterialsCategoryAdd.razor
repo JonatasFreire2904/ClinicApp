@@ -1,4 +1,6 @@
 ﻿@page "/materiais/{Category}/add"
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Master")]
 @inject HttpClient Http
 @inject NavigationManager Nav
 
@@ -50,7 +52,7 @@
             })
         };
 
-        var result = await Http.PostAsJsonAsync("api/materials/batch", payload);
+        var result = await Http.PostAsJsonAsync("materials/batch", payload);
 
         if (result.IsSuccessStatusCode)
         {

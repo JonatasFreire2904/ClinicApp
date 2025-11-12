@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DTOs
 {
-    public record MaterialDto(Guid Id, string Name, string Category);
+    public record MaterialDto(Guid Id, string Name, string Category, int Quantity);
 }

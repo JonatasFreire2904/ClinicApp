@@ -1,0 +1,186 @@
+@page "/clinica/{ClinicId}/estoque"
+@using Microsoft.AspNetCore.Authorization
+@using Shared.DTOs
+@using Client.Services
+@attribute [Authorize(Roles = "User")]
+@inject ClinicService ClinicService
+@inject IJSRuntime JS
+
+<h3>Estoque - @(clinicDetails?.Name ?? "Carregando...")</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+@if (clinicDetails == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <div class="mb-3">
+        <a href="/minhas-clinicas" class="btn btn-secondary">← Voltar</a>
+    </div>
+
+    @if (!clinicDetails.Stocks.Any())
+    {
+        <p>Esta clínica não possui materiais no estoque.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Categoria</th>
+                    <th class="text-center">Quantidade Disponível</th>
+                    <th class="text-center">Aberto</th>
+                    <th class="text-center">Aberto Desde</th>
+                    <th class="text-end">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var stock in clinicDetails.Stocks)
+                {
+                    <tr>
+                        <td>@stock.MaterialName</td>
+                        <td>@stock.Category</td>
+                        <td class="text-center">@stock.QuantityAvailable</td>
+                        <td class="text-center">
+                            @if (stock.Category == "MateriaisDeUso")
+                            {
+                                @if (stock.IsOpen)
+                                {
+                                    <span class="badge bg-success">Sim</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Não</span>
+                                }
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            @if (stock.IsOpen && stock.OpenedAt is not null)
+                            {
+                                @stock.OpenedAt.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm")
+                            }
+                            else
+                            {
+                                <span>-</span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-danger"
+                                    disabled="@(stock.QuantityAvailable <= 0)"
+                                    title="Consumir material do estoque"
+                                    @onclick="() => ConsumeMaterial(stock)">
+                                Consumir
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <h5 class="mt-4">Últimas Movimentações</h5>
+    @if (!clinicDetails.Movements.Any())
+    {
+        <p>Nenhuma movimentação registrada.</p>
+    }
+    else
+    {
+        <ul class="list-unstyled">
+            @foreach (var movement in clinicDetails.Movements.Take(20))
+            {
+                <li>
+                    <strong>@movement.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm"):</strong>
+                    @movement.MovementType - @movement.Quantity - por @movement.PerformedBy
+                    @if (!string.IsNullOrWhiteSpace(movement.Note))
+                    {
+                        <span class="text-muted">(@movement.Note)</span>
+                    }
+                </li>
+            }
+        </ul>
+    }
+}
+
+@code {
+    [Parameter] public Guid ClinicId { get; set; }
+    ClinicDetailDto? clinicDetails;
+    string? errorMessage;
+    string? successMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadClinicDetails();
+    }
+
+    async Task LoadClinicDetails()
+    {
+        try
+        {
+            clinicDetails = await ClinicService.Get(ClinicId);
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erro ao carregar detalhes da clínica: {ex.Message}";
+        }
+    }
+
+    async Task ConsumeMaterial(ClinicStockDto stock)
+    {
+        errorMessage = null;
+        successMessage = null;
+
+        if (stock.QuantityAvailable <= 0)
+        {
+            errorMessage = "Não há quantidade disponível para consumir.";
+            return;
+        }
+
+        var input = await JS.InvokeAsync<string?>("prompt", 
+            $"Quantidade de '{stock.MaterialName}' para consumir (máximo: {stock.QuantityAvailable})", 
+            "1");
+
+        if (string.IsNullOrWhiteSpace(input))
+            return;
+
+        if (!int.TryParse(input, out var quantity) || quantity <= 0)
+        {
+            errorMessage = "Informe uma quantidade válida.";
+            return;
+        }
+
+        if (quantity > stock.QuantityAvailable)
+        {
+            errorMessage = $"Quantidade solicitada ({quantity}) é maior que a disponível ({stock.QuantityAvailable}).";
+            return;
+        }
+
+        var response = await ClinicService.ConsumeMaterial(ClinicId, new ClinicConsumeRequest(stock.MaterialId, quantity));
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            errorMessage = $"Erro ao consumir material: {error}";
+            return;
+        }
+
+        successMessage = $"Material consumido com sucesso! Quantidade restante atualizada.";
+        await LoadClinicDetails();
+    }
+}
+

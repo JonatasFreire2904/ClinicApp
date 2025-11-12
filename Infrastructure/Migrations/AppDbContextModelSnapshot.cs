@@ -41,7 +41,13 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ClinicId")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("MaterialId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("OpenedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("QuantityAvailable")
@@ -68,6 +74,9 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

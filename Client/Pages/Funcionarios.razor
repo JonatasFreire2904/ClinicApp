@@ -1,0 +1,239 @@
+@page "/funcionarios"
+@using Microsoft.AspNetCore.Authorization
+@using Shared.DTOs
+@using Client.Services
+@attribute [Authorize(Roles = "Master")]
+@inject UserService UserService
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<h3>Gerenciar Funcionários</h3>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
+<button class="btn btn-primary mb-3" @onclick="ShowAddForm">+ Adicionar Funcionário</button>
+
+@if (users == null)
+{
+    <p>Carregando...</p>
+}
+else if (!users.Any())
+{
+    <p>Nenhum funcionário cadastrado.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome de Usuário</th>
+                <th>Email</th>
+                <th>Função</th>
+                <th>Data de Criação</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.UserName</td>
+                    <td>@user.Email</td>
+                    <td>@user.Role</td>
+                    <td>@user.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => EditUser(user)">Editar</button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteUser(user)">Excluir</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (showForm)
+{
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@(editingUser == null ? "Adicionar" : "Editar") Funcionário</h5>
+                    <button type="button" class="btn-close" @onclick="CancelForm"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nome de Usuário</label>
+                        <input type="text" class="form-control" @bind="formUserName" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" @bind="formEmail" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Senha @(editingUser != null ? "(deixe em branco para não alterar)" : "")</label>
+                        <input type="password" class="form-control" @bind="formPassword" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Função</label>
+                        <select class="form-select" @bind="formRole">
+                            <option value="User">User</option>
+                            <option value="Master">Master</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="CancelForm">Cancelar</button>
+                    <button type="button" class="btn btn-primary" @onclick="SaveUser">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    List<UserDto>? users;
+    bool showForm = false;
+    UserDto? editingUser;
+    string? errorMessage;
+    string? successMessage;
+
+    string formUserName = "";
+    string formEmail = "";
+    string formPassword = "";
+    string formRole = "User";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUsers();
+    }
+
+    async Task LoadUsers()
+    {
+        try
+        {
+            users = await UserService.GetAll();
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erro ao carregar funcionários: {ex.Message}";
+        }
+    }
+
+    void ShowAddForm()
+    {
+        editingUser = null;
+        formUserName = "";
+        formEmail = "";
+        formPassword = "";
+        formRole = "User";
+        showForm = true;
+        errorMessage = null;
+        successMessage = null;
+    }
+
+    void EditUser(UserDto user)
+    {
+        editingUser = user;
+        formUserName = user.UserName;
+        formEmail = user.Email;
+        formPassword = "";
+        formRole = user.Role;
+        showForm = true;
+        errorMessage = null;
+        successMessage = null;
+    }
+
+    void CancelForm()
+    {
+        showForm = false;
+        editingUser = null;
+        errorMessage = null;
+        successMessage = null;
+    }
+
+    async Task SaveUser()
+    {
+        errorMessage = null;
+        successMessage = null;
+
+        if (string.IsNullOrWhiteSpace(formUserName) || string.IsNullOrWhiteSpace(formEmail))
+        {
+            errorMessage = "Nome de usuário e email são obrigatórios.";
+            return;
+        }
+
+        if (editingUser == null)
+        {
+            if (string.IsNullOrWhiteSpace(formPassword))
+            {
+                errorMessage = "Senha é obrigatória ao criar um novo funcionário.";
+                return;
+            }
+
+            var request = new UserCreateRequest(formUserName, formEmail, formPassword, formRole);
+            var result = await UserService.Create(request);
+
+            if (result == null)
+            {
+                errorMessage = "Erro ao criar funcionário. Verifique se o usuário ou email já existe.";
+            }
+            else
+            {
+                successMessage = "Funcionário criado com sucesso!";
+                showForm = false;
+                await LoadUsers();
+            }
+        }
+        else
+        {
+            var request = new UserUpdateRequest(
+                formUserName,
+                formEmail,
+                string.IsNullOrWhiteSpace(formPassword) ? null : formPassword,
+                formRole
+            );
+
+            var result = await UserService.Update(editingUser.Id, request);
+
+            if (result == null)
+            {
+                errorMessage = "Erro ao atualizar funcionário. Verifique se o usuário ou email já existe.";
+            }
+            else
+            {
+                successMessage = "Funcionário atualizado com sucesso!";
+                showForm = false;
+                await LoadUsers();
+            }
+        }
+    }
+
+    async Task DeleteUser(UserDto user)
+    {
+        if (!await JS.InvokeAsync<bool>("confirm", $"Tem certeza que deseja excluir o funcionário {user.UserName}?"))
+            return;
+
+        var response = await UserService.Delete(user.Id);
+
+        if (response.IsSuccessStatusCode)
+        {
+            successMessage = "Funcionário excluído com sucesso!";
+            await LoadUsers();
+        }
+        else
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            errorMessage = $"Erro ao excluir funcionário: {error}";
+        }
+    }
+}
+

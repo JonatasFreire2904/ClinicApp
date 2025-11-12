@@ -27,40 +27,38 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Pega a URL da API do arquivo de configuração
+// Pega a URL da API do arquivo de configuraï¿½ï¿½o
 string apiBaseUrl = builder.Configuration.GetValue<string>("ApiBaseUrl")
                     ?? throw new InvalidOperationException("ApiBaseUrl not found in configuration.");
 
 // Configura o HttpClient para usar a URL da API
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(apiBaseUrl) });
 
-// --- Configuração de Autenticação ---
+// --- Configuraï¿½ï¿½o de Autenticaï¿½ï¿½o ---
 
-// Seu serviço de lógica de autenticação (login, logout, etc.)
+// Seu serviï¿½o de lï¿½gica de autenticaï¿½ï¿½o (login, logout, etc.)
 builder.Services.AddScoped<AuthService>();
 
-// Adiciona os serviços principais de autorização (ex: para usar [Authorize])
+// Adiciona os serviï¿½os principais de autorizaï¿½ï¿½o (ex: para usar [Authorize])
 builder.Services.AddAuthorizationCore();
 
-// Registra seu provedor de estado de autenticação personalizado
+// Registra seu provedor de estado de autenticaï¿½ï¿½o personalizado
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
 
 // **LINHA FALTANTE ADICIONADA AQUI**
-// Habilita o componente CascadingAuthenticationState a receber o estado de autenticação
-// do provedor e distribuí-lo para o resto da aplicação.
+// Habilita o componente CascadingAuthenticationState a receber o estado de autenticaï¿½ï¿½o
+// do provedor e distribuï¿½-lo para o resto da aplicaï¿½ï¿½o.
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<ClinicService>();
 builder.Services.AddScoped<MaterialService>();
-builder.Services.AddScoped<DashboardService>();
-builder.Services.AddScoped<ClinicService>();
-builder.Services.AddScoped<MaterialService>();
+builder.Services.AddScoped<UserService>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, Client.Auth.CustomAuthStateProvider>();
-builder.Services.AddScoped<AuthService>();
 
 
-// --- Fim da Configuração de Autenticação ---
+
+// --- Fim da Configuraï¿½ï¿½o de Autenticaï¿½ï¿½o ---
 
 await builder.Build().RunAsync();
 

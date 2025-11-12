@@ -1,9 +1,11 @@
 ﻿@page "/materiais/{Category}"
 @using Microsoft.AspNetCore.Authorization
+@using Microsoft.JSInterop
 @using Shared.DTOs
 @attribute [Authorize(Roles = "Master")]
 @inject HttpClient Http
 @inject NavigationManager Nav
+@inject IJSRuntime JS
 
 <h3>Materiais - @Category</h3>
 
@@ -23,7 +25,8 @@ else
         <thead>
             <tr>
                 <th>Nome</th>
-                <th></th>
+                <th class="text-center">Quantidade</th>
+                <th class="text-end">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +34,9 @@ else
             {
                 <tr>
                     <td>@m.Name</td>
-                    <td>
+                    <td class="text-center">@m.Quantity</td>
+                    <td class="text-end">
+                        <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => AddStock(m)">Adicionar</button>
                         <button class="btn btn-sm btn-danger" @onclick="() => Delete(m.Id)">Excluir</button>
                     </td>
                 </tr>
@@ -46,7 +51,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        materials = await Http.GetFromJsonAsync<List<MaterialDto>>($"/materials/by-category/{Category}");
+        await LoadMaterials();
     }
 
     void AddNew()
@@ -56,7 +61,22 @@ else
 
     async Task Delete(Guid id)
     {
-        await Http.DeleteAsync($"api/materials/{id}");
-        materials = await Http.GetFromJsonAsync<List<MaterialDto>>($"/materials/by-category/{Category}");
+        await Http.DeleteAsync($"materials/{id}");
+        await LoadMaterials();
+    }
+
+    async Task AddStock(MaterialDto material)
+    {
+        var input = await JS.InvokeAsync<string>("prompt", $"Adicionar quantidade para {material.Name}", "1");
+        if (string.IsNullOrWhiteSpace(input)) return;
+        if (!int.TryParse(input, out var amount) || amount <= 0) return;
+
+        await Http.PostAsJsonAsync($"materials/{material.Id}/add-stock", new { quantity = amount });
+        await LoadMaterials();
+    }
+
+    async Task LoadMaterials()
+    {
+        materials = await Http.GetFromJsonAsync<List<MaterialDto>>($"materials/by-category/{Category}");
     }
 }

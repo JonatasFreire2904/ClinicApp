@@ -1,161 +1,185 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\",
+  "WorkspaceRootPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\materialscategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materialscategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\materiaisadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiaisadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\materialscategoryadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materialscategoryadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\materialcreatebatchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialcreatebatchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\materialcreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialcreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\infrastructure\\dat\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\dat\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\materiais.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiais.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\materiaisconsumo.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiaisconsumo.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\core\\entities\\stockmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\stockmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\core\\entities\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\stockmovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\stockmovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\materialdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\sharedclient\\masterlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\sharedclient\\masterlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\pages\\clinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\clinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\dashboardsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\dashboardsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\services\\materialservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\materialservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\services\\clinicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\clinicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\client\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\infrastructure\\migrations\\20251111222316_nomedasuamigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20251111222316_nomedasuamigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\infrastructure\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\api\\controllers\\clinicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\controllers\\clinicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\clinicscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\clinicstockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\services\\clinicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\clinicservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\minhasclinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\minhasclinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\clinicestoque.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\clinicestoque.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\clinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\clinicas.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\materiaisconsumo.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiaisconsumo.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\utils\\authorizationmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\utils\\authorizationmessagehandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\materialcreatebatchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialcreatebatchrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\utils\\jwtparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\utils\\jwtparser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\materiaisadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiaisadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\materialscategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materialscategory.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\materialscategoryadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materialscategoryadd.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\materialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\materialcreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialcreaterequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\infrastructure\\dat\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\dat\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\pages\\materiais.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\pages\\materiais.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\core\\entities\\stockmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\stockmovement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\core\\entities\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\material.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\stockmovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\stockmovementdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\materialdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\materialdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\sharedclient\\masterlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\sharedclient\\masterlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\dashboardsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\dashboardsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\services\\materialservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\materialservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\client\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{103624F2-A7FD-4763-AA67-DEDC3B574816}|Client\\Client.csproj|solutionrelative:client\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\infrastructure\\migrations\\20251111222316_nomedasuamigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\20251111222316_nomedasuamigration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\infrastructure\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E3AC5A1-4291-4543-9991-45275B7FCCA1}|Infrastructure\\Infrastructure.csproj|solutionrelative:infrastructure\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B515C86D-1ED7-46BB-A003-60577F59271B}|Api\\Api.csproj|solutionrelative:api\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\clinicstockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\clinicstockdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\clinicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\clinicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\clinicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\auth\\loginrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\shared\\dtos\\auth\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\shared\\dtos\\auth\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5B84FD2-6E36-4F2E-B18B-BF8A0BBBD7FD}|Shared\\Shared.csproj|solutionrelative:shared\\dtos\\auth\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\core\\entities\\userclinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\core\\entities\\userclinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\userclinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\core\\entities\\clinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\core\\entities\\clinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\clinic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\jonat\\onedrive\\\u00E1rea de trabalho\\projetos\\myclinicapp\\clinicapp\\core\\entities\\clinicstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|c:\\users\\login\\onedrive\\documentos\\projetinhos\\clinicapp\\clinicapp\\core\\entities\\clinicstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56A79A1A-E0A7-45CC-8880-1EFA4CB72E18}|Core\\Core.csproj|solutionrelative:core\\entities\\clinicstock.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -166,7 +190,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -178,72 +202,199 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Services\\TokenService.cs",
-              "RelativeDocumentMoniker": "Api\\Services\\TokenService.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Services\\TokenService.cs",
-              "RelativeToolTip": "Api\\Services\\TokenService.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAuwDMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T09:10:25.336Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "Api\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "Api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAACkAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T09:09:01.986Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "SeedData.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Dat\\SeedData.cs",
-              "RelativeDocumentMoniker": "Infrastructure\\Dat\\SeedData.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Dat\\SeedData.cs",
-              "RelativeToolTip": "Infrastructure\\Dat\\SeedData.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAA4wBwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T09:08:23.597Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Counter.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Counter.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\Counter.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Counter.razor",
-              "RelativeToolTip": "Client\\Pages\\Counter.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAHAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "MinhasClinicas.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MinhasClinicas.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\MinhasClinicas.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MinhasClinicas.razor",
+              "RelativeToolTip": "Client\\Pages\\MinhasClinicas.razor",
+              "ViewState": "AgIAACAAAAAAAAAAAAAiwEYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T09:07:15.249Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MaterialsController.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\MaterialsController.cs",
-              "RelativeDocumentMoniker": "Api\\Controllers\\MaterialsController.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\MaterialsController.cs",
-              "RelativeToolTip": "Api\\Controllers\\MaterialsController.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAuwHEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T22:12:45.017Z",
+              "WhenOpened": "2025-11-12T15:48:43.36Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClinicEstoque.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\ClinicEstoque.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
+              "RelativeToolTip": "Client\\Pages\\ClinicEstoque.razor",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAiwLoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-12T15:46:21.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Login.razor",
+              "RelativeToolTip": "Client\\Pages\\Login.razor",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-12T09:07:13.433Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MateriaisConsumo.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\MateriaisConsumo.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
+              "RelativeToolTip": "Client\\Pages\\MateriaisConsumo.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-11T23:26:46.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Clinicas.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Clinicas.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\Clinicas.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Clinicas.razor",
+              "RelativeToolTip": "Client\\Pages\\Clinicas.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-11T22:52:56.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ClinicService.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\ClinicService.cs",
+              "RelativeDocumentMoniker": "Client\\Services\\ClinicService.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\ClinicService.cs",
+              "RelativeToolTip": "Client\\Services\\ClinicService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAwBYAAABfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T22:40:14.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ClinicsController.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\ClinicsController.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\ClinicsController.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\ClinicsController.cs",
+              "RelativeToolTip": "Api\\Controllers\\ClinicsController.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwBAAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T22:08:48.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "MaterialCreateBatchRequest.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateBatchRequest.cs",
+              "RelativeDocumentMoniker": "Shared\\DTOs\\MaterialCreateBatchRequest.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateBatchRequest.cs",
+              "RelativeToolTip": "Shared\\DTOs\\MaterialCreateBatchRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T09:16:52.131Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\appsettings.json",
+              "RelativeDocumentMoniker": "Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\appsettings.json",
+              "RelativeToolTip": "Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-12T10:17:53.087Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Client\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Client\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-12T08:46:11.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Api\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Api\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-12T10:18:03.759Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Client\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Client\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAwBYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-12T10:19:10.526Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AuthorizationMessageHandler.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Utils\\AuthorizationMessageHandler.cs",
+              "RelativeDocumentMoniker": "Client\\Utils\\AuthorizationMessageHandler.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Utils\\AuthorizationMessageHandler.cs",
+              "RelativeToolTip": "Client\\Utils\\AuthorizationMessageHandler.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T10:36:54.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "JwtParser.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Utils\\JwtParser.cs",
+              "RelativeDocumentMoniker": "Client\\Utils\\JwtParser.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Utils\\JwtParser.cs",
+              "RelativeToolTip": "Client\\Utils\\JwtParser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T10:36:34.452Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 18,
+              "Title": "MaterialsController.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\MaterialsController.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\MaterialsController.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\MaterialsController.cs",
+              "RelativeToolTip": "Api\\Controllers\\MaterialsController.cs",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAuwHEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T22:12:45.017Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
               "Title": "Material.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\Material.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\Material.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\Material.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\Material.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\Material.cs",
               "RelativeToolTip": "Core\\Entities\\Material.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -251,88 +402,107 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "Clinicas.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Clinicas.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\Clinicas.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Clinicas.razor",
-              "RelativeToolTip": "Client\\Pages\\Clinicas.razor",
-              "ViewState": "AgIAACsAAAAAAAAAAAAcwFEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-11T22:52:56.08Z"
+              "DocumentIndex": 12,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Program.cs",
+              "RelativeDocumentMoniker": "Client\\Program.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Program.cs",
+              "RelativeToolTip": "Client\\Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAD4vxsAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-11T22:40:33.44Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 17,
               "Title": "MaterialsCategoryAdd.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategoryAdd.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategoryAdd.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\MaterialsCategoryAdd.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategoryAdd.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategoryAdd.razor",
               "RelativeToolTip": "Client\\Pages\\MaterialsCategoryAdd.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T08:51:28.947Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-12T08:51:28.947Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 16,
               "Title": "MaterialsCategory.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategory.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategory.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\MaterialsCategory.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategory.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MaterialsCategory.razor",
               "RelativeToolTip": "Client\\Pages\\MaterialsCategory.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T08:48:47.529Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-12T08:48:47.529Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 15,
               "Title": "MateriaisAdd.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MateriaisAdd.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MateriaisAdd.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\MateriaisAdd.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MateriaisAdd.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\MateriaisAdd.razor",
               "RelativeToolTip": "Client\\Pages\\MateriaisAdd.razor",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAqwB4AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T08:59:24.015Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-12T08:59:24.015Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 24,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Dat\\SeedData.cs",
+              "RelativeDocumentMoniker": "Infrastructure\\Dat\\SeedData.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Dat\\SeedData.cs",
+              "RelativeToolTip": "Infrastructure\\Dat\\SeedData.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA4wBwAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T09:08:23.597Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Api\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Api\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T09:09:01.986Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "Api\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Services\\TokenService.cs",
+              "RelativeToolTip": "Api\\Services\\TokenService.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAuwDMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-12T09:10:25.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
               "Title": "MaterialCreateRequest.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateRequest.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateRequest.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\MaterialCreateRequest.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateRequest.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateRequest.cs",
               "RelativeToolTip": "Shared\\DTOs\\MaterialCreateRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T09:16:33.698Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-12T09:16:33.698Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MaterialCreateBatchRequest.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateBatchRequest.cs",
-              "RelativeDocumentMoniker": "Shared\\DTOs\\MaterialCreateBatchRequest.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialCreateBatchRequest.cs",
-              "RelativeToolTip": "Shared\\DTOs\\MaterialCreateBatchRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T09:16:52.131Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 21,
               "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\AuthService.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "Client\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\AuthService.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\AuthService.cs",
               "RelativeToolTip": "Client\\Services\\AuthService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -340,11 +510,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 25,
               "Title": "Dashboard.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Dashboard.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Dashboard.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\Dashboard.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Dashboard.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Dashboard.razor",
               "RelativeToolTip": "Client\\Pages\\Dashboard.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -352,11 +522,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 20,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Program.cs",
               "RelativeDocumentMoniker": "Api\\Program.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Program.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Program.cs",
               "RelativeToolTip": "Api\\Program.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAuwF0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -364,36 +534,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Program.cs",
-              "RelativeDocumentMoniker": "Client\\Program.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Program.cs",
-              "RelativeToolTip": "Client\\Program.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAuwEMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T22:40:33.44Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Login.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Login.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\Login.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Login.razor",
-              "RelativeToolTip": "Client\\Pages\\Login.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T09:07:13.433Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 30,
               "Title": "MaterialDto.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialDto.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialDto.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\MaterialDto.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialDto.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\MaterialDto.cs",
               "RelativeToolTip": "Shared\\DTOs\\MaterialDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -401,23 +546,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "MateriaisConsumo.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\MateriaisConsumo.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
-              "RelativeToolTip": "Client\\Pages\\MateriaisConsumo.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-11T23:26:46.106Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 26,
               "Title": "Materiais.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Materiais.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Materiais.razor",
               "RelativeDocumentMoniker": "Client\\Pages\\Materiais.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Pages\\Materiais.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Pages\\Materiais.razor",
               "RelativeToolTip": "Client\\Pages\\Materiais.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -425,11 +558,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 27,
               "Title": "StockMovement.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\StockMovement.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\StockMovement.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\StockMovement.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\StockMovement.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\StockMovement.cs",
               "RelativeToolTip": "Core\\Entities\\StockMovement.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -437,23 +570,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "NavMenu.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Layout\\NavMenu.razor",
-              "RelativeDocumentMoniker": "Client\\Layout\\NavMenu.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Layout\\NavMenu.razor",
-              "RelativeToolTip": "Client\\Layout\\NavMenu.razor",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAABMAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T08:46:11.489Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 29,
               "Title": "StockMovementDto.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\StockMovementDto.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\StockMovementDto.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\StockMovementDto.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\StockMovementDto.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\StockMovementDto.cs",
               "RelativeToolTip": "Shared\\DTOs\\StockMovementDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -461,11 +582,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 31,
               "Title": "MasterLayout.razor",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\SharedClient\\MasterLayout.razor",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\SharedClient\\MasterLayout.razor",
               "RelativeDocumentMoniker": "Client\\SharedClient\\MasterLayout.razor",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\SharedClient\\MasterLayout.razor",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\SharedClient\\MasterLayout.razor",
               "RelativeToolTip": "Client\\SharedClient\\MasterLayout.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -473,11 +594,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 33,
               "Title": "MaterialService.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\MaterialService.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\MaterialService.cs",
               "RelativeDocumentMoniker": "Client\\Services\\MaterialService.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\MaterialService.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\MaterialService.cs",
               "RelativeToolTip": "Client\\Services\\MaterialService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -485,23 +606,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
-              "Title": "ClinicService.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\ClinicService.cs",
-              "RelativeDocumentMoniker": "Client\\Services\\ClinicService.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\ClinicService.cs",
-              "RelativeToolTip": "Client\\Services\\ClinicService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T22:40:14.016Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 34,
               "Title": "DashboardService.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\DashboardService.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\DashboardService.cs",
               "RelativeDocumentMoniker": "Client\\Services\\DashboardService.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Client\\Services\\DashboardService.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Client\\Services\\DashboardService.cs",
               "RelativeToolTip": "Client\\Services\\DashboardService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -509,11 +618,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 35,
               "Title": "20251111222316_NomeDaSuaMigration.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
               "RelativeToolTip": "Infrastructure\\Migrations\\20251111222316_NomeDaSuaMigration.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -521,11 +630,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 32,
               "Title": "DashboardSummaryDto.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\DashboardSummaryDto.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\DashboardSummaryDto.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\DashboardSummaryDto.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\DashboardSummaryDto.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\DashboardSummaryDto.cs",
               "RelativeToolTip": "Shared\\DTOs\\DashboardSummaryDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -533,11 +642,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 36,
               "Title": "AppDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
               "RelativeToolTip": "Infrastructure\\Migrations\\AppDbContextModelSnapshot.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -545,11 +654,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 37,
               "Title": "DashboardController.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\DashboardController.cs",
               "RelativeDocumentMoniker": "Api\\Controllers\\DashboardController.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Api\\Controllers\\DashboardController.cs",
               "RelativeToolTip": "Api\\Controllers\\DashboardController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -557,23 +666,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "ClinicsController.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\ClinicsController.cs",
-              "RelativeDocumentMoniker": "Api\\Controllers\\ClinicsController.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Api\\Controllers\\ClinicsController.cs",
-              "RelativeToolTip": "Api\\Controllers\\ClinicsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-11T22:08:48.999Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 38,
               "Title": "ClinicStockDto.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicStockDto.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicStockDto.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\ClinicStockDto.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicStockDto.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicStockDto.cs",
               "RelativeToolTip": "Shared\\DTOs\\ClinicStockDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -581,11 +678,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 39,
               "Title": "ClinicDto.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicDto.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicDto.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\ClinicDto.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicDto.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\ClinicDto.cs",
               "RelativeToolTip": "Shared\\DTOs\\ClinicDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -593,11 +690,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 40,
               "Title": "LoginRequest.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\Auth\\LoginRequest.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginRequest.cs",
               "RelativeToolTip": "Shared\\DTOs\\Auth\\LoginRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -605,11 +702,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 41,
               "Title": "LoginResponse.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginResponse.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginResponse.cs",
               "RelativeDocumentMoniker": "Shared\\DTOs\\Auth\\LoginResponse.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginResponse.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Shared\\DTOs\\Auth\\LoginResponse.cs",
               "RelativeToolTip": "Shared\\DTOs\\Auth\\LoginResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -617,11 +714,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 42,
               "Title": "UserClinic.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\UserClinic.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\UserClinic.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\UserClinic.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\UserClinic.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\UserClinic.cs",
               "RelativeToolTip": "Core\\Entities\\UserClinic.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -629,11 +726,11 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 43,
               "Title": "Clinic.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\Clinic.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\Clinic.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\Clinic.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\Clinic.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\Clinic.cs",
               "RelativeToolTip": "Core\\Entities\\Clinic.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -641,15 +738,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 44,
               "Title": "ClinicStock.cs",
-              "DocumentMoniker": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\ClinicStock.cs",
+              "DocumentMoniker": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\ClinicStock.cs",
               "RelativeDocumentMoniker": "Core\\Entities\\ClinicStock.cs",
-              "ToolTip": "C:\\Users\\jonat\\OneDrive\\\u00C1rea de Trabalho\\Projetos\\MyClinicApp\\ClinicApp\\Core\\Entities\\ClinicStock.cs",
+              "ToolTip": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\ClinicApp\\Core\\Entities\\ClinicStock.cs",
               "RelativeToolTip": "Core\\Entities\\ClinicStock.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-11T21:31:35.353Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         },

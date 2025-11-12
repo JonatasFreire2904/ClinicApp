@@ -1,4 +1,4 @@
-﻿@* @page "/materiais/{Category}/add"
+﻿@page "/materiais/{Category}/addMaterial"
 @using Microsoft.AspNetCore.Authorization
 @using Shared.DTOs
 @attribute [Authorize(Roles = "Master")]
@@ -12,17 +12,23 @@
     <input class="form-control" @bind="Name" />
 </div>
 
+<div class="mb-3">
+    <label>Quantidade</label>
+    <input type="number" class="form-control" @bind="Quantity" min="0" />
+</div>
+
 <button class="btn btn-success" @onclick="Create">Salvar</button>
 <button class="btn btn-secondary ms-2" @onclick="Cancel">Cancelar</button>
 
 @code {
     [Parameter] public string Category { get; set; } = string.Empty;
     private string Name = "";
+    private int Quantity = 0;
 
     async Task Create()
     {
-        var dto = new MaterialDto(Guid.Empty, Name, Category);
-        var result = await Http.PostAsJsonAsync("/materials", dto);
+        var request = new MaterialCreateRequest(Name, Category, Quantity);
+        var result = await Http.PostAsJsonAsync("materials", request);
 
         if (result.IsSuccessStatusCode)
         {
@@ -34,4 +40,4 @@
     {
         Nav.NavigateTo($"/materiais/{Category}");
     }
-} *@
+} 

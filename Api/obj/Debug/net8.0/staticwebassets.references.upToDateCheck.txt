@@ -40,3 +40,13 @@ C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Client\
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\jonat\OneDrive\Área de Trabalho\Projetos\MyClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\login\OneDrive\Documentos\Projetinhos\ClinicApp\ClinicApp\Client\obj\Debug\net8.0\staticwebassets.build.json

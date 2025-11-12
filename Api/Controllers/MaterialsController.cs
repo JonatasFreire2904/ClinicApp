@@ -17,7 +17,7 @@ public class MaterialsController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAll() =>
         Ok(await _db.Materials
-            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString()))
+            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity))
             .ToListAsync());
 
     // 🔹 GET /materials/by-category/{category}
@@ -29,7 +29,7 @@ public class MaterialsController : ControllerBase
 
         var materials = await _db.Materials
             .Where(m => m.Category == parsedCategory)
-            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString()))
+            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity))
             .ToListAsync();
 
         return Ok(materials);
@@ -41,13 +41,13 @@ public class MaterialsController : ControllerBase
     {
         var m = await _db.Materials.FindAsync(id);
         if (m == null) return NotFound();
-        return Ok(new MaterialDto(m.Id, m.Name, m.Category.ToString()));
+        return Ok(new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity));
     }
 
     // 🔹 POST /materials
     [HttpPost]
     [Authorize(Roles = "Master")]
-    public async Task<IActionResult> Create([FromBody] MaterialDto dto)
+    public async Task<IActionResult> Create([FromBody] MaterialCreateRequest dto)
     {
         if (!Enum.TryParse<MaterialCategory>(dto.Category, true, out var parsedCategory))
             return BadRequest($"Categoria inválida: {dto.Category}");
@@ -55,14 +55,15 @@ public class MaterialsController : ControllerBase
         var material = new Material
         {
             Name = dto.Name,
-            Category = parsedCategory
+            Category = parsedCategory,
+            Quantity = dto.Quantity
         };
 
         _db.Materials.Add(material);
         await _db.SaveChangesAsync();
 
         return CreatedAtAction(nameof(Get), new { id = material.Id },
-            new MaterialDto(material.Id, material.Name, material.Category.ToString()));
+            new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity));
     }
 
     // 🔹 PUT /materials/{id}
@@ -78,6 +79,7 @@ public class MaterialsController : ControllerBase
 
         m.Name = dto.Name;
         m.Category = parsedCategory;
+        m.Quantity = dto.Quantity;
         await _db.SaveChangesAsync();
 
         return NoContent();
@@ -92,24 +94,31 @@ public class MaterialsController : ControllerBase
             var material = new Material
             {
                 Name = item.Name,
-                Category = Enum.Parse<MaterialCategory>(item.Category)
+                Category = Enum.Parse<MaterialCategory>(item.Category),
+                Quantity = item.Quantity
             };
 
             _db.Materials.Add(material);
-
-            // Cria o movimento de entrada (estoque)
-            _db.StockMovements.Add(new StockMovement
-            {
-                MaterialId = material.Id,
-                ClinicId = Guid.Empty, // definir depois se quiser vincular
-                Quantity = item.Quantity,
-                MovementType = Core.Entities.Enums.MovementType.Entrada,
-                PerformedByUserId = Guid.Empty // o usuário logado depois
-            });
         }
 
         await _db.SaveChangesAsync();
         return Ok();
+    }
+
+    [HttpPost("{id:guid}/add-stock")]
+    [Authorize(Roles = "Master")]
+    public async Task<IActionResult> AddStock(Guid id, [FromBody] MaterialAdjustQuantityRequest request)
+    {
+        if (request.Quantity <= 0)
+            return BadRequest("Quantidade deve ser maior que zero.");
+
+        var material = await _db.Materials.FindAsync(id);
+        if (material == null) return NotFound();
+
+        material.Quantity += request.Quantity;
+        await _db.SaveChangesAsync();
+
+        return Ok(new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity));
     }
 
 

@@ -1,0 +1,70 @@
+    @page "/minhas-clinicas"
+    @using Microsoft.AspNetCore.Authorization
+    @using Shared.DTOs
+    @using Client.Services
+    @attribute [Authorize(Roles = "User")]
+    @inject ClinicService ClinicService
+    @inject NavigationManager Nav
+
+    <h3>Minhas Clínicas</h3>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger">@errorMessage</div>
+    }
+
+    @if (clinics == null)
+    {
+        <p>Carregando...</p>
+    }
+    else if (!clinics.Any())
+    {
+        <p>Nenhuma clínica cadastrada.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var clinic in clinics)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@clinic.Name</h5>
+                            <button class="btn btn-primary" @onclick="() => ViewClinicStock(clinic)">
+                                Ver Estoque
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @code {
+        List<ClinicDto>? clinics;
+        string? errorMessage;
+
+        protected override async Task OnInitializedAsync()
+        {
+            await LoadClinics();
+        }
+
+        async Task LoadClinics()
+        {
+            try
+            {
+                clinics = await ClinicService.GetMyClinics();
+                errorMessage = null;
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"Erro ao carregar clínicas: {ex.Message}";
+            }
+        }
+
+        void ViewClinicStock(ClinicDto clinic)
+        {
+            Nav.NavigateTo($"/clinica/{clinic.Id}/estoque");
+        }
+    }
+

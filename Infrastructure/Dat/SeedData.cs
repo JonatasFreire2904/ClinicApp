@@ -26,6 +26,19 @@ namespace Infrastructure.Dat
                 db.Users.Add(master);
                 db.SaveChanges();
             }
+
+            if (!db.Clinics.Any())
+            {
+                var clinics = new[]
+                {
+                    new Clinic { Name = "Clínica Centro" },
+                    new Clinic { Name = "Clínica Norte" },
+                    new Clinic { Name = "Clínica Sul" }
+                };
+
+                db.Clinics.AddRange(clinics);
+                db.SaveChanges();
+            }
         }
     }
 

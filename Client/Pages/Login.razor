@@ -1,118 +1,113 @@
 ﻿@page "/login"
-@attribute [AllowAnonymous]
-@layout LoginLayout
+@using Shared.DTOs.Auth
 @using Client.Services
-@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
-@using System.Text.Json
-@using System.Security.Claims
 @inject AuthService AuthService
-@inject NavigationManager Nav
-@inject IJSRuntime JS
-@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
-<h3>Login</h3>
+<div class="login-container">
+    <div class="login-card">
+        <h3>🔐 Login</h3>
+        
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
 
-<div style="max-width:300px; margin:auto;">
-    <input @bind="username" class="form-control mb-2" placeholder="Usuário" />
-    <input @bind="password" type="password" class="form-control mb-2" placeholder="Senha" />
-    <button class="btn btn-primary w-100" @onclick="DoLogin">Entrar</button>
+        <EditForm Model="@loginRequest" OnValidSubmit="HandleLogin">
+            <DataAnnotationsValidator />
+            
+            <div class="mb-3">
+                <label>Usuário</label>
+                <InputText @bind-Value="loginRequest.UserName" class="form-control" />
+                <ValidationMessage For="@(() => loginRequest.UserName)" />
+            </div>
 
-    <p class="text-danger mt-2">@message</p>
+            <div class="mb-3">
+                <label>Senha</label>
+                <InputText @bind-Value="loginRequest.Password" type="password" class="form-control" />
+                <ValidationMessage For="@(() => loginRequest.Password)" />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span>Carregando...</span>
+                }
+                else
+                {
+                    <span>Entrar</span>
+                }
+            </button>
+        </EditForm>
+    </div>
 </div>
 
 @code {
-    private string username = "";
-    private string password = "";
-    private string message = "";
+    private LoginRequest loginRequest = new();
+    private string? errorMessage;
+    private bool isLoading = false;
 
-    private async Task DoLogin()
+    private async Task HandleLogin()
     {
+        isLoading = true;
+        errorMessage = null;
+
         try
         {
-            var token = await AuthService.Login(new Shared.DTOs.Auth.LoginRequest
-            {
-                UserName = username,
-                Password = password
-            });
+            var token = await AuthService.Login(loginRequest);
 
-            if (string.IsNullOrEmpty(token))
+            if (token != null)
             {
-                message = "Credenciais inválidas";
-                return;
-            }
-
-            // 🔹 1. Salva o token no localStorage
-            await JS.InvokeVoidAsync("localStorage.setItem", "authToken", token);
-
-            // 🔹 2. Notifica o provedor de autenticação
-            var customProvider = AuthStateProvider as Client.Auth.CustomAuthStateProvider;
-            if (customProvider != null)
-            {
-                customProvider.NotifyUserAuthentication(token);
+                await Task.Delay(100);
                 
-                // 🔹 3. Aguarda múltiplas vezes para garantir propagação completa
-                await Task.Delay(300);
-                
-                // Verifica se o estado foi atualizado
-                var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-                int attempts = 0;
-                while (authState.User?.Identity?.IsAuthenticated != true && attempts < 10)
+                var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                var user = authState.User;
+
+                if (user.IsInRole("Master"))
                 {
-                    await Task.Delay(50);
-                    authState = await AuthStateProvider.GetAuthenticationStateAsync();
-                    attempts++;
+                    Navigation.NavigateTo("/clinicas", forceLoad: true);
+                }
+                else if (user.IsInRole("User"))
+                {
+                    Navigation.NavigateTo("/minhas-clinicas", forceLoad: true);
+                }
+                else
+                {
+                    Navigation.NavigateTo("/", forceLoad: true);
                 }
             }
-
-            // 🔹 4. Verifica o estado de autenticação atual
-            var finalAuthState = await AuthStateProvider.GetAuthenticationStateAsync();
-            var role = finalAuthState.User?.FindFirst(ClaimTypes.Role)?.Value ?? GetRoleFromJwt(token);
-
-            // 🔹 5. Redireciona conforme o tipo de usuário
-            if (role == "Master")
-                Nav.NavigateTo("/clinicas", true);
             else
-                Nav.NavigateTo("/materiaisconsumo", true);
+            {
+                errorMessage = "Usuário ou senha inválidos.";
+            }
         }
         catch (Exception ex)
         {
-            message = $"Erro ao tentar logar: {ex.Message}";
+            errorMessage = $"Erro ao fazer login: {ex.Message}";
         }
-    }
-
-    // Método simples para extrair o "role" do token
-    private string GetRoleFromJwt(string token)
-    {
-        try
+        finally
         {
-            var payload = token.Split('.')[1];
-            var json = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(PadBase64(payload)));
-            var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-
-            if (data != null)
-            {
-                // Procura por "role" (nome curto)
-                if (data.TryGetValue("role", out var role))
-                    return role?.ToString() ?? "";
-                
-                // Procura por "http://schemas.microsoft.com/ws/2008/06/identity/claims/role" (nome completo do ClaimTypes.Role)
-                if (data.TryGetValue("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", out var roleFull))
-                    return roleFull?.ToString() ?? "";
-            }
-
-            return "";
+            isLoading = false;
         }
-        catch
-        {
-            return "";
-        }
-    }
-
-    private string PadBase64(string base64)
-    {
-        if (base64.Length % 4 == 2) base64 += "==";
-        else if (base64.Length % 4 == 3) base64 += "=";
-        return base64;
     }
 }
+
+<style>
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+</style>

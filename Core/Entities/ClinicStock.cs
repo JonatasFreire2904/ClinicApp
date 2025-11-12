@@ -16,5 +16,7 @@ namespace Core.Entities
         public Material Material { get; set; }
 
         public int QuantityAvailable { get; set; }
+        public bool IsOpen { get; set; }
+        public DateTime? OpenedAt { get; set; }
     }
 }
