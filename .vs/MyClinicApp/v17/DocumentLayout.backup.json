@@ -217,52 +217,20 @@
           "SelectedChildIndex": 16,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ClinicEstoque.razor",
-              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\ClinicEstoque.razor",
-              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
-              "RelativeToolTip": "Client\\Pages\\ClinicEstoque.razor",
-              "ViewState": "AgIAAJQAAAAAAAAAAAAiwLoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T15:46:21.965Z"
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Login.razor",
-              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Login.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\Login.razor",
-              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Login.razor",
-              "RelativeToolTip": "Client\\Pages\\Login.razor",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-12T09:07:13.433Z"
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "MateriaisConsumo.razor",
-              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\MateriaisConsumo.razor",
-              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
-              "RelativeToolTip": "Client\\Pages\\MateriaisConsumo.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-11T23:26:46.106Z"
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Clinicas.razor",
-              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Clinicas.razor",
-              "RelativeDocumentMoniker": "Client\\Pages\\Clinicas.razor",
-              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Clinicas.razor",
-              "RelativeToolTip": "Client\\Pages\\Clinicas.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-11T22:52:56.08Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
             },
             {
               "$type": "Document",
@@ -421,10 +389,58 @@
               "RelativeDocumentMoniker": "Api\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Api\\Controllers\\AuthController.cs",
               "RelativeToolTip": "Api\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAApwBgAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAApwBcAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-12T09:09:01.986Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Clinicas.razor",
+              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Clinicas.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\Clinicas.razor",
+              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Clinicas.razor",
+              "RelativeToolTip": "Client\\Pages\\Clinicas.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-11T22:52:56.08Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MateriaisConsumo.razor",
+              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\MateriaisConsumo.razor",
+              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\MateriaisConsumo.razor",
+              "RelativeToolTip": "Client\\Pages\\MateriaisConsumo.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-11T23:26:46.106Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Login.razor",
+              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\Login.razor",
+              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\Login.razor",
+              "RelativeToolTip": "Client\\Pages\\Login.razor",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-12T09:07:13.433Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ClinicEstoque.razor",
+              "DocumentMoniker": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
+              "RelativeDocumentMoniker": "Client\\Pages\\ClinicEstoque.razor",
+              "ToolTip": "C:\\Users\\Pedro Souza\\source\\repos\\ClinicApp\\Client\\Pages\\ClinicEstoque.razor",
+              "RelativeToolTip": "Client\\Pages\\ClinicEstoque.razor",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAiwLoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-12T15:46:21.965Z"
             },
             {
               "$type": "Document",
@@ -833,6 +849,16 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-11T21:31:35.353Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }
