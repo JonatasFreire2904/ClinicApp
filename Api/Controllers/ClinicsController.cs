@@ -129,6 +129,67 @@ public class ClinicsController(AppDbContext db) : ControllerBase
         });
     }
 
+    [HttpPost("{clinicId:guid}/stock/add")]
+    [Authorize(Roles = "User, Master")]
+    public async Task<IActionResult> AddStockToClinic(Guid clinicId, [FromBody] ClinicAddStockRequest request)
+    {
+        if (request.Quantity <= 0)
+            return BadRequest("Quantidade deve ser maior que zero.");
+
+        var clinic = await _db.Clinics
+            .Include(c => c.ClinicStocks)
+            .FirstOrDefaultAsync(c => c.Id == clinicId);
+        if (clinic == null) return NotFound("Clínica não encontrada.");
+
+        var material = await _db.Materials.FindAsync(request.MaterialId);
+        if (material == null) return NotFound("Material não encontrado.");
+
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+            return Unauthorized("Usuário não identificado.");
+
+        var clinicStock = await _db.ClinicStocks
+            .FirstOrDefaultAsync(cs => cs.ClinicId == clinicId && cs.MaterialId == material.Id);
+
+        if (clinicStock is null)
+        {
+            clinicStock = new ClinicStock
+            {
+                ClinicId = clinicId,
+                MaterialId = material.Id,
+                QuantityAvailable = request.Quantity,
+                IsOpen = false,
+                OpenedAt = null
+            };
+            _db.ClinicStocks.Add(clinicStock);
+        }
+        else
+        {
+            clinicStock.QuantityAvailable += request.Quantity;
+        }
+
+        _db.StockMovements.Add(new StockMovement
+        {
+            ClinicId = clinicId,
+            MaterialId = material.Id,
+            Quantity = request.Quantity,
+            MovementType = MovementType.Entrada,
+            Note = string.IsNullOrWhiteSpace(request.Note)
+                ? "Entrada direta no estoque da clínica"
+                : request.Note!,
+            PerformedByUserId = userId
+        });
+
+        await _db.SaveChangesAsync();
+
+        return Ok(new ClinicStockDto(
+            clinicStock.MaterialId,
+            material.Name,
+            clinicStock.QuantityAvailable,
+            material.Category.ToString(),
+            clinicStock.IsOpen,
+            clinicStock.OpenedAt));
+    }
+
     [HttpPost("{clinicId:guid}/stock/{materialId:guid}/open")]
     [Authorize(Roles = "User, Master")]
     public async Task<IActionResult> SetClinicStockOpen(Guid clinicId, Guid materialId, [FromBody] ClinicStockOpenRequest request)

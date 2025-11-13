@@ -62,6 +62,61 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         }
     }
 
+    // 🔹 GET /materials/summary
+    [HttpGet("summary")]
+    public async Task<IActionResult> GetSummary()
+    {
+        var materials = await _db.Materials
+            .AsNoTracking()
+            .OrderBy(m => m.Name)
+            .ToListAsync();
+
+        var clinics = await _db.Clinics
+            .AsNoTracking()
+            .Select(c => new { c.Id, c.Name })
+            .ToListAsync();
+        var clinicNameLookup = clinics.ToDictionary(c => c.Id, c => c.Name);
+
+        var clinicStocks = await _db.ClinicStocks
+            .AsNoTracking()
+            .Select(cs => new
+            {
+                cs.MaterialId,
+                cs.ClinicId,
+                cs.QuantityAvailable
+            })
+            .ToListAsync();
+
+        var result = materials.Select(material =>
+        {
+            var clinicsWithMaterial = clinicStocks
+                .Where(cs => cs.MaterialId == material.Id)
+                .GroupBy(cs => cs.ClinicId)
+                .Select(group =>
+                {
+                    clinicNameLookup.TryGetValue(group.Key, out var clinicName);
+                    return new MaterialClinicStockDto(
+                        group.Key,
+                        clinicName ?? "Clínica desconhecida",
+                        group.Sum(x => x.QuantityAvailable));
+                })
+                .Where(dto => dto.Quantity > 0)
+                .OrderByDescending(dto => dto.Quantity)
+                .ToList();
+
+            var totalQuantity = clinicsWithMaterial.Sum(c => c.Quantity);
+
+            return new MaterialGeneralStockDto(
+                material.Id,
+                material.Name,
+                material.Category.ToString(),
+                totalQuantity,
+                clinicsWithMaterial);
+        }).ToList();
+
+        return Ok(result);
+    }
+
     // 🔹 GET /materials/by-category/{category}
     [HttpGet("by-category/{category}")]
     public async Task<IActionResult> GetByCategory(string category)

@@ -18,6 +18,9 @@ public class ClinicService(HttpClient http)
     public Task<HttpResponseMessage> Allocate(Guid clinicId, ClinicAllocateRequest request) =>
         _http.PostAsJsonAsync($"clinics/{clinicId}/allocate", request);
 
+    public Task<HttpResponseMessage> AddStock(Guid clinicId, ClinicAddStockRequest request) =>
+        _http.PostAsJsonAsync($"clinics/{clinicId}/stock/add", request);
+
     public Task<HttpResponseMessage> SetStockOpen(Guid clinicId, Guid materialId, bool isOpen) =>
         _http.PostAsJsonAsync($"clinics/{clinicId}/stock/{materialId}/open", new ClinicStockOpenRequest(isOpen));
 

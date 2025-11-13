@@ -34,16 +34,16 @@ else
 
     <div class="card mb-4">
         <div class="card-header">
-            <h5 class="mb-0">📦 Atribuir Material do Estoque Geral</h5>
+            <h5 class="mb-0">➕ Adicionar Material ao Estoque da Clínica</h5>
         </div>
         <div class="card-body">
-            @if (generalStock == null)
+            @if (materialsCatalog == null)
             {
-                <p>Carregando estoque geral...</p>
+                <p>Carregando catálogo de materiais...</p>
             }
-            else if (!generalStock.Any())
+            else if (!materialsCatalog.Any())
             {
-                <p class="text-muted">Nenhum material disponível no estoque geral.</p>
+                <p class="text-muted">Nenhum material cadastrado. Peça ao administrador para registrar materiais.</p>
             }
             else
             {
@@ -53,24 +53,25 @@ else
                             <tr>
                                 <th>Material</th>
                                 <th>Categoria</th>
-                                <th class="text-center">Disponível no Estoque Geral</th>
+                                <th class="text-center">Quantidade na Clínica</th>
                                 <th class="text-end">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var material in generalStock.Where(m => m.Quantity > 0))
+                            @foreach (var material in materialsCatalog)
                             {
+                                var clinicQuantity = clinicDetails?.Stocks.FirstOrDefault(s => s.MaterialId == material.Id)?.QuantityAvailable ?? 0;
                                 <tr>
                                     <td>@material.Name</td>
                                     <td>@material.Category</td>
                                     <td class="text-center">
-                                        <span class="badge bg-info">@material.Quantity</span>
+                                        <span class="badge @(clinicQuantity > 0 ? "bg-info" : "bg-secondary")">@clinicQuantity</span>
                                     </td>
                                     <td class="text-end">
                                         <button class="btn btn-sm btn-success"
-                                                title="Atribuir material do estoque geral para esta clínica"
-                                                @onclick="() => AllocateMaterial(material)">
-                                            ➕ Atribuir
+                                                title="Adicionar material diretamente ao estoque desta clínica"
+                                                @onclick="() => AddMaterialToClinic(material)">
+                                            ➕ Adicionar
                                         </button>
                                     </td>
                                 </tr>
@@ -195,7 +196,7 @@ else
     [Parameter] public string ClinicIdString { get; set; } = string.Empty;
     private Guid ClinicId => Guid.TryParse(ClinicIdString, out var id) ? id : Guid.Empty;
     ClinicDetailDto? clinicDetails;
-    List<MaterialDto>? generalStock;
+    List<MaterialDto>? materialsCatalog;
     string? errorMessage;
     string? successMessage;
 
@@ -204,7 +205,7 @@ else
         if (!string.IsNullOrWhiteSpace(ClinicIdString) && Guid.TryParse(ClinicIdString, out _))
         {
             await LoadClinicDetails();
-            await LoadGeneralStock();
+            await LoadMaterialsCatalog();
         }
         else if (!string.IsNullOrWhiteSpace(ClinicIdString))
         {
@@ -212,15 +213,15 @@ else
         }
     }
 
-    async Task LoadGeneralStock()
+    async Task LoadMaterialsCatalog()
     {
         try
         {
-            generalStock = await MaterialService.GetAll();
+            materialsCatalog = await MaterialService.GetAll();
         }
         catch (Exception ex)
         {
-            errorMessage = $"Erro ao carregar estoque geral: {ex.Message}";
+            errorMessage = $"Erro ao carregar catálogo de materiais: {ex.Message}";
         }
     }
 
@@ -298,19 +299,13 @@ else
 
         successMessage = $"Material consumido com sucesso! Quantidade restante atualizada.";
         await LoadClinicDetails();
-        await LoadGeneralStock();
+        await LoadMaterialsCatalog();
     }
 
-    async Task AllocateMaterial(MaterialDto material)
+    async Task AddMaterialToClinic(MaterialDto material)
     {
         errorMessage = null;
         successMessage = null;
-
-        if (material.Quantity <= 0)
-        {
-            errorMessage = "Não há quantidade disponível no estoque geral.";
-            return;
-        }
 
         if (!Guid.TryParse(ClinicIdString, out var clinicId))
         {
@@ -319,7 +314,7 @@ else
         }
 
         var input = await JS.InvokeAsync<string?>("prompt", 
-            $"Quantidade de '{material.Name}' para atribuir à clínica (máximo disponível: {material.Quantity})", 
+            $"Quantidade de '{material.Name}' para adicionar ao estoque da clínica", 
             "1");
 
         if (string.IsNullOrWhiteSpace(input))
@@ -331,24 +326,18 @@ else
             return;
         }
 
-        if (quantity > material.Quantity)
-        {
-            errorMessage = $"Quantidade solicitada ({quantity}) é maior que a disponível no estoque geral ({material.Quantity}).";
-            return;
-        }
-
-        var response = await ClinicService.Allocate(clinicId, new ClinicAllocateRequest(material.Id, quantity));
+        var response = await ClinicService.AddStock(clinicId, new ClinicAddStockRequest(material.Id, quantity));
 
         if (!response.IsSuccessStatusCode)
         {
             var error = await response.Content.ReadAsStringAsync();
-            errorMessage = $"Erro ao atribuir material: {error}";
+            errorMessage = $"Erro ao adicionar material: {error}";
             return;
         }
 
-        successMessage = $"Material atribuído com sucesso! {quantity} unidade(s) de '{material.Name}' foram adicionadas ao estoque da clínica.";
+        successMessage = $"Material adicionado com sucesso! {quantity} unidade(s) de '{material.Name}' foram registrados no estoque.";
         await LoadClinicDetails();
-        await LoadGeneralStock();
+        await LoadMaterialsCatalog();
     }
 
     async Task ToggleOpen(ClinicStockDto stock, ChangeEventArgs e)

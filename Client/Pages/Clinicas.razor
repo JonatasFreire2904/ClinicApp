@@ -3,7 +3,6 @@
 @using Shared.DTOs
 @attribute [Authorize(Roles = "Master")]
 @inject ClinicService ClinicService
-@inject MaterialService MaterialService
 @inject IJSRuntime JS
 
 <div class="page-header mb-4">
@@ -16,7 +15,7 @@
     <div class="alert alert-danger">@errorMessage</div>
 }
 
-@if (clinics == null || materials == null)
+@if (clinics == null)
 {
     <p>Carregando...</p>
 }
@@ -33,88 +32,15 @@ else
         }
     </div>
 
-    <h4>Estoque Geral</h4>
-    @if (!materials.Any())
+    <p class="text-muted small">
+        Utilize a página <NavLink class="fw-semibold" href="/estoque-geral">Estoque Geral</NavLink> para distribuir materiais entre as clínicas.
+    </p>
+
+    @if (selectedClinic == null)
     {
-        <p>Nenhum material cadastrado.</p>
+        <p class="text-muted">Selecione uma clínica para visualizar estoque, status e movimentações.</p>
     }
     else
-    {
-        <table class="table table-sm">
-            <thead>
-                <tr>
-                    <th>Material</th>
-                    <th>Categoria</th>
-                    <th class="text-center">Disponível</th>
-                    <th class="text-center">Distribuídos</th>
-                    <th class="text-center">Total</th>
-                    <th>Status nas Clínicas</th>
-                    <th class="text-end">Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var material in materials)
-                {
-                    var total = material.Quantity + material.DistributedQuantity;
-                    <tr>
-                        <td>@material.Name</td>
-                        <td>@material.Category</td>
-                        <td class="text-center">@material.Quantity</td>
-                        <td class="text-center">
-                            <span class="badge bg-info">@material.DistributedQuantity</span>
-                        </td>
-                        <td class="text-center">
-                            <strong>@total</strong>
-                        </td>
-                        <td>
-                            @if ((material.Category == "MateriaisDeUso" || material.Category == "Descartaveis") && material.OpenInClinics.Any())
-                            {
-                                <div class="small">
-                                    @foreach (var clinicStatus in material.OpenInClinics)
-                                    {
-                                        <div class="mb-1">
-                                            <span class="badge @(clinicStatus.IsOpen ? "bg-success" : "bg-secondary")">
-                                                @clinicStatus.ClinicName: @(clinicStatus.IsOpen ? "Aberto" : "Fechado")
-                                            </span>
-                                            @if (clinicStatus.IsOpen && clinicStatus.OpenedAt.HasValue)
-                                            {
-                                                <span class="text-muted small ms-1">
-                                                    (desde @clinicStatus.OpenedAt.Value.ToLocalTime().ToString("dd/MM/yyyy HH:mm"))
-                                                </span>
-                                            }
-                                        </div>
-                                    }
-                                </div>
-                            }
-                            else if (material.Category == "MateriaisDeUso" || material.Category == "Descartaveis")
-                            {
-                                <span class="text-muted small">Nenhuma clínica com estoque</span>
-                            }
-                            else
-                            {
-                                <span class="text-muted small">-</span>
-                            }
-                        </td>
-                        <td class="text-end">
-                            <button class="btn btn-sm btn-outline-primary"
-                                    disabled="@(selectedClinic == null || material.Quantity <= 0)"
-                                    title="Distribuir para clínica selecionada"
-                                    @onclick="() => AllocateMaterial(material)">
-                                Distribuir
-                            </button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <p class="text-muted small">
-            @(selectedClinic == null
-                ? "Selecione uma clínica para distribuir materiais."
-                : $"Distribuir materiais para {selectedClinic.Name}.")
-        </p>
-    }
-
-    @if (selectedClinic != null)
     {
         <section class="mt-4">
             <h4>Estoque de @selectedClinic.Name</h4>
@@ -208,7 +134,6 @@ else
 
 @code {
     List<ClinicDto>? clinics;
-    List<MaterialWithOpenStatusDto>? materials;
     ClinicDto? selectedClinic;
     ClinicDetailDto? clinicDetails;
     string? errorMessage;
@@ -216,50 +141,18 @@ else
     protected override async Task OnInitializedAsync()
     {
         clinics = await ClinicService.GetAll();
-        materials = await MaterialService.GetAllWithOpenStatus();
     }
 
     async Task SelectClinic(ClinicDto c)
     {
         selectedClinic = c;
         errorMessage = null;
+        clinicDetails = null;
         clinicDetails = await ClinicService.Get(c.Id);
         if (clinicDetails == null)
         {
             errorMessage = "Não foi possível carregar os detalhes da clínica selecionada.";
         }
-    }
-
-    async Task AllocateMaterial(MaterialWithOpenStatusDto material)
-    {
-        errorMessage = null;
-
-        if (selectedClinic == null)
-            return;
-
-        var input = await JS.InvokeAsync<string?>("prompt", $"Quantidade para enviar '{material.Name}' a {selectedClinic.Name}", "1");
-        if (string.IsNullOrWhiteSpace(input))
-            return;
-
-        if (!int.TryParse(input, out var quantity) || quantity <= 0)
-        {
-            errorMessage = "Informe uma quantidade válida.";
-            return;
-        }
-
-        var response = await ClinicService.Allocate(selectedClinic.Id, new ClinicAllocateRequest(material.Id, quantity));
-        if (!response.IsSuccessStatusCode)
-        {
-            errorMessage = await response.Content.ReadAsStringAsync();
-            return;
-        }
-
-        clinicDetails = await ClinicService.Get(selectedClinic.Id);
-        if (clinicDetails == null)
-        {
-            errorMessage = "Não foi possível atualizar os dados da clínica após a distribuição.";
-        }
-        materials = await MaterialService.GetAllWithOpenStatus();
     }
 
     async Task ToggleOpen(ClinicStockDto stock, ChangeEventArgs e)
@@ -291,7 +184,6 @@ else
         {
             errorMessage = "Não foi possível atualizar os dados da clínica.";
         }
-        materials = await MaterialService.GetAllWithOpenStatus();
     }
 
     async Task ClearMovements()

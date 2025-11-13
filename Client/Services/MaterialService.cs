@@ -6,7 +6,7 @@ public class MaterialService(HttpClient http)
     private readonly HttpClient _http = http;
 
     public Task<List<MaterialDto>> GetAll() => _http.GetFromJsonAsync<List<MaterialDto>>("materials")!;
-    public Task<List<MaterialWithOpenStatusDto>> GetAllWithOpenStatus() => _http.GetFromJsonAsync<List<MaterialWithOpenStatusDto>>("materials?withOpenStatus=true")!;
+    public Task<List<MaterialGeneralStockDto>> GetGeneralSummary() => _http.GetFromJsonAsync<List<MaterialGeneralStockDto>>("materials/summary")!;
     public async Task<MaterialDto?> Create(MaterialCreateRequest request)
     {
         var response = await _http.PostAsJsonAsync("materials", request);

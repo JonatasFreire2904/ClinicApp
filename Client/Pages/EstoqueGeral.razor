@@ -1,0 +1,134 @@
+@page "/estoque-geral"
+@using Microsoft.AspNetCore.Authorization
+@using Shared.DTOs
+@attribute [Authorize(Roles = "Master")]
+@inject MaterialService MaterialService
+
+<div class="page-header mb-4">
+    <h3>📦 Estoque Geral</h3>
+    <p class="text-muted">Soma consolidada dos estoques individuais de cada clínica</p>
+</div>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (materials == null)
+{
+    <p>Carregando...</p>
+}
+else if (!materials.Any())
+{
+    <p class="text-muted">Nenhum material cadastrado nas clínicas.</p>
+}
+else
+{
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <span class="text-muted small">
+            Estoque geral = soma das quantidades disponíveis em cada clínica. 
+            Cada clínica movimenta apenas o seu próprio estoque.
+        </span>
+        <button class="btn btn-sm btn-outline-primary" @onclick="LoadSummary">
+            Atualizar
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Categoria</th>
+                    <th class="text-center">Total nas Clínicas</th>
+                    <th>Distribuição por Clínica</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var material in materials)
+                {
+                    <tr>
+                        <td class="align-middle">@material.Name</td>
+                        <td class="align-middle">@material.Category</td>
+                        <td class="text-center align-middle">
+                            @if (material.TotalQuantity > 0)
+                            {
+                                <strong>@material.TotalQuantity</strong>
+                            }
+                            else
+                            {
+                                <span class="text-muted">0</span>
+                            }
+                        </td>
+                        <td class="align-middle">
+                            @if (material.Clinics.Any())
+                            {
+                                <div class="clinic-badges">
+                                    @foreach (var clinic in material.Clinics)
+                                    {
+                                        <span class="clinic-badge" title="@($"{clinic.ClinicName}: {clinic.Quantity} unidade(s)")">
+                                            @clinic.ClinicName: @clinic.Quantity
+                                        </span>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <span class="text-muted small">Nenhuma clínica com estoque disponível.</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    List<MaterialGeneralStockDto>? materials;
+    string? errorMessage;
+
+    protected override async Task OnInitializedAsync() => await LoadSummary();
+
+    async Task LoadSummary()
+    {
+        errorMessage = null;
+
+        try
+        {
+            materials = await MaterialService.GetGeneralSummary();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erro ao carregar o estoque geral: {ex.Message}";
+            materials = new();
+        }
+    }
+}
+
+<style>
+    .page-header {
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .clinic-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+    }
+
+    .clinic-badge {
+        background: #e9f2ff;
+        color: #1d4ed8;
+        border-radius: 999px;
+        padding: 0.35rem 0.75rem;
+        font-weight: 600;
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+</style>
+
