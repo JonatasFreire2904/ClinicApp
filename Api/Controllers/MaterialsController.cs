@@ -208,7 +208,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
     public async Task<IActionResult> AddStock(Guid id, [FromBody] MaterialAdjustQuantityRequest request)
     {
         if (request.Quantity <= 0)
-            return BadRequest("Quantidade deve ser maior que zero.");
+            return BadRequest("Quantity must be greater than zero.");
 
         var material = await _db.Materials.FindAsync(id);
         if (material == null) return NotFound();

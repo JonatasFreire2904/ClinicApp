@@ -136,4 +136,16 @@
     height: auto;
     max-height: 150px;
     object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-footer ::deep a {
+    display: block;
+    text-decoration: none;
+}
+
+.nav-footer ::deep a:hover .nav-logo {
+    transform: scale(1.05);
+    opacity: 0.9;
 }

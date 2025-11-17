@@ -2,10 +2,17 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    /* Adicionando altura total para evitar scroll no layout principal */
+    min-height: 100vh;
 }
 
 main {
     flex: 1;
+    /* Adicionando flexbox para que o conte�do ocupe o espa�o restante */
+    display: flex;
+    flex-direction: column;
+    /* Garantindo que o main ocupe o espa�o restante e n�o cause scroll */
+    min-height: 0;
 }
 
 .sidebar {
@@ -21,6 +28,7 @@ main {
     display: flex;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0; /* Impede que o top-row encolha */
 }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
@@ -29,28 +37,37 @@ main {
         text-decoration: none;
     }
 
-    .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        text-decoration: underline;
-    }
+        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+            text-decoration: underline;
+        }
 
-    .top-row ::deep a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .top-row ::deep a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+.content {
+    flex-grow: 1; /* Permite que o conte�do ocupe o espa�o restante */
+    overflow-y: auto; /* Adiciona scroll apenas se o conte�do da p�gina for maior que o espa�o dispon�vel */
+    padding-top: 0; /* Removendo padding superior para evitar scroll desnecess�rio */
+    padding-bottom: 0; /* Removendo padding inferior para evitar scroll desnecess�rio */
+}
 
 @media (max-width: 640.98px) {
     .top-row {
         justify-content: space-between;
     }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        margin-left: 0;
-    }
+        .top-row ::deep a, .top-row ::deep .btn-link {
+            margin-left: 0;
+        }
 }
 
 @media (min-width: 641px) {
     .page {
         flex-direction: row;
+        /* Adicionando overflow: hidden para garantir que o scroll n�o seja global */
+        overflow: hidden;
     }
 
     .sidebar {
@@ -58,6 +75,7 @@ main {
         height: 100vh;
         position: sticky;
         top: 0;
+        flex-shrink: 0; /* Impede que o sidebar encolha */
     }
 
     .top-row {
@@ -66,14 +84,26 @@ main {
         z-index: 1;
     }
 
-    .top-row.auth ::deep a:first-child {
-        flex: 1;
-        text-align: right;
-        width: 0;
-    }
+        .top-row.auth ::deep a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+        }
 
     .top-row, article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
+    }
+
+    main {
+        /* Garante que o main ocupe o espa�o restante e permita o scroll apenas no conte�do */
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .content {
+        /* Ocupa o espa�o restante verticalmente */
+        height: 100%;
+        overflow-y: auto;
     }
 }

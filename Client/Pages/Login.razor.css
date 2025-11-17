@@ -1,38 +1,46 @@
-/* Conte�do para Login.razor.css */
-
-.login-container {
-    /* Define a imagem de fundo */
-    background-image: url('/imagens/LogoLogin.jpeg');
-    /* Garante que a imagem cubra todo o cont�iner sem distorcer */
-    background-size: cover;
-    /* Centraliza a imagem */
-    background-position: center;
-    /* Impede que a imagem se repita */
-    background-repeat: no-repeat;
-    /* Garante que o cont�iner ocupe toda a altura da tela */
-    width: 100vw;
-    height: 100vh;
-    /* Usa Flexbox para centralizar o formul�rio de login */
+.home-hero-wrapper {
+    /* Garantindo que o wrapper ocupe todo o espaço disponível na tela (após o navmenu) */
+    width: 100%;
+    height: 100vh; /* Ocupa a altura total da viewport */
+    /* Adicionando overflow: hidden para garantir que não haja scrollbar, caso o conteúdo exceda a viewport */
+    overflow: hidden;
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+    justify-content: center;
+    align-items: center;
 }
 
-.login-card {
-    /* Adiciona um fundo semi-transparente ou branco para garantir a legibilidade */
-    background-color: rgba(255, 255, 255, 0.95);
-    /* Adiciona um pouco de sombra para destacar */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    /* Define a largura m�xima do cart�o */
-    max-width: 400px;
-    width: 90%;
-    /* Adiciona padding e bordas arredondadas */
-    padding: 30px;
-    border-radius: 10px;
+.home-hero {
+    /* Ocupa 100% da largura e altura do seu container (home-hero-wrapper) */
+    width: 100%;
+    height: 100%;
+    /* Usando a imagem como background no container principal */
+    background-image: url('/wwwroot/imagens/LogoLogin.jpeg');
+    background-size: cover; /* Garante que a imagem cubra toda a área, cortando se necessário */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição */
+    /* Removendo o min-height, pois o height: 100% do wrapper já deve ser suficiente */
+    /* min-height: calc(100vh - 4rem); */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
-    .login-card h3 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #333;
+/* Removendo o estilo da tag <img>, pois agora usaremos background-image */
+/* .home-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+} */
+
+@media (max-width: 768px) {
+    .home-hero-wrapper {
+        width: 100%;
     }
+
+    .home-hero {
+        /* min-height: calc(100vh - 3rem); */
+    }
+}

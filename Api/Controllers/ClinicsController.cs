@@ -70,21 +70,21 @@ public class ClinicsController(AppDbContext db) : ControllerBase
     public async Task<IActionResult> AllocateToClinic(Guid clinicId, [FromBody] ClinicAllocateRequest request)
     {
         if (request.Quantity <= 0)
-            return BadRequest("Quantidade deve ser maior que zero.");
+            return BadRequest("Quantity must be greater than zero.");
 
         var clinic = await _db.Clinics
             .Include(c => c.ClinicStocks)
             .FirstOrDefaultAsync(c => c.Id == clinicId);
-        if (clinic == null) return NotFound("Clínica não encontrada.");
+        if (clinic == null) return NotFound("No clinic found.");
 
         var material = await _db.Materials.FindAsync(request.MaterialId);
-        if (material == null) return NotFound("Material não encontrado.");
+        if (material == null) return NotFound("The requested material could not be found.");
 
         if (material.Quantity < request.Quantity)
-            return BadRequest("Quantidade insuficiente no estoque geral.");
+            return BadRequest("Insufficient quantity in general inventory.");
 
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
-            return Unauthorized("Usuário não identificado.");
+            return Unauthorized("Unidentified user.");
 
         material.Quantity -= request.Quantity;
 
@@ -113,9 +113,9 @@ public class ClinicsController(AppDbContext db) : ControllerBase
             ClinicId = clinicId,
             MaterialId = material.Id,
             Quantity = request.Quantity,
-            MovementType = MovementType.Entrada,
+            MovementType = MovementType.Inbound,
             Note = string.IsNullOrWhiteSpace(request.Note)
-                ? $"Distribuição do estoque geral"
+                ? $"General inventory distribution."
                 : request.Note!,
             PerformedByUserId = userId
         });
@@ -134,18 +134,18 @@ public class ClinicsController(AppDbContext db) : ControllerBase
     public async Task<IActionResult> AddStockToClinic(Guid clinicId, [FromBody] ClinicAddStockRequest request)
     {
         if (request.Quantity <= 0)
-            return BadRequest("Quantidade deve ser maior que zero.");
+            return BadRequest("Quantity must be greater than zero.");
 
         var clinic = await _db.Clinics
             .Include(c => c.ClinicStocks)
             .FirstOrDefaultAsync(c => c.Id == clinicId);
-        if (clinic == null) return NotFound("Clínica não encontrada.");
+        if (clinic == null) return NotFound("The specified clinic could not be found.");
 
         var material = await _db.Materials.FindAsync(request.MaterialId);
-        if (material == null) return NotFound("Material não encontrado.");
+        if (material == null) return NotFound("Material not found.");
 
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
-            return Unauthorized("Usuário não identificado.");
+            return Unauthorized("Unidentified user.");
 
         var clinicStock = await _db.ClinicStocks
             .FirstOrDefaultAsync(cs => cs.ClinicId == clinicId && cs.MaterialId == material.Id);
@@ -172,9 +172,9 @@ public class ClinicsController(AppDbContext db) : ControllerBase
             ClinicId = clinicId,
             MaterialId = material.Id,
             Quantity = request.Quantity,
-            MovementType = MovementType.Entrada,
+            MovementType = MovementType.Inbound,
             Note = string.IsNullOrWhiteSpace(request.Note)
-                ? "Entrada direta no estoque da clínica"
+                ? "Direct entry into the clinic's inventory."
                 : request.Note!,
             PerformedByUserId = userId
         });
@@ -203,7 +203,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
 
         if (clinicStock.Material.Category != MaterialCategory.UsageMaterials && 
             clinicStock.Material.Category != MaterialCategory.Disposables)
-            return BadRequest("Apenas materiais de uso e descartáveis podem ser marcados como abertos.");
+            return BadRequest("Only consumable and disposable materials can be marked as opened.");
 
         if (request.IsOpen && !clinicStock.IsOpen)
         {
@@ -276,26 +276,26 @@ public class ClinicsController(AppDbContext db) : ControllerBase
     public async Task<IActionResult> ConsumeMaterial(Guid clinicId, [FromBody] ClinicConsumeRequest request)
     {
         if (request.Quantity <= 0)
-            return BadRequest("Quantidade deve ser maior que zero.");
+            return BadRequest("Quantity must be greater than zero.");
 
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
-            return Unauthorized("Usuário não identificado.");
+            return Unauthorized("Unidentified user.");
 
         // Usuários podem consumir de qualquer clínica (não precisa estar associado)
         var clinic = await _db.Clinics
             .Include(c => c.ClinicStocks)
             .FirstOrDefaultAsync(c => c.Id == clinicId);
 
-        if (clinic == null) return NotFound("Clínica não encontrada.");
+        if (clinic == null) return NotFound("The specified clinic could not be found.");
 
         var clinicStock = await _db.ClinicStocks
             .FirstOrDefaultAsync(cs => cs.ClinicId == clinicId && cs.MaterialId == request.MaterialId);
 
         if (clinicStock == null)
-            return NotFound("Material não encontrado no estoque desta clínica.");
+            return NotFound("Material not found in this clinic's inventory.");
 
         if (clinicStock.QuantityAvailable < request.Quantity)
-            return BadRequest("Quantidade insuficiente no estoque da clínica.");
+            return BadRequest("Insufficient quantity in the clinic's inventory.");
 
         // Diminui a quantidade no estoque da clínica
         clinicStock.QuantityAvailable -= request.Quantity;
@@ -306,9 +306,9 @@ public class ClinicsController(AppDbContext db) : ControllerBase
             ClinicId = clinicId,
             MaterialId = request.MaterialId,
             Quantity = request.Quantity,
-            MovementType = MovementType.Saida,
+            MovementType = MovementType.Outbound,
             Note = string.IsNullOrWhiteSpace(request.Note)
-                ? $"Consumo de material"
+                ? $"Material consumption"
                 : request.Note!,
             PerformedByUserId = userId
         });
@@ -317,7 +317,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
 
         return Ok(new
         {
-            Message = "Material consumido com sucesso.",
+            Message = "Material successfully consumed.",
             RemainingQuantity = clinicStock.QuantityAvailable
         });
     }
@@ -327,7 +327,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
     public async Task<IActionResult> ClearMovements(Guid clinicId)
     {
         var clinic = await _db.Clinics.FindAsync(clinicId);
-        if (clinic == null) return NotFound("Clínica não encontrada.");
+        if (clinic == null) return NotFound("The specified clinic could not be found.");
 
         var movements = await _db.StockMovements
             .Where(m => m.ClinicId == clinicId)
@@ -336,6 +336,6 @@ public class ClinicsController(AppDbContext db) : ControllerBase
         _db.StockMovements.RemoveRange(movements);
         await _db.SaveChangesAsync();
 
-        return Ok(new { Message = "Log de movimentações limpo com sucesso." });
+        return Ok(new { Message = "Movement log successfully cleared." });
     }
 }
