@@ -70,7 +70,7 @@
                 var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 var user = authState.User;
 
-                Navigation.NavigateTo("/home", forceLoad: true);
+                Navigation.NavigateTo("/home");
             }
             else
             {
