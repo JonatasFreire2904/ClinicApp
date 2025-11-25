@@ -26,6 +26,9 @@ else
             <tr>
                 <th>Name</th>
                 <th class="text-center">Quantity</th>
+                <th class="text-center">Cost (R$)</th>
+                <th class="text-center">Total (R$)</th>
+                <th class="text-center">Added On (Qt)</th>
                 <th class="text-end">Actions</th>
             </tr>
         </thead>
@@ -35,10 +38,13 @@ else
                 <tr>
                     <td>@m.Name</td>
                     <td class="text-center">@m.Quantity</td>
+                    <td class="text-center">@m.Cost.ToString("F2")</td>
+                    <td class="text-center">@m.Cost.ToString("F2")</td>
+                    <td class="text-center">@m.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm") (@m.LastAddedQuantity)</td>
                     <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => AddStock(m)">Add</button>
                         <AuthorizeView Roles="Master">
                             <Authorized>
-                                <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => AddStock(m)">Add</button>
                                 <button class="btn btn-sm btn-danger" @onclick="() => Delete(m.Id)">Delete</button>
                             </Authorized>
                         </AuthorizeView>
@@ -75,7 +81,15 @@ else
         if (string.IsNullOrWhiteSpace(input)) return;
         if (!int.TryParse(input, out var amount) || amount <= 0) return;
 
-        await Http.PostAsJsonAsync($"materials/{material.Id}/add-stock", new { quantity = amount });
+        var inputCost = await JS.InvokeAsync<string>("prompt", $"Informe o custo unitário (R$) para {material.Name}", material.Cost.ToString());
+        if (string.IsNullOrWhiteSpace(inputCost)) return;
+        if (!decimal.TryParse(inputCost, out var cost) || cost < 0) return;
+
+        var inputTotal = await JS.InvokeAsync<string>("prompt", $"Informe o valor total (R$) da compra de {material.Name}", "0");
+        if (string.IsNullOrWhiteSpace(inputTotal)) return;
+        if (!decimal.TryParse(inputTotal, out var total) || total < 0) return;
+
+        await Http.PostAsJsonAsync($"materials/{material.Id}/add-stock", new { quantity = amount, cost = cost, total = total });
         await LoadMaterials();
     }
 

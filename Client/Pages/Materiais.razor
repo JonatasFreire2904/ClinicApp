@@ -3,28 +3,44 @@
 @attribute [Authorize(Roles = "Master, User")]
 @inject NavigationManager Nav
 
-
-
 <h3 class="mb-4">Manage Materials</h3>
 
 <div class="d-flex gap-3 flex-wrap">
-    <div class="card p-4 text-center shadow-sm" style="cursor:pointer; width:220px" @onclick='() => GoToCategory("Disposables")'>
-        <h5>Disposables</h5>
-        <p>Single-use materials</p>
-    </div>
-
-    <div class="card p-4 text-center shadow-sm" style="cursor:pointer; width:220px" @onclick='() => GoToCategory("Durables")'>
-        <h5>Durables</h5>
-        <p>Long-lasting items</p>
-    </div>
-
-    <div class="card p-4 text-center shadow-sm" style="cursor:pointer; width:220px" @onclick='() => GoToCategory("UsageMaterials")'>
-        <h5>Usage Materials</h5>
-        <p>Daily consumption items</p>
-    </div>
+    @foreach (var category in categories)
+    {
+        <div class="card p-4 text-center shadow-sm" style="cursor:pointer; width:220px" @onclick='() => GoToCategory(category.Name)'>
+            <h5>@category.Name</h5>
+            <p>@category.Description</p>
+        </div>
+    }
 </div>
 
 @code {
+    // Classe auxiliar para armazenar os dados do cartão
+    public class CategoryCard
+    {
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    // Lista de categorias com nomes e descrições amigáveis
+    private List<CategoryCard> categories = new List<CategoryCard>
+    {
+        new CategoryCard { Name = "ImpressionMaterials", Description = "Impression materials" },
+        new CategoryCard { Name = "CementationMaterials", Description = "Cementation materials" },
+        new CategoryCard { Name = "RestorationMaterials", Description = "Restoration materials" },
+        new CategoryCard { Name = "Disposables", Description = "Disposable materials" },
+        new CategoryCard { Name = "Extraction", Description = "Extraction materials" },
+        new CategoryCard { Name = "Burs", Description = "Burs and tips" },
+        new CategoryCard { Name = "ImplantAcessories", Description = "Implant accessories" },
+        new CategoryCard { Name = "Ortodontics", Description = "Orthodontics materials" },
+        new CategoryCard { Name = "Cleaning", Description = "Cleaning materials" },
+        new CategoryCard { Name = "EndodonticsRCT", Description = "Root canal treatment materials" },
+        new CategoryCard { Name = "Durables", Description = "Long-lasting items" },
+        new CategoryCard { Name = "UsageMaterials", Description = "Daily consumption items" }
+    };
+
+
     void GoToCategory(string category)
     {
         Nav.NavigateTo($"/materiais/{category}");

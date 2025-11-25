@@ -1,39 +1,587 @@
 ﻿@page "/dashboard"
 @using Microsoft.AspNetCore.Authorization
-
+@using Shared.DTOs
 @attribute [Authorize(Roles = "Master")]
-@inject DashboardService DashboardService
+@inject HttpClient Http
+@inject IJSRuntime JS
 
-<h3>General Dashboard</h3>
+<div class="page-header-modern">
+    <h3>📊 Financial Dashboard</h3>
+    <p>Material costs and inventory spending overview</p>
+</div>
 
-@if (summary == null)
+@if (!string.IsNullOrEmpty(errorMessage))
 {
-    <p>Loading...</p>
+    <div class="alert-modern alert-danger-modern">
+        <span class="alert-icon">⚠️</span>
+        @errorMessage
+    </div>
 }
-else
+
+<div class="mb-4">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label class="label-modern">Start Date</label>
+            <input type="date" class="input-modern" @bind="startDate" />
+        </div>
+        <div class="col-md-3">
+            <label class="label-modern">End Date</label>
+            <input type="date" class="input-modern" @bind="endDate" />
+        </div>
+        <div class="col-md-4">
+            <label class="label-modern">Clinic Filter</label>
+            <select class="input-modern" @bind="selectedClinicFilter" @bind:after="ApplyClinicFilter">
+                <option value="">All Clinics</option>
+                @if (dashboardData != null)
+                {
+                    @foreach (var clinic in dashboardData.ClinicExpenses)
+                    {
+                        <option value="@clinic.ClinicId">@clinic.ClinicName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-2 d-flex align-items-end">
+            <button class="btn-modern btn-primary-modern w-100" @onclick="LoadDashboard">
+                <span>🔍</span> Load
+            </button>
+        </div>
+    </div>
+</div>
+
+@if (isLoading)
 {
-    <div class="row">
-        @foreach (var c in summary.Clinics)
-        {
-            <div class="card m-2 p-2" style="width:220px;">
-                <h5>@c.ClinicName</h5>
-                <p>Distinct materials: @c.DistinctMaterials</p>
-                <p>Total in stock: @c.TotalQuantity</p>
+    <div class="text-center py-5">
+        <div class="spinner-modern"></div>
+        <p class="mt-3 text-muted">Loading dashboard data...</p>
+    </div>
+}
+else if (dashboardData != null && filteredData != null)
+{
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-card-icon">💰</div>
+                <div class="stats-card-label">Total Spent</div>
+                <div class="stats-card-value">R$ @filteredData.TotalSpent.ToString("N2")</div>
+                <small class="text-muted-modern">
+                    @dashboardData.StartDate.ToString("dd/MM/yyyy") - @dashboardData.EndDate.ToString("dd/MM/yyyy")
+                </small>
             </div>
-        }
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-card-icon">📦</div>
+                <div class="stats-card-label">Materials Added</div>
+                <div class="stats-card-value">@filteredData.MaterialsAdded</div>
+                <small class="text-muted-modern">Purchases in period</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-card-icon">🏥</div>
+                <div class="stats-card-label">@(string.IsNullOrEmpty(selectedClinicFilter) ? "Locations" : "Selected Clinic")</div>
+                <div class="stats-card-value">@filteredData.ClinicName</div>
+                <small class="text-muted-modern">@(filteredData.MaterialsAdded) items</small>
+            </div>
+        </div>
     </div>
 
-    <div class="mt-4">
-        <p>Total clinics: @summary.TotalClinics</p>
-        <p>Total distinct materials (sum): @summary.TotalMaterials</p>
-        <p>Total units in stock: @summary.TotalQuantity</p>
+    <!-- Charts Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h5 class="modern-card-title">
+                        <span class="modern-card-icon">📊</span>
+                        Expenses by Category
+                    </h5>
+                </div>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h5 class="modern-card-title">
+                        <span class="modern-card-icon">💎</span>
+                        Top Materials by Cost
+                    </h5>
+                </div>
+                <div class="chart-container">
+                    <canvas id="materialChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Line Charts Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h5 class="modern-card-title">
+                        <span class="modern-card-icon">📈</span>
+                        Category Spending Trends
+                    </h5>
+                </div>
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="categoryTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h5 class="modern-card-title">
+                        <span class="modern-card-icon">🔬</span>
+                        Top Material Spending Trends
+                    </h5>
+                </div>
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="materialTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Table -->
+    <div class="modern-card">
+        <div class="modern-card-header">
+            <h5 class="modern-card-title">
+                <span class="modern-card-icon">📋</span>
+                Detailed Material Expenses
+            </h5>
+            <span class="badge-modern badge-success">R$ @filteredData.TotalSpent.ToString("N2")</span>
+        </div>
+
+        @if (filteredData.Materials.Any())
+        {
+            <div class="table-responsive">
+                <table class="table-modern">
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>Category</th>
+                            <th class="text-center">Quantity Added</th>
+                            <th class="text-end">Total Cost</th>
+                            <th class="text-center">Last Added</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var material in filteredData.Materials)
+                        {
+                            <tr>
+                                <td><strong>@material.MaterialName</strong></td>
+                                <td><span class="badge-modern badge-primary">@material.Category</span></td>
+                                <td class="text-center">@material.QuantityAdded</td>
+                                <td class="text-end"><strong class="text-primary-modern">R$ @material.TotalCost.ToString("N2")</strong></td>
+                                <td class="text-center">@material.LastAdded.ToLocalTime().ToString("dd/MM/yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td class="text-end"><strong class="text-success-modern">R$ @filteredData.TotalSpent.ToString("N2")</strong></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted-modern">No materials added in this period.</p>
+        }
     </div>
 }
 
 @code {
-    Shared.DTOs.DashboardSummaryDto? summary;
+    private DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+    private DateTime endDate = DateTime.Now;
+    private DashboardSummaryDto? dashboardData;
+    private string? errorMessage;
+    private bool isLoading = false;
+    private string selectedClinicFilter = "";
+    
+    private FilteredClinicData? filteredData;
+
     protected override async Task OnInitializedAsync()
     {
-        summary = await DashboardService.GetSummary();
+        await LoadDashboard();
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (filteredData != null && filteredData.Materials.Any())
+        {
+            await RenderCharts();
+        }
+    }
+
+    private async Task LoadDashboard()
+    {
+        isLoading = true;
+        errorMessage = null;
+
+        try
+        {
+            var url = $"dashboard/financial-summary?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+            
+            // Add clinicId parameter if a specific clinic is selected
+            if (!string.IsNullOrEmpty(selectedClinicFilter))
+            {
+                url += $"&clinicId={selectedClinicFilter}";
+            }
+            
+            dashboardData = await Http.GetFromJsonAsync<DashboardSummaryDto>(url);
+            
+            if (dashboardData == null)
+            {
+                errorMessage = "No data returned from API";
+                return;
+            }
+            
+            ApplyClinicFilter();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading dashboard: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ApplyClinicFilter()
+    {
+        if (dashboardData == null) return;
+
+        if (string.IsNullOrEmpty(selectedClinicFilter))
+        {
+            // Show all clinics aggregated
+            var allMaterials = dashboardData.ClinicExpenses.SelectMany(c => c.Materials).ToList();
+            filteredData = new FilteredClinicData(
+                "All Locations",
+                dashboardData.TotalSpent,
+                dashboardData.TotalMaterialsAdded,
+                allMaterials
+            );
+        }
+        else
+        {
+            // Show specific clinic
+            var clinic = dashboardData.ClinicExpenses.FirstOrDefault(c => c.ClinicId.ToString() == selectedClinicFilter);
+            if (clinic != null)
+            {
+                filteredData = new FilteredClinicData(
+                    clinic.ClinicName,
+                    clinic.TotalSpent,
+                    clinic.MaterialsAdded,
+                    clinic.Materials.ToList()
+                );
+            }
+        }
+    }
+
+    private List<(string category, decimal amount, string color, int index)> GetCategoryData()
+    {
+        if (filteredData == null) return new();
+
+        var colors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40" };
+        var categoryData = filteredData.Materials
+            .GroupBy(m => m.Category)
+            .Select((g, index) => (
+                category: g.Key,
+                amount: g.Sum(m => m.TotalCost),
+                color: colors[index % colors.Length],
+                index: index
+            ))
+            .OrderByDescending(x => x.amount)
+            .ToList();
+
+        return categoryData;
+    }
+
+    private List<(string material, decimal amount, string color, int index)> GetTopMaterialsData()
+    {
+        if (filteredData == null) return new();
+
+        var colors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#E7E9ED", "#8B5CF6" };
+        var materialData = filteredData.Materials
+            .OrderByDescending(m => m.TotalCost)
+            .Take(8)
+            .Select((m, index) => (
+                material: m.MaterialName,
+                amount: m.TotalCost,
+                color: colors[index % colors.Length],
+                index: index
+            ))
+            .ToList();
+
+        return materialData;
+    }
+
+    private async Task RenderCharts()
+    {
+        try
+        {
+            // Category Chart
+            var categoryData = GetCategoryData();
+            if (categoryData.Any())
+            {
+                await JS.InvokeVoidAsync("renderPieChart", 
+                    "categoryChart",
+                    categoryData.Select(c => c.category).ToArray(),
+                    categoryData.Select(c => (double)c.amount).ToArray(),
+                    categoryData.Select(c => c.color).ToArray());
+            }
+
+            // Material Chart  
+            var materialData = GetTopMaterialsData();
+            if (materialData.Any())
+            {
+                await JS.InvokeVoidAsync("renderPieChart",
+                    "materialChart",
+                    materialData.Select(m => m.material).ToArray(),
+                    materialData.Select(m => (double)m.amount).ToArray(),
+                    materialData.Select(m => m.color).ToArray());
+            }
+
+            // Line Charts for Trends
+            await RenderLineTrendCharts();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error rendering charts: {ex.Message}");
+        }
+    }
+
+    private async Task RenderLineTrendCharts()
+    {
+        if (filteredData == null || !filteredData.Materials.Any()) return;
+
+        try
+        {
+            // Group materials by date to show trends
+            var materialsByDate = filteredData.Materials
+                .GroupBy(m => m.LastAdded.Date)
+                .OrderBy(g => g.Key)
+                .ToList();
+
+            var dates = materialsByDate.Select(g => g.Key.ToString("dd/MM")).ToArray();
+
+            // Category Trend Chart
+            var categoryColors = new Dictionary<string, string>
+            {
+                { "ConsumableMaterials", "#FF6384" },
+                { "Disposables", "#36A2EB" },
+                { "Durables", "#FFCE56" },
+                { "Cleaning", "#4BC0C0" }
+            };
+
+            var categoryDatasets = filteredData.Materials
+                .GroupBy(m => m.Category)
+                .Select(categoryGroup => new
+                {
+                    label = categoryGroup.Key,
+                    data = dates.Select(date =>
+                    {
+                        var dateObj = DateTime.ParseExact(date, "dd/MM", System.Globalization.CultureInfo.InvariantCulture);
+                        var fullDate = new DateTime(DateTime.Now.Year, dateObj.Month, dateObj.Day);
+                        return (double)categoryGroup
+                            .Where(m => m.LastAdded.ToString("dd/MM") == date)
+                            .Sum(m => m.TotalCost);
+                    }).ToArray(),
+                    borderColor = categoryColors.GetValueOrDefault(categoryGroup.Key, "#999"),
+                    backgroundColor = categoryColors.GetValueOrDefault(categoryGroup.Key, "#999") + "20",
+                    tension = 0.4,
+                    fill = true
+                })
+                .ToList();
+
+            if (categoryDatasets.Any())
+            {
+                await JS.InvokeVoidAsync("renderLineChart",
+                    "categoryTrendChart",
+                    dates,
+                    categoryDatasets.ToArray());
+            }
+
+            // Material Trend Chart (top 5 materials)
+            var topMaterials = filteredData.Materials
+                .GroupBy(m => m.MaterialName)
+                .OrderByDescending(g => g.Sum(x => x.TotalCost))
+                .Take(5)
+                .ToList();
+
+            var materialColors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF" };
+
+            var materialDatasets = topMaterials
+                .Select((materialGroup, index) => new
+                {
+                    label = materialGroup.Key,
+                    data = dates.Select(date =>
+                    {
+                        return (double)materialGroup
+                            .Where(m => m.LastAdded.ToString("dd/MM") == date)
+                            .Sum(m => m.TotalCost);
+                    }).ToArray(),
+                    borderColor = materialColors[index],
+                    backgroundColor = materialColors[index] + "20",
+                    tension = 0.4,
+                    fill = true
+                })
+                .ToList();
+
+            if (materialDatasets.Any())
+            {
+                await JS.InvokeVoidAsync("renderLineChart",
+                    "materialTrendChart",
+                    dates,
+                    materialDatasets.ToArray());
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error rendering line charts: {ex.Message}");
+        }
+    }
+
+    private record FilteredClinicData(string ClinicName, decimal TotalSpent, int MaterialsAdded, List<MaterialExpenseDto> Materials);
 }
+
+<style>
+    .page-header {
+        border-bottom: 2px solid #e9ecef;
+        padding-bottom: 1rem;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        transition: transform 0.2s;
+    }
+
+    .summary-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .summary-card.total-spent {
+        border-left: 4px solid #198754;
+    }
+
+    .summary-card.materials-added {
+        border-left: 4px solid #0d6efd;
+    }
+
+    .summary-card.clinics-count {
+        border-left: 4px solid #6f42c1;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+        line-height: 1;
+    }
+
+    .card-content h6 {
+        margin: 0;
+        font-size: 0.875rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .card-content h3 {
+        margin: 0.25rem 0 0 0;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #212529;
+    }
+
+    .chart-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        min-height: 400px;
+    }
+
+    .chart-card h5 {
+        color: #212529;
+        margin-bottom: 1rem;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .chart-container canvas {
+        max-height: 300px !important;
+    }
+
+    .clinic-expense-section {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #e9ecef;
+    }
+
+    .section-header h5 {
+        margin: 0;
+        color: #212529;
+    }
+
+    .clinic-stats {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .category-badge {
+        background: #e7f3ff;
+        color: #0d6efd;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .table thead th {
+        background: #f8f9fa;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+</style>

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared.DTOs;
+using System.Security.Claims;
 
 [ApiController]
 [Route("materials")]
@@ -57,7 +58,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         else
         {
             return Ok(await _db.Materials
-                .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity))
+                .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity, m.Cost, m.CreatedAt, m.LastAddedQuantity, m.LastAddedTotal))
                 .ToListAsync());
         }
     }
@@ -112,6 +113,10 @@ public class MaterialsController(AppDbContext db) : ControllerBase
                 material.Category.ToString(),
                 material.Quantity,
                 totalQuantity,
+                material.Cost,
+                material.CreatedAt,
+                material.LastAddedQuantity,
+                material.LastAddedTotal,
                 clinicsWithMaterial);
         }).ToList();
 
@@ -127,7 +132,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
 
         var materials = await _db.Materials
             .Where(m => m.Category == parsedCategory)
-            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity))
+            .Select(m => new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity, m.Cost, m.CreatedAt, m.LastAddedQuantity, m.LastAddedTotal))
             .ToListAsync();
 
         return Ok(materials);
@@ -139,7 +144,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
     {
         var m = await _db.Materials.FindAsync(id);
         if (m == null) return NotFound();
-        return Ok(new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity));
+        return Ok(new MaterialDto(m.Id, m.Name, m.Category.ToString(), m.Quantity, m.Cost, m.CreatedAt, m.LastAddedQuantity, m.LastAddedTotal));
     }
 
     // 🔹 POST /materials
@@ -150,18 +155,31 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         if (!Enum.TryParse<MaterialCategory>(dto.Category, true, out var parsedCategory))
             return BadRequest($"Categoria inválida: {dto.Category}");
 
+        // Verificar se o material já existe (por nome e categoria)
+        var existingMaterial = await _db.Materials
+            .FirstOrDefaultAsync(m => m.Name.ToLower() == dto.Name.ToLower() && m.Category == parsedCategory);
+
+        if (existingMaterial != null)
+        {
+            return BadRequest($"O material '{dto.Name}' já está cadastrado na categoria '{dto.Category}'. " +
+                            $"Por favor, vá ao estoque geral e adicione a quantidade desejada ao material existente.");
+        }
+
         var material = new Material
         {
             Name = dto.Name,
             Category = parsedCategory,
-            Quantity = dto.Quantity
+            Quantity = dto.Quantity,
+            Cost = dto.Cost,
+            LastAddedQuantity = dto.Quantity,
+            LastAddedTotal = dto.Total
         };
 
         _db.Materials.Add(material);
         await _db.SaveChangesAsync();
 
         return CreatedAtAction(nameof(Get), new { id = material.Id },
-            new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity));
+            new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity, material.Cost, material.CreatedAt, material.LastAddedQuantity, material.LastAddedTotal));
     }
 
     // 🔹 PUT /materials/{id}
@@ -178,6 +196,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         m.Name = dto.Name;
         m.Category = parsedCategory;
         m.Quantity = dto.Quantity;
+        m.Cost = dto.Cost;
         await _db.SaveChangesAsync();
 
         return NoContent();
@@ -187,24 +206,57 @@ public class MaterialsController(AppDbContext db) : ControllerBase
     [Authorize(Roles = "Master, User")]
     public async Task<IActionResult> CreateBatch([FromBody] MaterialCreateBatchRequest request)
     {
+        var errors = new List<string>();
+        var materialsToAdd = new List<Material>();
+
         foreach (var item in request.Materials)
         {
+            if (!Enum.TryParse<MaterialCategory>(item.Category, true, out var parsedCategory))
+            {
+                errors.Add($"Categoria inválida para '{item.Name}': {item.Category}");
+                continue;
+            }
+
+            // Verificar se o material já existe (por nome e categoria)
+            var existingMaterial = await _db.Materials
+                .FirstOrDefaultAsync(m => m.Name.ToLower() == item.Name.ToLower() && m.Category == parsedCategory);
+
+            if (existingMaterial != null)
+            {
+                errors.Add($"O material '{item.Name}' já está cadastrado na categoria '{item.Category}'. " +
+                          $"Por favor, vá ao estoque geral e adicione a quantidade desejada ao material existente.");
+                continue;
+            }
+
             var material = new Material
             {
                 Name = item.Name,
-                Category = Enum.Parse<MaterialCategory>(item.Category),
-                Quantity = item.Quantity
+                Category = parsedCategory,
+                Quantity = item.Quantity,
+                Cost = item.Cost,
+                LastAddedQuantity = item.Quantity,
+                LastAddedTotal = item.Total
             };
 
-            _db.Materials.Add(material);
+            materialsToAdd.Add(material);
         }
 
-        await _db.SaveChangesAsync();
+        if (errors.Any())
+        {
+            return BadRequest(new { Errors = errors });
+        }
+
+        if (materialsToAdd.Any())
+        {
+            _db.Materials.AddRange(materialsToAdd);
+            await _db.SaveChangesAsync();
+        }
+
         return Ok();
     }
 
     [HttpPost("{id:guid}/add-stock")]
-    [Authorize(Roles = "Master")]
+    [Authorize(Roles = "Master, User")]
     public async Task<IActionResult> AddStock(Guid id, [FromBody] MaterialAdjustQuantityRequest request)
     {
         if (request.Quantity <= 0)
@@ -214,9 +266,78 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         if (material == null) return NotFound();
 
         material.Quantity += request.Quantity;
+        material.Cost = request.Cost;
+        material.CreatedAt = DateTime.UtcNow;
+        material.LastAddedQuantity = request.Quantity;
+        material.LastAddedTotal = request.Total;
         await _db.SaveChangesAsync();
 
-        return Ok(new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity));
+        return Ok(new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity, material.Cost, material.CreatedAt, material.LastAddedQuantity, material.LastAddedTotal));
+    }
+
+    // 🔹 POST /materials/{id}/assign-to-clinic - Transfer material from warehouse to clinic
+    [HttpPost("{id:guid}/assign-to-clinic")]
+    [Authorize(Roles = "Master")]
+    public async Task<IActionResult> AssignToClinic(Guid id, [FromBody] MaterialAssignToClinicRequest request)
+    {
+        if (request.Quantity <= 0)
+            return BadRequest("Quantity must be greater than zero.");
+
+        var material = await _db.Materials.FindAsync(id);
+        if (material == null) return NotFound("Material not found.");
+
+        // Check if warehouse has enough stock
+        if (material.Quantity < request.Quantity)
+            return BadRequest($"Insufficient stock in warehouse. Available: {material.Quantity}, Requested: {request.Quantity}");
+
+        var clinic = await _db.Clinics.FindAsync(request.ClinicId);
+        if (clinic == null) return NotFound("Clinic not found.");
+
+        // Get user ID from claims
+        if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
+            return Unauthorized("Unidentified user.");
+
+        // Reduce warehouse stock
+        material.Quantity -= request.Quantity;
+
+        // Find or create clinic stock
+        var clinicStock = await _db.ClinicStocks
+            .FirstOrDefaultAsync(cs => cs.ClinicId == request.ClinicId && cs.MaterialId == id);
+
+        if (clinicStock == null)
+        {
+            clinicStock = new ClinicStock
+            {
+                ClinicId = request.ClinicId,
+                MaterialId = id,
+                QuantityAvailable = request.Quantity
+            };
+            _db.ClinicStocks.Add(clinicStock);
+        }
+        else
+        {
+            clinicStock.QuantityAvailable += request.Quantity;
+        }
+
+        // Create stock movement record
+        _db.StockMovements.Add(new StockMovement
+        {
+            ClinicId = request.ClinicId,
+            MaterialId = id,
+            Quantity = request.Quantity,
+            MovementType = MovementType.Inbound,
+            Note = $"Transferred from warehouse to {clinic.Name}",
+            PerformedByUserId = userId
+        });
+
+        await _db.SaveChangesAsync();
+
+        return Ok(new
+        {
+            Message = $"Successfully assigned {request.Quantity} unit(s) of '{material.Name}' to {clinic.Name}",
+            WarehouseQuantity = material.Quantity,
+            ClinicQuantity = clinicStock.QuantityAvailable
+        });
     }
 
 

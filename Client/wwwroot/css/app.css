@@ -327,15 +327,12 @@ code {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Configura��o para usar a imagem como fundo de tela */
     background-image: url('/imagens/LogoLogin.jpeg');
-    background-size: cover; /* Estica a imagem para cobrir toda a área horizontal e vertical */
-    background-position: center; /* Centraliza a imagem */
-    background-repeat: no-repeat; /* Evita repeti��o */
-    /* Opcional: Adicionar um gradiente sutil por cima para escurecer o fundo e aumentar a legibilidade da caixa de login */
-    background-blend-mode: multiply; /* Mistura o fundo com uma cor */
-    background-color: rgba(0, 0, 0, 0.4); /* Cor escura que ser� misturada */
-}
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-blend-mode: multiply; 
+    background-color: rgba(0, 0, 0, 0.4); }
 
 /* Card central com sombra suave */
 .login-card {

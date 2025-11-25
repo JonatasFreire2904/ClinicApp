@@ -145,13 +145,28 @@ else
         }
     </div>
 
-    <h5>Estoque da Clínica</h5>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Clinic Inventory</h5>
+        <input class="form-control form-control-sm"
+               type="search"
+               placeholder="Search material or category"
+               style="max-width: 320px;"
+               @bind="clinicInventorySearchTerm"
+               @bind:event="oninput" />
+    </div>
     @if (!clinicDetails.Stocks.Any())
     {
         <p>This clinic has no materials in stock.</p>
     }
     else
     {
+        var filteredStocks = FilterClinicInventory().ToList();
+        @if (!filteredStocks.Any())
+        {
+            <p class="text-muted">No materials found for "@clinicInventorySearchTerm".</p>
+        }
+        else
+        {
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -164,7 +179,7 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var stock in clinicDetails.Stocks)
+                @foreach (var stock in filteredStocks)
                 {
                     var isLowStock = stock.QuantityAvailable <= 1;
                     <tr class="@(isLowStock ? "table-danger" : string.Empty)">
@@ -219,6 +234,7 @@ else
                 }
             </tbody>
         </table>
+        }
     }
 }
 
@@ -230,6 +246,7 @@ else
     string? errorMessage;
     string? successMessage;
     string materialSearchTerm = string.Empty;
+    string clinicInventorySearchTerm = string.Empty;
     bool isInsertSectionCollapsed;
 
     protected override async Task OnParametersSetAsync()
@@ -273,6 +290,24 @@ else
         return materialsCatalog.Where(m =>
             (!string.IsNullOrWhiteSpace(m.Name) && m.Name.Contains(normalized, StringComparison.OrdinalIgnoreCase)) ||
             (!string.IsNullOrWhiteSpace(m.Category) && m.Category.Contains(normalized, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    IEnumerable<ClinicStockDto> FilterClinicInventory()
+    {
+        if (clinicDetails == null || clinicDetails.Stocks == null || !clinicDetails.Stocks.Any())
+        {
+            return Enumerable.Empty<ClinicStockDto>();
+        }
+
+        if (string.IsNullOrWhiteSpace(clinicInventorySearchTerm))
+        {
+            return clinicDetails.Stocks;
+        }
+
+        var normalized = clinicInventorySearchTerm.Trim();
+        return clinicDetails.Stocks.Where(s =>
+            (!string.IsNullOrWhiteSpace(s.MaterialName) && s.MaterialName.Contains(normalized, StringComparison.OrdinalIgnoreCase)) ||
+            (!string.IsNullOrWhiteSpace(s.Category) && s.Category.Contains(normalized, StringComparison.OrdinalIgnoreCase)));
     }
 
     async Task LoadClinicDetails()

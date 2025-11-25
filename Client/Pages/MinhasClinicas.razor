@@ -6,14 +6,17 @@
     @inject ClinicService ClinicService
     @inject NavigationManager Nav
 
-    <div class="page-header mb-4">
+    <div class="page-header-modern">
         <h3>🏥 My Clinics</h3>
-        <p class="text-muted">Gerencie o estoque das clínicas atribuídas</p>
+        <p>Gerencie o estoque das clínicas atribuídas</p>
     </div>
 
     @if (!string.IsNullOrEmpty(errorMessage))
     {
-        <div class="alert alert-danger">@errorMessage</div>
+        <div class="alert-modern alert-danger-modern">
+            <span class="alert-icon">⚠️</span>
+            @errorMessage
+        </div>
     }
 
     @if (clinics == null)
@@ -36,8 +39,8 @@
                                 <span style="font-size: 3rem;">🏥</span>
                             </div>
                             <h5 class="card-title mb-3">@clinic.Name</h5>
-                            <button class="btn btn-primary w-100" @onclick="() => ViewClinicStock(clinic)">
-                                Check Inventory
+                            <button class="btn-modern btn-primary-modern w-100" @onclick="() => ViewClinicStock(clinic)">
+                                <span>📊</span> Check Inventory
                             </button>
                         </div>
                     </div>

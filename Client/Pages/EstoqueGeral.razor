@@ -1,17 +1,31 @@
 @page "/estoque-geral"
 @using Microsoft.AspNetCore.Authorization
 @using Shared.DTOs
-@attribute [Authorize(Roles = "Master")]
+@using System.Net.Http
+@attribute [Authorize(Roles = "Master, User")]
 @inject MaterialService MaterialService
+@inject HttpClient Http
+@inject IJSRuntime JS
 
-<div class="page-header mb-4">
+<div class="page-header-modern">
     <h3>📦 General Inventory</h3>
-    <p class="text-muted">Consolidated total of individual inventories from each clinic</p>
+    <p>Consolidated total of individual inventories from each clinic</p>
 </div>
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger">@errorMessage</div>
+    <div class="alert-modern alert-danger-modern">
+        <span class="alert-icon">⚠️</span>
+        @errorMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert-modern alert-success-modern">
+        <span class="alert-icon">✅</span>
+        @successMessage
+    </div>
 }
 
 @if (materials == null)
@@ -30,26 +44,30 @@ else
             Each clinic operates independently, managing only its own stock.
         </span>
         <div class="d-flex flex-column flex-sm-row gap-2 inventory-actions">
-            <input class="form-control form-control-sm"
+            <input class="input-modern"
                    type="search"
-                   placeholder="Search material or category"
+                   placeholder="🔍 Search material or category"
                    @bind="searchTerm"
                    @bind:event="oninput" />
-            <button class="btn btn-sm btn-outline-primary" @onclick="LoadSummary">
-                Refresh
+            <button class="btn-modern btn-primary-modern btn-sm-modern" @onclick="LoadSummary">
+                <span>🔄</span> Refresh
             </button>
         </div>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table-modern">
             <thead>
                 <tr>
                     <th>Material</th>
                     <th>Category</th>
                     <th class="text-center">Total in Warehouse</th>
+                    <th class="text-center">Cost (R$)</th>
+                    <th class="text-center">Total Value (R$)</th>
+                    <th class="text-center">Added On (Qt)</th>
                     <th class="text-center">Total in Clinics</th>
                     <th>Distribution by Clinic</th>
+                    <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +77,7 @@ else
                 @if (!filteredMaterials.Any())
                 {
                     <tr>
-                        <td colspan="5" class="text-center text-muted py-4">
+                        <td colspan="9" class="text-center text-muted py-4">
                             No materials found for "@searchTerm".
                         </td>
                     </tr>
@@ -71,17 +89,20 @@ else
                         var isLowStock = material.TotalQuantity < 1;
                         <tr class="@(isLowStock ? "low-stock" : string.Empty)">
                             <td class="align-middle">@material.Name</td>
-                            <td class="align-middle">@material.Category</td>
+                            <td class="align-middle"><span class="badge-modern badge-primary">@material.Category</span></td>
                             <td class="text-center align-middle">
                                 @if (material.WarehouseQuantity > 0)
                                 {
-                                    <strong>@material.WarehouseQuantity</strong>
+                                    <strong class="text-primary-modern">@material.WarehouseQuantity</strong>
                                 }
                                 else
                                 {
                                     <span class="text-muted">0</span>
                                 }
                             </td>
+                            <td class="text-center align-middle">@material.Cost.ToString("F2")</td>
+                            <td class="text-center align-middle">@material.Cost.ToString("F2")</td>
+                            <td class="text-center align-middle">@material.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy") (@material.LastAddedQuantity)</td>
                             <td class="text-center align-middle">
                                 @if (!isLowStock)
                                 {
@@ -98,7 +119,7 @@ else
                                     <div class="clinic-badges">
                                         @foreach (var clinic in material.Clinics)
                                         {
-                                            <span class="clinic-badge" title="@($"{clinic.ClinicName}: {clinic.Quantity} unidade(s)")">
+                                            <span class="badge-modern badge-success" title="@($"{clinic.ClinicName}: {clinic.Quantity} unidade(s)")">
                                                 @clinic.ClinicName: @clinic.Quantity
                                             </span>
                                         }
@@ -109,6 +130,23 @@ else
                                     <span class="text-muted small">No clinics have available stock.</span>
                                 }
                             </td>
+                            <td class="text-end align-middle">
+                                <div class="d-flex gap-1 justify-content-end">
+                                    <button class="btn-modern btn-primary-modern btn-sm-modern"
+                                            title="Adicionar estoque ao material"
+                                            @onclick="() => AddStockToMaterial(material)">
+                                        ➕ Add Stock
+                                    </button>
+                                    @if (material.WarehouseQuantity > 0)
+                                    {
+                                        <button class="btn-modern btn-success-modern btn-sm-modern"
+                                                title="Atribuir material a uma clínica"
+                                                @onclick="() => OpenAssignToClinicModal(material)">
+                                            🏥 Assign to Clinic
+                                        </button>
+                                    }
+                                </div>
+                            </td>
                         </tr>
                     }
                 }
@@ -117,16 +155,181 @@ else
     </div>
 }
 
+<!-- Modal for Adding Stock -->
+@if (showAddStockModal && selectedMaterial != null)
+{
+    <div class="modal-overlay" @onclick="CloseAddStockModal">
+        <div class="modern-modal" @onclick:stopPropagation="true">
+            <div class="modal-header-modern">
+                <div class="modal-icon">📦</div>
+                <h4 class="modal-title-modern">Add Stock to Warehouse</h4>
+                <button type="button" class="btn-close-modern" @onclick="CloseAddStockModal">×</button>
+            </div>
+            <div class="modal-body-modern">
+                <div class="material-info-card">
+                    <div class="info-row">
+                        <span class="info-label">Material:</span>
+                        <span class="info-value">@selectedMaterial.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Category:</span>
+                        <span class="info-badge">@selectedMaterial.Category</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Current Stock:</span>
+                        <span class="info-value-highlight">@selectedMaterial.WarehouseQuantity units</span>
+                    </div>
+                </div>
+
+                <div class="form-group-modern">
+                    <label class="form-label-modern">
+                        <span class="label-icon">📊</span>
+                        Quantity to Add <span class="required">*</span>
+                    </label>
+                    <input type="number" class="form-input-modern" @bind="addStockQuantity" min="1" placeholder="Enter quantity" />
+                </div>
+
+                <div class="form-group-modern">
+                    <label class="form-label-modern">
+                        <span class="label-icon">💰</span>
+                        Unit Cost (R$) <span class="required">*</span>
+                    </label>
+                    <input type="number" step="0.01" class="form-input-modern" @bind="addStockCost" min="0" placeholder="0.00" />
+                </div>
+
+                <div class="form-group-modern">
+                    <label class="form-label-modern">
+                        <span class="label-icon">💵</span>
+                        Total Purchase Value (R$) <span class="required">*</span>
+                    </label>
+                    <input type="number" step="0.01" class="form-input-modern" @bind="addStockTotal" min="0" placeholder="0.00" />
+                </div>
+
+                @if (!string.IsNullOrEmpty(addStockErrorMessage))
+                {
+                    <div class="alert-modern alert-danger-modern">
+                        <span class="alert-icon">⚠️</span>
+                        @addStockErrorMessage
+                    </div>
+                }
+            </div>
+            <div class="modal-footer-modern">
+                <button type="button" class="btn-modern btn-cancel" @onclick="CloseAddStockModal">
+                    Cancel
+                </button>
+                <button type="button" class="btn-modern btn-primary" @onclick="ConfirmAddStock">
+                    <span class="btn-icon">✓</span>
+                    Add to Stock
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Modal for Assigning Material to Clinic -->
+@if (showAssignModal && selectedMaterial != null)
+{
+    <div class="modal-overlay" @onclick="CloseAssignModal">
+        <div class="modern-modal" @onclick:stopPropagation="true">
+            <div class="modal-header-modern">
+                <div class="modal-icon">🏥</div>
+                <h4 class="modal-title-modern">Assign Material to Clinic</h4>
+                <button type="button" class="btn-close-modern" @onclick="CloseAssignModal">×</button>
+            </div>
+            <div class="modal-body-modern">
+                <div class="material-info-card">
+                    <div class="info-row">
+                        <span class="info-label">Material:</span>
+                        <span class="info-value">@selectedMaterial.Name</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Category:</span>
+                        <span class="info-badge">@selectedMaterial.Category</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Available in Warehouse:</span>
+                        <span class="info-value-highlight">@selectedMaterial.WarehouseQuantity units</span>
+                    </div>
+                </div>
+
+                <div class="form-group-modern">
+                    <label class="form-label-modern">
+                        <span class="label-icon">🏥</span>
+                        Select Clinic <span class="required">*</span>
+                    </label>
+                    <select class="form-input-modern" @bind="selectedClinicId">
+                        <option value="">-- Select a clinic --</option>
+                        @if (clinics != null)
+                        {
+                            @foreach (var clinic in clinics)
+                            {
+                                <option value="@clinic.Id">@clinic.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group-modern">
+                    <label class="form-label-modern">
+                        <span class="label-icon">📊</span>
+                        Quantity to Assign <span class="required">*</span>
+                    </label>
+                    <input type="number" class="form-input-modern" @bind="assignQuantity" min="1" max="@selectedMaterial.WarehouseQuantity" placeholder="Enter quantity" />
+                    <small class="form-hint">Maximum: @selectedMaterial.WarehouseQuantity units</small>
+                </div>
+
+                @if (!string.IsNullOrEmpty(assignErrorMessage))
+                {
+                    <div class="alert-modern alert-danger-modern">
+                        <span class="alert-icon">⚠️</span>
+                        @assignErrorMessage
+                    </div>
+                }
+            </div>
+            <div class="modal-footer-modern">
+                <button type="button" class="btn-modern btn-cancel" @onclick="CloseAssignModal">
+                    Cancel
+                </button>
+                <button type="button" class="btn-modern btn-success" @onclick="ConfirmAssignToClinic">
+                    <span class="btn-icon">✓</span>
+                    Assign to Clinic
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
 @code {
     List<MaterialGeneralStockDto>? materials;
+    List<ClinicDto>? clinics;
     string? errorMessage;
+    string? successMessage;
     string searchTerm = string.Empty;
 
-    protected override async Task OnInitializedAsync() => await LoadSummary();
+    // Add Stock Modal state
+    bool showAddStockModal = false;
+    int addStockQuantity = 1;
+    decimal addStockCost = 0;
+    decimal addStockTotal = 0;
+    string? addStockErrorMessage;
+
+    // Assign to Clinic Modal state
+    bool showAssignModal = false;
+    MaterialGeneralStockDto? selectedMaterial;
+    string selectedClinicId = string.Empty;
+    int assignQuantity = 1;
+    string? assignErrorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSummary();
+        await LoadClinics();
+    }
 
     async Task LoadSummary()
     {
         errorMessage = null;
+        successMessage = null;
 
         try
         {
@@ -136,6 +339,19 @@ else
         {
             errorMessage = $"Error loading general inventory: {ex.Message}";
             materials = new();
+        }
+    }
+
+    async Task LoadClinics()
+    {
+        try
+        {
+            clinics = await Http.GetFromJsonAsync<List<ClinicDto>>("clinics");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading clinics: {ex.Message}");
+            clinics = new();
         }
     }
 
@@ -156,6 +372,146 @@ else
         return materials.Where(material =>
             (!string.IsNullOrWhiteSpace(material.Name) && material.Name.Contains(normalized, StringComparison.OrdinalIgnoreCase)) ||
             (!string.IsNullOrWhiteSpace(material.Category) && material.Category.Contains(normalized, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    // Add Stock Modal Methods
+    void AddStockToMaterial(MaterialGeneralStockDto material)
+    {
+        selectedMaterial = material;
+        addStockQuantity = 1;
+        addStockCost = material.Cost;
+        addStockTotal = 0;
+        addStockErrorMessage = null;
+        showAddStockModal = true;
+    }
+
+    void CloseAddStockModal()
+    {
+        showAddStockModal = false;
+        selectedMaterial = null;
+        addStockQuantity = 1;
+        addStockCost = 0;
+        addStockTotal = 0;
+        addStockErrorMessage = null;
+    }
+
+    async Task ConfirmAddStock()
+    {
+        addStockErrorMessage = null;
+
+        if (selectedMaterial == null)
+        {
+            addStockErrorMessage = "No material selected.";
+            return;
+        }
+
+        if (addStockQuantity <= 0)
+        {
+            addStockErrorMessage = "Quantity must be greater than zero.";
+            return;
+        }
+
+        if (addStockCost < 0)
+        {
+            addStockErrorMessage = "Unit cost cannot be negative.";
+            return;
+        }
+
+        if (addStockTotal < 0)
+        {
+            addStockErrorMessage = "Total purchase value cannot be negative.";
+            return;
+        }
+
+        try
+        {
+            var response = await MaterialService.AddStock(selectedMaterial.Id, addStockQuantity, addStockCost, addStockTotal);
+            if (response.IsSuccessStatusCode)
+            {
+                successMessage = $"✅ Stock added successfully! {addStockQuantity} unit(s) of '{selectedMaterial.Name}' added to warehouse.";
+                CloseAddStockModal();
+                await LoadSummary();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                addStockErrorMessage = $"Error: {errorContent}";
+            }
+        }
+        catch (Exception ex)
+        {
+            addStockErrorMessage = $"Error adding stock: {ex.Message}";
+        }
+    }
+
+    // Assign to Clinic Modal Methods
+    void OpenAssignToClinicModal(MaterialGeneralStockDto material)
+    {
+        selectedMaterial = material;
+        selectedClinicId = string.Empty;
+        assignQuantity = 1;
+        assignErrorMessage = null;
+        showAssignModal = true;
+    }
+
+    void CloseAssignModal()
+    {
+        showAssignModal = false;
+        selectedMaterial = null;
+        selectedClinicId = string.Empty;
+        assignQuantity = 1;
+        assignErrorMessage = null;
+    }
+
+    async Task ConfirmAssignToClinic()
+    {
+        assignErrorMessage = null;
+
+        if (selectedMaterial == null)
+        {
+            assignErrorMessage = "No material selected.";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(selectedClinicId))
+        {
+            assignErrorMessage = "Please select a clinic.";
+            return;
+        }
+
+        if (assignQuantity <= 0)
+        {
+            assignErrorMessage = "Quantity must be greater than zero.";
+            return;
+        }
+
+        if (assignQuantity > selectedMaterial.WarehouseQuantity)
+        {
+            assignErrorMessage = $"Quantity cannot exceed available warehouse stock ({selectedMaterial.WarehouseQuantity}).";
+            return;
+        }
+
+        try
+        {
+            var response = await MaterialService.AssignToClinic(selectedMaterial.Id, Guid.Parse(selectedClinicId), assignQuantity);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                var clinic = clinics?.FirstOrDefault(c => c.Id.ToString() == selectedClinicId);
+                successMessage = $"✅ Successfully assigned {assignQuantity} unit(s) of '{selectedMaterial.Name}' to {clinic?.Name ?? "clinic"}.";
+                CloseAssignModal();
+                await LoadSummary();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                assignErrorMessage = $"Error: {errorContent}";
+            }
+        }
+        catch (Exception ex)
+        {
+            assignErrorMessage = $"Error assigning material: {ex.Message}";
+        }
     }
 }
 
@@ -195,6 +551,282 @@ else
     .low-stock-text {
         color: #9c1a23;
         font-weight: 700;
+    }
+
+    /* Modern Modal Styles */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeIn 0.2s ease-out;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .modern-modal {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+        max-height: 90vh;
+        overflow: hidden;
+        animation: slideUp 0.3s ease-out;
+    }
+
+    @@keyframes slideUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .modal-header-modern {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+    }
+
+    .modal-icon {
+        font-size: 2rem;
+        line-height: 1;
+    }
+
+    .modal-title-modern {
+        flex: 1;
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .btn-close-modern {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        line-height: 1;
+    }
+
+    .btn-close-modern:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+
+    .modal-body-modern {
+        padding: 1.5rem;
+        max-height: calc(90vh - 200px);
+        overflow-y: auto;
+    }
+
+    .material-info-card {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+    }
+
+    .info-row:not(:last-child) {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .info-label {
+        font-weight: 500;
+        color: #4a5568;
+        font-size: 0.9rem;
+    }
+
+    .info-value {
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    .info-badge {
+        background: white;
+        color: #667eea;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .info-value-highlight {
+        color: #667eea;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .form-group-modern {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-label-modern {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    .label-icon {
+        font-size: 1.1rem;
+    }
+
+    .required {
+        color: #e53e3e;
+    }
+
+    .form-input-modern {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.2s;
+        background: white;
+    }
+
+    .form-input-modern:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .form-input-modern::placeholder {
+        color: #a0aec0;
+    }
+
+    .form-hint {
+        display: block;
+        margin-top: 0.25rem;
+        color: #718096;
+        font-size: 0.85rem;
+    }
+
+    .alert-modern {
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        animation: slideDown 0.3s ease-out;
+    }
+
+    @@keyframes slideDown {
+        from {
+            transform: translateY(-10px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .alert-danger-modern {
+        background: #fff5f5;
+        color: #c53030;
+        border: 1px solid #feb2b2;
+    }
+
+    .alert-icon {
+        font-size: 1.2rem;
+    }
+
+    .modal-footer-modern {
+        padding: 1rem 1.5rem;
+        background: #f7fafc;
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-modern {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .btn-cancel {
+        background: #e2e8f0;
+        color: #4a5568;
+    }
+
+    .btn-cancel:hover {
+        background: #cbd5e0;
+        transform: translateY(-1px);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        color: white;
+    }
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+    }
+
+    .btn-icon {
+        font-size: 1.1rem;
     }
 </style>
 

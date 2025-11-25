@@ -7,19 +7,30 @@
 @inject NavigationManager Nav
 @inject IJSRuntime JS
 
-<h3>Gerenciar Funcionários</h3>
+<div class="page-header-modern">
+    <h3>👥 HR - Employees</h3>
+    <p>Manage system users and access permissions</p>
+</div>
 
 @if (!string.IsNullOrEmpty(errorMessage))
 {
-    <div class="alert alert-danger">@errorMessage</div>
+    <div class="alert-modern alert-danger-modern">
+        <span class="alert-icon">⚠️</span>
+        @errorMessage
+    </div>
 }
 
 @if (!string.IsNullOrEmpty(successMessage))
 {
-    <div class="alert alert-success">@successMessage</div>
+    <div class="alert-modern alert-success-modern">
+        <span class="alert-icon">✅</span>
+        @successMessage
+    </div>
 }
 
-<button class="btn btn-primary mb-3" @onclick="ShowAddForm">+ Register Employee</button>
+<button class="btn-modern btn-primary-modern mb-3" @onclick="ShowAddForm">
+    <span>➕</span> Register Employee
+</button>
 
 @if (users == null)
 {
@@ -31,7 +42,7 @@ else if (!users.Any())
 }
 else
 {
-    <table class="table table-striped">
+    <table class="table-modern">
         <thead>
             <tr>
                 <th>Username</th>
@@ -47,11 +58,11 @@ else
                 <tr>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
-                    <td>@user.Role</td>
+                    <td><span class="badge-modern badge-primary">@user.Role</span></td>
                     <td>@user.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                     <td class="text-end">
-                        <button class="btn btn-sm btn-outline-primary me-2" @onclick="() => EditUser(user)">Edit</button>
-                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteUser(user)">Delete</button>
+                        <button class="btn-modern btn-primary-modern btn-sm-modern me-2" @onclick="() => EditUser(user)">Edit</button>
+                        <button class="btn-modern btn-danger-modern btn-sm-modern" @onclick="() => DeleteUser(user)">Delete</button>
                     </td>
                 </tr>
             }

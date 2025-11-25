@@ -1,29 +1,99 @@
-﻿using Infrastructure.Dat;
+﻿using Core.Entities;
+using Infrastructure.Dat;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared.DTOs;
 
 [ApiController]
 [Route("dashboard")]
+[Authorize(Roles = "Master")]
 public class DashboardController(AppDbContext db) : ControllerBase
 {
     private readonly AppDbContext _db = db;
 
-    [HttpGet("summary")]
-    public async Task<IActionResult> Summary()
+    // 🔹 GET /dashboard/financial-summary?startDate=2024-01-01&endDate=2024-12-31&clinicId=guid
+    [HttpGet("financial-summary")]
+    public async Task<IActionResult> FinancialSummary([FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate, [FromQuery] Guid? clinicId)
     {
-        // por clinica: qtd materiais distintos e soma das quantidades
-        var q = await _db.Clinics
-            .Select(c => new ClinicSummaryDto
-            {
-                ClinicId = c.Id,
-                ClinicName = c.Name,
-                DistinctMaterials = c.ClinicStocks.Count(),
-                TotalQuantity = c.ClinicStocks.Sum(s => s.QuantityAvailable)
-            }).ToListAsync();
+        // Default to current month if not specified
+        var start = startDate ?? new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+        var end = endDate ?? DateTime.UtcNow;
 
-        var dto = new DashboardSummaryDto { Clinics = q };
-        return Ok(dto);
+        // Get all Inbound stock movements in the date range
+        var movementsQuery = _db.StockMovements
+            .Include(m => m.Material)
+            .Where(m => m.CreatedAt >= start && m.CreatedAt <= end && m.MovementType == Core.Entities.Enums.MovementType.Inbound);
+
+        // Filter by clinic if specified
+        if (clinicId.HasValue && clinicId.Value != Guid.Empty)
+        {
+            movementsQuery = movementsQuery.Where(m => m.ClinicId == clinicId.Value);
+        }
+
+        var movements = await movementsQuery.ToListAsync();
+
+        // Calculate total spent: sum of (quantity × material cost) for all Inbound movements
+        var totalSpent = movements.Sum(m => m.Quantity * m.Material.Cost);
+        var totalMaterialsAdded = movements.Sum(m => m.Quantity);
+
+        // Get all clinics from database
+        var clinics = await _db.Clinics.ToListAsync();
+
+        var clinicExpenses = new List<ClinicExpenseDto>();
+
+        // Group movements by material to show expense breakdown
+        var materialExpenses = movements
+            .GroupBy(m => new { m.Material.Name, m.Material.Category })
+            .Select(g => new MaterialExpenseDto(
+                g.Key.Name,
+                g.Key.Category.ToString(),
+                g.Sum(m => m.Quantity),
+                g.Sum(m => m.Quantity * m.Material.Cost),
+                g.Max(m => m.CreatedAt)))
+            .OrderByDescending(m => m.TotalCost)
+            .ToList();
+
+        // Add Warehouse/General option
+        clinicExpenses.Add(new ClinicExpenseDto(
+            Guid.Empty,
+            "All Locations",
+            totalSpent,
+            totalMaterialsAdded,
+            materialExpenses));
+
+        // Add each clinic with their specific movements
+        foreach (var clinic in clinics)
+        {
+            var clinicMovements = movements.Where(m => m.ClinicId == clinic.Id).ToList();
+            
+            var clinicMaterialExpenses = clinicMovements
+                .GroupBy(m => new { m.Material.Name, m.Material.Category })
+                .Select(g => new MaterialExpenseDto(
+                    g.Key.Name,
+                    g.Key.Category.ToString(),
+                    g.Sum(m => m.Quantity),
+                    g.Sum(m => m.Quantity * m.Material.Cost),
+                    g.Max(m => m.CreatedAt)))
+                .OrderByDescending(m => m.TotalCost)
+                .ToList();
+
+            var clinicTotalCost = clinicMaterialExpenses.Sum(m => m.TotalCost);
+
+            clinicExpenses.Add(new ClinicExpenseDto(
+                clinic.Id,
+                clinic.Name,
+                clinicTotalCost,
+                clinicMovements.Sum(m => m.Quantity),
+                clinicMaterialExpenses));
+        }
+
+        return Ok(new DashboardSummaryDto(
+            start,
+            end,
+            totalSpent,
+            totalMaterialsAdded,
+            clinicExpenses));
     }
 
     [HttpGet("clinic/{id:guid}")]

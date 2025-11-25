@@ -124,7 +124,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
 
         return Ok(new
         {
-            Material = new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity),
+            Material = new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity, material.Cost, material.CreatedAt, material.LastAddedQuantity, material.LastAddedTotal),
             ClinicStock = new ClinicStockDto(clinicStock.MaterialId, material.Name, clinicStock.QuantityAvailable, material.Category.ToString(), clinicStock.IsOpen, clinicStock.OpenedAt)
         });
     }

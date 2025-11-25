@@ -14,32 +14,35 @@
         
         @if (!string.IsNullOrEmpty(errorMessage))
         {
-            <div class="alert alert-danger">@errorMessage</div>
+            <div class="alert-modern alert-danger-modern">
+                <span class="alert-icon">⚠️</span>
+                @errorMessage
+            </div>
         }
 
         <EditForm Model="@loginRequest" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
             
             <div class="mb-3">
-                <label>User</label>
-                <InputText @bind-Value="loginRequest.UserName" class="form-control" />
+                <label class="label-modern">User</label>
+                <InputText @bind-Value="loginRequest.UserName" class="input-modern" />
                 <ValidationMessage For="@(() => loginRequest.UserName)" />
             </div>
 
             <div class="mb-3">
-                <label>Password</label>
-                <InputText @bind-Value="loginRequest.Password" type="password" class="form-control" />
+                <label class="label-modern">Password</label>
+                <InputText @bind-Value="loginRequest.Password" type="password" class="input-modern" />
                 <ValidationMessage For="@(() => loginRequest.Password)" />
             </div>
 
-            <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
+            <button type="submit" class="btn-modern btn-primary-modern w-100" disabled="@isLoading">
                 @if (isLoading)
                 {
-                    <span>Loading...</span>
+                    <span>🔄 Loading...</span>
                 }
                 else
                 {
-                    <span>Login</span>
+                    <span>🔐 Login</span>
                 }
             </button>
         </EditForm>

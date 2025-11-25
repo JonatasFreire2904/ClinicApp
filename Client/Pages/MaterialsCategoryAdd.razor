@@ -1,26 +1,59 @@
 ﻿@page "/materiais/{Category}/add"
 @using Microsoft.AspNetCore.Authorization
+@using System.Text.Json
 @attribute [Authorize(Roles = "Master, User")]
 @inject HttpClient Http
 @inject NavigationManager Nav
 
 <h3>Adicionar Materiais - @Category</h3>
 
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Erro ao adicionar materiais:</strong>
+        <ul class="mb-0 mt-2">
+            @foreach (var error in errorMessages)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert alert-success">@successMessage</div>
+}
+
 @foreach (var item in Materials)
 {
     <div class="mb-3 border p-3 rounded bg-light">
-        <label>Nome do Material</label>
+        <label>
+            - Material Name
+        </label>
         <input class="form-control mb-2" @bind="item.Name" placeholder="Ex: Luva" />
 
-        <label>Quantidade</label>
-        <input type="number" class="form-control" @bind="item.Quantity" min="1" />
+        <label>
+            - Quantity
+        </label>
+        <input type="number" class="form-control mb-2" @bind="item.Quantity" min="1" />
+
+        <label>
+            - Cost (R$)
+        </label>
+        <input type="number" step="0.01" class="form-control mb-2" @bind="item.Cost" min="0" />
+
+        <label>
+            - Total (R$)
+        </label>
+        <input type="number" step="0.01" class="form-control" @bind="item.Total" min="0" />
     </div>
 }
 
 <button class="btn btn-outline-primary mb-3" @onclick="AddNewMaterial">+ Add another</button>
 
 <div>
-    <button class="btn btn-success" @onclick="SaveAll">Salvar Tudo</button>
+    <button class="btn btn-success" @onclick="SaveAll">Save All</button>
     <button class="btn btn-secondary ms-2" @onclick="@(() => Nav.NavigateTo($"/materiais/{Category}"))">Cancel</button>
 </div>
 
@@ -31,9 +64,14 @@
     {
         public string Name { get; set; } = string.Empty;
         public int Quantity { get; set; } = 1;
+        public decimal Cost { get; set; } = 0;
+        public decimal Total { get; set; } = 0;
     }
 
     List<MaterialInput> Materials = new() { new MaterialInput() };
+    private string? errorMessage;
+    private string? successMessage;
+    private List<string> errorMessages = new();
 
     void AddNewMaterial()
     {
@@ -42,12 +80,30 @@
 
     async Task SaveAll()
     {
+        errorMessage = null;
+        successMessage = null;
+        errorMessages.Clear();
+
+        // Validar antes de enviar
+        var invalidMaterials = Materials
+            .Where(m => string.IsNullOrWhiteSpace(m.Name) || m.Quantity <= 0)
+            .ToList();
+
+        if (invalidMaterials.Any())
+        {
+            errorMessages.Add("Por favor, preencha todos os campos corretamente. Nome do material é obrigatório e quantidade deve ser maior que zero.");
+            errorMessage = "Erro de validação";
+            return;
+        }
+
         var payload = new
         {
             Materials = Materials.Select(x => new
             {
                 x.Name,
                 x.Quantity,
+                x.Cost,
+                x.Total,
                 Category
             })
         };
@@ -56,7 +112,38 @@
 
         if (result.IsSuccessStatusCode)
         {
+            successMessage = "Materiais adicionados com sucesso!";
+            await Task.Delay(1000);
             Nav.NavigateTo($"/materiais/{Category}");
+        }
+        else
+        {
+            var errorContent = await result.Content.ReadAsStringAsync();
+            try
+            {
+                var errorResponse = JsonSerializer.Deserialize<JsonElement>(errorContent);
+                if (errorResponse.TryGetProperty("errors", out var errors) && errors.ValueKind == JsonValueKind.Array)
+                {
+                    errorMessages = errors.EnumerateArray()
+                        .Select(e => e.GetString() ?? "Erro desconhecido")
+                        .ToList();
+                }
+                else if (errorResponse.TryGetProperty("Errors", out var errors2) && errors2.ValueKind == JsonValueKind.Array)
+                {
+                    errorMessages = errors2.EnumerateArray()
+                        .Select(e => e.GetString() ?? "Erro desconhecido")
+                        .ToList();
+                }
+                else
+                {
+                    errorMessages.Add(errorContent);
+                }
+            }
+            catch
+            {
+                errorMessages.Add(errorContent);
+            }
+            errorMessage = "Erro ao adicionar materiais";
         }
     }
 }

@@ -14,6 +14,8 @@ public class MaterialService(HttpClient http)
         return await response.Content.ReadFromJsonAsync<MaterialDto>();
     }
     public Task Delete(Guid id) => _http.DeleteAsync($"materials/{id}");
-    public Task AddStock(Guid id, int quantity) =>
-        _http.PostAsJsonAsync($"materials/{id}/add-stock", new { quantity });
+    public Task<HttpResponseMessage> AddStock(Guid id, int quantity, decimal cost, decimal total) =>
+        _http.PostAsJsonAsync($"materials/{id}/add-stock", new { quantity, cost, total });
+    public Task<HttpResponseMessage> AssignToClinic(Guid materialId, Guid clinicId, int quantity) =>
+        _http.PostAsJsonAsync($"materials/{materialId}/assign-to-clinic", new { clinicId, quantity });
 }

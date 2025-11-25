@@ -6,6 +6,10 @@ public record MaterialGeneralStockDto(
     string Category,
     int WarehouseQuantity,
     int TotalQuantity,
+    decimal Cost,
+    DateTime CreatedAt,
+    int LastAddedQuantity,
+    decimal LastAddedTotal,
     IReadOnlyList<MaterialClinicStockDto> Clinics);
 
 public record MaterialClinicStockDto(
