@@ -64,7 +64,7 @@ else if (dashboardData != null && filteredData != null)
             <div class="stats-card">
                 <div class="stats-card-icon">💰</div>
                 <div class="stats-card-label">Total Spent</div>
-                <div class="stats-card-value">R$ @filteredData.TotalSpent.ToString("N2")</div>
+                <div class="stats-card-value">$ @filteredData.TotalSpent.ToString("N2")</div>
                 <small class="text-muted-modern">
                     @dashboardData.StartDate.ToString("dd/MM/yyyy") - @dashboardData.EndDate.ToString("dd/MM/yyyy")
                 </small>
@@ -155,7 +155,7 @@ else if (dashboardData != null && filteredData != null)
                 <span class="modern-card-icon">📋</span>
                 Detailed Material Expenses
             </h5>
-            <span class="badge-modern badge-success">R$ @filteredData.TotalSpent.ToString("N2")</span>
+            <span class="badge-modern badge-success">$ @filteredData.TotalSpent.ToString("N2")</span>
         </div>
 
         @if (filteredData.Materials.Any())
@@ -178,7 +178,7 @@ else if (dashboardData != null && filteredData != null)
                                 <td><strong>@material.MaterialName</strong></td>
                                 <td><span class="badge-modern badge-primary">@material.Category</span></td>
                                 <td class="text-center">@material.QuantityAdded</td>
-                                <td class="text-end"><strong class="text-primary-modern">R$ @material.TotalCost.ToString("N2")</strong></td>
+                                <td class="text-end"><strong class="text-primary-modern">$ @material.TotalCost.ToString("N2")</strong></td>
                                 <td class="text-center">@material.LastAdded.ToLocalTime().ToString("dd/MM/yyyy")</td>
                             </tr>
                         }
@@ -186,7 +186,7 @@ else if (dashboardData != null && filteredData != null)
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                            <td class="text-end"><strong class="text-success-modern">R$ @filteredData.TotalSpent.ToString("N2")</strong></td>
+                            <td class="text-end"><strong class="text-success-modern">$ @filteredData.TotalSpent.ToString("N2")</strong></td>
                             <td></td>
                         </tr>
                     </tfoot>

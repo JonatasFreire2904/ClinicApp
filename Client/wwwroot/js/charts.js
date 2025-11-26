@@ -34,7 +34,7 @@ window.renderPieChart = (canvasId, labels, data, colors) => {
                             if (label) {
                                 label += ': ';
                             }
-                            label += 'R$ ' + context.parsed.toFixed(2);
+                            label += '$ ' + context.parsed.toFixed(2);
                             return label;
                         }
                     }
@@ -75,7 +75,7 @@ window.renderLineChart = (canvasId, labels, datasets) => {
                             if (label) {
                                 label += ': ';
                             }
-                            label += 'R$ ' + context.parsed.y.toFixed(2);
+                            label += '$ ' + context.parsed.y.toFixed(2);
                             return label;
                         }
                     }
@@ -86,7 +86,7 @@ window.renderLineChart = (canvasId, labels, datasets) => {
                     beginAtZero: true,
                     ticks: {
                         callback: function(value) {
-                            return 'R$ ' + value.toFixed(0);
+                            return '$ ' + value.toFixed(0);
                         }
                     }
                 }
