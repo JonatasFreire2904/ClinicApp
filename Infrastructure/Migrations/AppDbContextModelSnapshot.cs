@@ -101,7 +101,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ClinicId")
+                    b.Property<Guid?>("ClinicId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -201,9 +201,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.Clinic", "Clinic")
                         .WithMany()
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClinicId");
 
                     b.HasOne("Core.Entities.Material", "Material")
                         .WithMany()

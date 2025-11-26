@@ -26,6 +26,11 @@ namespace Infrastructure.Dat
                 .HasOne(x => x.Clinic)
                 .WithMany(x => x.UserClinics)
                 .HasForeignKey(x => x.ClinicId);
+
+            // Configure StockMovement: ClinicId is nullable (for warehouse movements)
+            modelBuilder.Entity<StockMovement>()
+                .Property(s => s.ClinicId)
+                .IsRequired(false);
         }
     }
 }

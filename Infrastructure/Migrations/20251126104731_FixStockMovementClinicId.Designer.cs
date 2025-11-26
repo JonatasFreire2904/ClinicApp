@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251111222316_NomeDaSuaMigration")]
-    partial class NomeDaSuaMigration
+    [Migration("20251126104731_FixStockMovementClinicId")]
+    partial class FixStockMovementClinicId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,13 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ClinicId")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsOpen")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("MaterialId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("OpenedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("QuantityAvailable")
@@ -68,9 +74,24 @@ namespace Infrastructure.Migrations
                     b.Property<int>("Category")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("LastAddedQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("LastAddedTotal")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -83,7 +104,7 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("ClinicId")
+                    b.Property<Guid?>("ClinicId")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
@@ -183,9 +204,7 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Core.Entities.Clinic", "Clinic")
                         .WithMany()
-                        .HasForeignKey("ClinicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClinicId");
 
                     b.HasOne("Core.Entities.Material", "Material")
                         .WithMany()

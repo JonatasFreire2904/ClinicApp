@@ -138,7 +138,7 @@ else if (dashboardData != null && filteredData != null)
                 <div class="modern-card-header">
                     <h5 class="modern-card-title">
                         <span class="modern-card-icon">🔬</span>
-                        Top Material Spending Trends
+                        Material Unit Price Evolution
                     </h5>
                 </div>
                 <div class="chart-container" style="height: 350px;">
@@ -309,7 +309,16 @@ else if (dashboardData != null && filteredData != null)
     {
         if (filteredData == null) return new();
 
-        var colors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40" };
+        var colors = new[] { 
+            "#FF6B6B", // Vermelho coral
+            "#4ECDC4", // Azul turquesa
+            "#FFD93D", // Amarelo vibrante
+            "#6BCB77", // Verde menta
+            "#9D84B7", // Roxo suave
+            "#FF9A76", // Laranja pêssego
+            "#A8E6CF", // Verde água
+            "#FF8CB4"  // Rosa suave
+        };
         var categoryData = filteredData.Materials
             .GroupBy(m => m.Category)
             .Select((g, index) => (
@@ -328,7 +337,18 @@ else if (dashboardData != null && filteredData != null)
     {
         if (filteredData == null) return new();
 
-        var colors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#E7E9ED", "#8B5CF6" };
+        var colors = new[] { 
+            "#E63946", // Vermelho intenso
+            "#457B9D", // Azul marinho
+            "#F4A261", // Laranja queimado
+            "#2A9D8F", // Verde esmeralda
+            "#8338EC", // Roxo vibrante
+            "#FF006E", // Rosa pink
+            "#06FFA5", // Verde neon
+            "#FFBE0B", // Amarelo ouro
+            "#FB5607", // Laranja fogo
+            "#3A86FF"  // Azul royal
+        };
         var materialData = filteredData.Materials
             .OrderByDescending(m => m.TotalCost)
             .Take(8)
@@ -395,10 +415,13 @@ else if (dashboardData != null && filteredData != null)
             // Category Trend Chart
             var categoryColors = new Dictionary<string, string>
             {
-                { "ConsumableMaterials", "#FF6384" },
-                { "Disposables", "#36A2EB" },
-                { "Durables", "#FFCE56" },
-                { "Cleaning", "#4BC0C0" }
+                { "ConsumableMaterials", "#FF6B6B" },    // Vermelho coral
+                { "Disposables", "#4ECDC4" },            // Azul turquesa
+                { "Durables", "#FFD93D" },               // Amarelo vibrante
+                { "Cleaning", "#6BCB77" },               // Verde menta
+                { "RestorationMaterials", "#9D84B7" },   // Roxo suave
+                { "Orthodontics", "#FF9A76" },           // Laranja pêssego
+                { "UsageMaterials", "#A8E6CF" }          // Verde água
             };
 
             var categoryDatasets = filteredData.Materials
@@ -417,7 +440,7 @@ else if (dashboardData != null && filteredData != null)
                     borderColor = categoryColors.GetValueOrDefault(categoryGroup.Key, "#999"),
                     backgroundColor = categoryColors.GetValueOrDefault(categoryGroup.Key, "#999") + "20",
                     tension = 0.4,
-                    fill = true
+                    fill = false
                 })
                 .ToList();
 
@@ -429,29 +452,48 @@ else if (dashboardData != null && filteredData != null)
                     categoryDatasets.ToArray());
             }
 
-            // Material Trend Chart (top 5 materials)
-            var topMaterials = filteredData.Materials
+            // Material Unit Price Trend Chart (all materials)
+            var allMaterials = filteredData.Materials
                 .GroupBy(m => m.MaterialName)
-                .OrderByDescending(g => g.Sum(x => x.TotalCost))
-                .Take(5)
+                .OrderBy(g => g.Key)
                 .ToList();
 
-            var materialColors = new[] { "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF" };
+            var materialColors = new[] { 
+                "#E63946", // Vermelho intenso
+                "#457B9D", // Azul marinho
+                "#F4A261", // Laranja queimado
+                "#2A9D8F", // Verde esmeralda
+                "#8338EC", // Roxo vibrante
+                "#FF006E", // Rosa pink
+                "#06FFA5", // Verde neon
+                "#FFBE0B", // Amarelo ouro
+                "#FB5607", // Laranja fogo
+                "#3A86FF", // Azul royal
+                "#FF6B6B", // Vermelho coral
+                "#4ECDC4", // Azul turquesa
+                "#FFD93D", // Amarelo vibrante
+                "#6BCB77", // Verde menta
+                "#9D84B7"  // Roxo suave
+            };
 
-            var materialDatasets = topMaterials
+            var materialDatasets = allMaterials
                 .Select((materialGroup, index) => new
                 {
                     label = materialGroup.Key,
                     data = dates.Select(date =>
                     {
-                        return (double)materialGroup
-                            .Where(m => m.LastAdded.ToString("dd/MM") == date)
-                            .Sum(m => m.TotalCost);
+                        var materialsOnDate = materialGroup.Where(m => m.LastAdded.ToString("dd/MM") == date).ToList();
+                        if (!materialsOnDate.Any()) return 0.0;
+                        
+                        // Calculate average unit price: total cost / total quantity
+                        var totalCost = materialsOnDate.Sum(m => m.TotalCost);
+                        var totalQty = materialsOnDate.Sum(m => m.QuantityAdded);
+                        return totalQty > 0 ? (double)(totalCost / totalQty) : 0.0;
                     }).ToArray(),
-                    borderColor = materialColors[index],
-                    backgroundColor = materialColors[index] + "20",
+                    borderColor = materialColors[index % materialColors.Length],
+                    backgroundColor = materialColors[index % materialColors.Length] + "40",
                     tension = 0.4,
-                    fill = true
+                    fill = false
                 })
                 .ToList();
 
