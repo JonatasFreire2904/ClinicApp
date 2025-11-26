@@ -18,12 +18,14 @@ public class DashboardController(AppDbContext db) : ControllerBase
     {
         // Default to current month if not specified
         var start = startDate ?? new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
-        var end = endDate ?? DateTime.UtcNow;
+        // Include the entire end date (until 23:59:59) to avoid timezone confusion
+        var end = endDate?.Date.AddDays(1).AddTicks(-1) ?? DateTime.UtcNow;
 
-        // Get all Inbound stock movements in the date range
+        // Get all Inbound and Transfer stock movements in the date range
         var movementsQuery = _db.StockMovements
             .Include(m => m.Material)
-            .Where(m => m.CreatedAt >= start && m.CreatedAt <= end && m.MovementType == Core.Entities.Enums.MovementType.Inbound);
+            .Where(m => m.CreatedAt >= start && m.CreatedAt <= end && 
+                  (m.MovementType == Core.Entities.Enums.MovementType.Inbound || m.MovementType == Core.Entities.Enums.MovementType.Transfer));
 
         // Filter by clinic if specified
         if (clinicId.HasValue && clinicId.Value != Guid.Empty)
@@ -33,9 +35,11 @@ public class DashboardController(AppDbContext db) : ControllerBase
 
         var movements = await movementsQuery.ToListAsync();
 
-        // Calculate total spent: sum of (quantity × material cost) for all Inbound movements
-        var totalSpent = movements.Sum(m => m.Quantity * m.Material.Cost);
-        var totalMaterialsAdded = movements.Sum(m => m.Quantity);
+        // Calculate total spent: sum of (quantity × material cost) for all Inbound movements ONLY
+        // Transfers are internal movements, not new spending
+        var inboundMovements = movements.Where(m => m.MovementType == Core.Entities.Enums.MovementType.Inbound).ToList();
+        var totalSpent = inboundMovements.Sum(m => m.Quantity * m.Material.Cost);
+        var totalMaterialsAdded = inboundMovements.Sum(m => m.Quantity);
 
         // Get all clinics from database
         var clinics = await _db.Clinics.ToListAsync();
@@ -43,7 +47,8 @@ public class DashboardController(AppDbContext db) : ControllerBase
         var clinicExpenses = new List<ClinicExpenseDto>();
 
         // Group movements by material to show expense breakdown
-        var materialExpenses = movements
+        // For global breakdown, we show what was purchased (Inbound)
+        var materialExpenses = inboundMovements
             .GroupBy(m => new { m.Material.Name, m.Material.Category })
             .Select(g => new MaterialExpenseDto(
                 g.Key.Name,
@@ -54,10 +59,10 @@ public class DashboardController(AppDbContext db) : ControllerBase
             .OrderByDescending(m => m.TotalCost)
             .ToList();
 
-        // Add Warehouse/General option
+        // Add "All Clinics" aggregated option
         clinicExpenses.Add(new ClinicExpenseDto(
             Guid.Empty,
-            "All Locations",
+            "All Clinics",
             totalSpent,
             totalMaterialsAdded,
             materialExpenses));
@@ -65,6 +70,7 @@ public class DashboardController(AppDbContext db) : ControllerBase
         // Add each clinic with their specific movements
         foreach (var clinic in clinics)
         {
+            // For specific clinic, expense includes Direct Inbound AND Transfers received
             var clinicMovements = movements.Where(m => m.ClinicId == clinic.Id).ToList();
             
             var clinicMaterialExpenses = clinicMovements
@@ -88,7 +94,7 @@ public class DashboardController(AppDbContext db) : ControllerBase
                 clinicMaterialExpenses));
         }
 
-        return Ok(new DashboardSummaryDto(
+        return Ok(new DashboardFinancialSummaryDto(
             start,
             end,
             totalSpent,
@@ -117,7 +123,7 @@ public class DashboardController(AppDbContext db) : ControllerBase
             .Where(m => m.ClinicId == id)
             .OrderByDescending(m => m.CreatedAt)
             .Take(20)
-            .Select(m => new StockMovementDto(m.Id, m.ClinicId, m.MaterialId, m.Material.Name, m.Quantity, m.MovementType.ToString(), m.PerformedByUser.UserName, m.CreatedAt, m.Note))
+            .Select(m => new StockMovementDto(m.Id, m.ClinicId ?? Guid.Empty, m.MaterialId, m.Material.Name, m.Quantity, m.MovementType.ToString(), m.PerformedByUser.UserName, m.CreatedAt, m.Note))
             .ToListAsync();
 
         return Ok(new

@@ -6,8 +6,8 @@ namespace Core.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Guid ClinicId { get; set; }
-        public Clinic Clinic { get; set; }
+        public Guid? ClinicId { get; set; }
+        public Clinic? Clinic { get; set; }
 
         public Guid MaterialId { get; set; }
         public Material Material { get; set; }

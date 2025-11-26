@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Shared.DTOs
 @using Client.Services
+@using Client.Components
 @attribute [Authorize(Roles = "User")]
 @inject ClinicService ClinicService
 @inject MaterialService MaterialService
@@ -238,6 +239,22 @@ else
     }
 }
 
+<!-- Modals -->
+<QuantityInputModal 
+    IsVisible="@showAddModal"
+    Title="Add Material to Clinic"
+    MaterialName="@(selectedMaterialForAdd?.Name ?? "")"
+    OnConfirm="@HandleAddConfirm"
+    OnCancel="@(() => showAddModal = false)" />
+
+<QuantityInputModal 
+    IsVisible="@showConsumeModal"
+    Title="Consume Material"
+    MaterialName="@(selectedStockForConsume?.MaterialName ?? "")"
+    MaxQuantity="@(selectedStockForConsume?.QuantityAvailable)"
+    OnConfirm="@HandleConsumeConfirm"
+    OnCancel="@(() => showConsumeModal = false)" />
+
 @code {
     [Parameter] public string ClinicIdString { get; set; } = string.Empty;
     private Guid ClinicId => Guid.TryParse(ClinicIdString, out var id) ? id : Guid.Empty;
@@ -248,6 +265,13 @@ else
     string materialSearchTerm = string.Empty;
     string clinicInventorySearchTerm = string.Empty;
     bool isInsertSectionCollapsed;
+    
+    // Modal state
+    bool showAddModal = false;
+    bool showConsumeModal = false;
+    MaterialGeneralStockDto? selectedMaterialForAdd;
+    ClinicStockDto? selectedStockForConsume;
+
 
     protected override async Task OnParametersSetAsync()
     {
@@ -337,7 +361,7 @@ else
         }
     }
 
-    async Task ConsumeMaterial(ClinicStockDto stock)
+    void ConsumeMaterial(ClinicStockDto stock)
     {
         errorMessage = null;
         successMessage = null;
@@ -348,23 +372,17 @@ else
             return;
         }
 
-        var input = await JS.InvokeAsync<string?>("prompt", 
-            $"Quantity of '{stock.MaterialName}' to consume (maximum: {stock.QuantityAvailable})", "1");
-
-        if (string.IsNullOrWhiteSpace(input))
+        // Show modal instead of prompt
+        selectedStockForConsume = stock;
+        showConsumeModal = true;
+    }
+    
+    async Task HandleConsumeConfirm(int quantity)
+    {
+        showConsumeModal = false;
+        
+        if (selectedStockForConsume == null)
             return;
-
-        if (!int.TryParse(input, out var quantity) || quantity <= 0)
-        {
-            errorMessage = "Please enter a valid quantity.";
-            return;
-        }
-
-        if (quantity > stock.QuantityAvailable)
-        {
-            errorMessage = $"Requested quantity ({quantity}) exceeds available stock ({stock.QuantityAvailable}).";
-            return;
-        }
 
         if (!Guid.TryParse(ClinicIdString, out var clinicId))
         {
@@ -372,7 +390,7 @@ else
             return;
         }
 
-        var response = await ClinicService.ConsumeMaterial(clinicId, new ClinicConsumeRequest(stock.MaterialId, quantity));
+        var response = await ClinicService.ConsumeMaterial(clinicId, new ClinicConsumeRequest(selectedStockForConsume.MaterialId, quantity));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -384,9 +402,11 @@ else
         successMessage = "Material successfully consumed! Remaining quantity updated.";
         await LoadClinicDetails();
         await LoadGeneralInventory();
+        
+        selectedStockForConsume = null;
     }
 
-    async Task AddMaterialToClinic(MaterialGeneralStockDto material)
+    void AddMaterialToClinic(MaterialGeneralStockDto material)
     {
         errorMessage = null;
         successMessage = null;
@@ -397,20 +417,25 @@ else
             return;
         }
 
-        var input = await JS.InvokeAsync<string?>("prompt",
-            $"Quantity of '{material.Name}' to add to clinic inventory",
-            "1");
-
-        if (string.IsNullOrWhiteSpace(input))
+        // Show modal instead of prompt
+        selectedMaterialForAdd = material;
+        showAddModal = true;
+    }
+    
+    async Task HandleAddConfirm(int quantity)
+    {
+        showAddModal = false;
+        
+        if (selectedMaterialForAdd == null)
             return;
 
-        if (!int.TryParse(input, out var quantity) || quantity <= 0)
+        if (!Guid.TryParse(ClinicIdString, out var clinicId))
         {
-            errorMessage = "Please enter a valid quantity.";
+            errorMessage = "Invalid clinic ID.";
             return;
         }
 
-        var response = await ClinicService.AddStock(clinicId, new ClinicAddStockRequest(material.Id, quantity));
+        var response = await ClinicService.AddStock(clinicId, new ClinicAddStockRequest(selectedMaterialForAdd.Id, quantity));
 
         if (!response.IsSuccessStatusCode)
         {
@@ -419,9 +444,11 @@ else
             return;
         }
 
-        successMessage = $"Material successfully added! {quantity} unit(s) of '{material.Name}' have been registered in inventory.";
+        successMessage = $"Material successfully added! {quantity} unit(s) of '{selectedMaterialForAdd.Name}' have been registered in inventory.";
         await LoadClinicDetails();
         await LoadGeneralInventory();
+        
+        selectedMaterialForAdd = null;
     }
 
     async Task ToggleOpen(ClinicStockDto stock, ChangeEventArgs e)

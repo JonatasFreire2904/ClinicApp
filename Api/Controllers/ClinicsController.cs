@@ -52,7 +52,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
             .Take(50)
             .Select(m => new StockMovementDto(
                 m.Id,
-                m.ClinicId,
+                m.ClinicId ?? Guid.Empty,
                 m.MaterialId,
                 m.Material.Name,
                 m.Quantity,
@@ -113,7 +113,8 @@ public class ClinicsController(AppDbContext db) : ControllerBase
             ClinicId = clinicId,
             MaterialId = material.Id,
             Quantity = request.Quantity,
-            MovementType = MovementType.Inbound,
+
+            MovementType = MovementType.Transfer,
             Note = string.IsNullOrWhiteSpace(request.Note)
                 ? $"General inventory distribution."
                 : request.Note!,

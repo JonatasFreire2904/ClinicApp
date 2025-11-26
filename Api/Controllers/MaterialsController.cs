@@ -176,6 +176,21 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         };
 
         _db.Materials.Add(material);
+        
+        // Record initial stock movement
+        if (material.Quantity > 0)
+        {
+            _db.StockMovements.Add(new StockMovement
+            {
+                MaterialId = material.Id,
+                Quantity = material.Quantity,
+                MovementType = MovementType.Inbound,
+                Note = "Initial stock creation",
+                PerformedByUserId = Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid) ? uid : Guid.Empty,
+                ClinicId = null // Warehouse
+            });
+        }
+
         await _db.SaveChangesAsync();
 
         return CreatedAtAction(nameof(Get), new { id = material.Id },
@@ -270,6 +285,18 @@ public class MaterialsController(AppDbContext db) : ControllerBase
         material.CreatedAt = DateTime.UtcNow;
         material.LastAddedQuantity = request.Quantity;
         material.LastAddedTotal = request.Total;
+
+        // Record stock movement for warehouse addition
+        _db.StockMovements.Add(new StockMovement
+        {
+            MaterialId = material.Id,
+            Quantity = request.Quantity,
+            MovementType = MovementType.Inbound,
+            Note = "Added to warehouse stock",
+            PerformedByUserId = Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var uid) ? uid : Guid.Empty,
+            ClinicId = null // Warehouse
+        });
+
         await _db.SaveChangesAsync();
 
         return Ok(new MaterialDto(material.Id, material.Name, material.Category.ToString(), material.Quantity, material.Cost, material.CreatedAt, material.LastAddedQuantity, material.LastAddedTotal));
@@ -325,7 +352,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
             ClinicId = request.ClinicId,
             MaterialId = id,
             Quantity = request.Quantity,
-            MovementType = MovementType.Inbound,
+            MovementType = MovementType.Transfer,
             Note = $"Transferred from warehouse to {clinic.Name}",
             PerformedByUserId = userId
         });

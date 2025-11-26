@@ -22,11 +22,11 @@
     <div class="row g-3">
         <div class="col-md-3">
             <label class="label-modern">Start Date</label>
-            <input type="date" class="input-modern" @bind="startDate" />
+            <input type="date" class="input-modern" @bind="startDate" @bind:after="LoadDashboard" />
         </div>
         <div class="col-md-3">
             <label class="label-modern">End Date</label>
-            <input type="date" class="input-modern" @bind="endDate" />
+            <input type="date" class="input-modern" @bind="endDate" @bind:after="LoadDashboard" />
         </div>
         <div class="col-md-4">
             <label class="label-modern">Clinic Filter</label>
@@ -34,7 +34,7 @@
                 <option value="">All Clinics</option>
                 @if (dashboardData != null)
                 {
-                    @foreach (var clinic in dashboardData.ClinicExpenses)
+                    @foreach (var clinic in dashboardData.ClinicExpenses.Where(c => c.ClinicId != Guid.Empty))
                     {
                         <option value="@clinic.ClinicId">@clinic.ClinicName</option>
                     }
@@ -43,7 +43,7 @@
         </div>
         <div class="col-md-2 d-flex align-items-end">
             <button class="btn-modern btn-primary-modern w-100" @onclick="LoadDashboard">
-                <span>🔍</span> Load
+                <span>🔍</span> Reload
             </button>
         </div>
     </div>
@@ -203,7 +203,7 @@ else if (dashboardData != null && filteredData != null)
 @code {
     private DateTime startDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
     private DateTime endDate = DateTime.Now;
-    private DashboardSummaryDto? dashboardData;
+    private DashboardFinancialSummaryDto? dashboardData;
     private string? errorMessage;
     private bool isLoading = false;
     private string selectedClinicFilter = "";
@@ -238,7 +238,7 @@ else if (dashboardData != null && filteredData != null)
                 url += $"&clinicId={selectedClinicFilter}";
             }
             
-            dashboardData = await Http.GetFromJsonAsync<DashboardSummaryDto>(url);
+            dashboardData = await Http.GetFromJsonAsync<DashboardFinancialSummaryDto>(url);
             
             if (dashboardData == null)
             {
@@ -265,12 +265,27 @@ else if (dashboardData != null && filteredData != null)
 
         if (string.IsNullOrEmpty(selectedClinicFilter))
         {
-            // Show all clinics aggregated
-            var allMaterials = dashboardData.ClinicExpenses.SelectMany(c => c.Materials).ToList();
+            // Show all clinics aggregated - need to regroup materials to avoid duplicates
+            var allMaterials = dashboardData.ClinicExpenses
+                .SelectMany(c => c.Materials)
+                .GroupBy(m => new { m.MaterialName, m.Category })
+                .Select(g => new MaterialExpenseDto(
+                    g.Key.MaterialName,
+                    g.Key.Category,
+                    g.Sum(m => m.QuantityAdded),
+                    g.Sum(m => m.TotalCost),
+                    g.Max(m => m.LastAdded)))
+                .OrderByDescending(m => m.TotalCost)
+                .ToList();
+            
+            // Recalculate totals from the regrouped materials
+            var recalculatedTotal = allMaterials.Sum(m => m.TotalCost);
+            var recalculatedQuantity = allMaterials.Sum(m => m.QuantityAdded);
+                
             filteredData = new FilteredClinicData(
-                "All Locations",
-                dashboardData.TotalSpent,
-                dashboardData.TotalMaterialsAdded,
+                "All Clinics",
+                recalculatedTotal,
+                recalculatedQuantity,
                 allMaterials
             );
         }

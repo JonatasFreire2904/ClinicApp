@@ -1,6 +1,6 @@
 namespace Shared.DTOs;
 
-public record DashboardSummaryDto(
+public record DashboardFinancialSummaryDto(
     DateTime StartDate,
     DateTime EndDate,
     decimal TotalSpent,

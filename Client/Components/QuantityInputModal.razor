@@ -1,0 +1,411 @@
+@if (IsVisible)
+{
+    <div class="modal-overlay" @onclick="HandleCancel">
+        <div class="modern-modal" @onclick:stopPropagation="true">
+            <div class="modal-header-modern">
+                <h5 class="modal-title-modern">@Title</h5>
+                <button type="button" class="modal-close-btn" @onclick="HandleCancel" aria-label="Close">
+                    ✕
+                </button>
+            </div>
+            
+            <div class="modal-body-modern">
+                <div class="material-name-display">
+                    <span class="material-icon">📦</span>
+                    <strong>@MaterialName</strong>
+                </div>
+                
+                @if (MaxQuantity.HasValue)
+                {
+                    <p class="text-muted-modern small">
+                        Maximum available: <strong>@MaxQuantity</strong> units
+                    </p>
+                }
+                
+                <div class="quantity-input-group">
+                    <button type="button" 
+                            class="qty-btn qty-btn-minus" 
+                            @onclick="Decrement"
+                            disabled="@(quantity <= 1)">
+                        −
+                    </button>
+                    
+                    <input type="number" 
+                           class="qty-input" 
+                           @bind="quantity" 
+                           @bind:event="oninput"
+                           @onkeydown="HandleKeyPress"
+                           min="1"
+                           max="@MaxQuantity"
+                           placeholder="Quantity" 
+                           autofocus />
+                    
+                    <button type="button" 
+                            class="qty-btn qty-btn-plus" 
+                            @onclick="Increment"
+                            disabled="@(MaxQuantity.HasValue && quantity >= MaxQuantity.Value)">
+                        +
+                    </button>
+                </div>
+                
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="modal-error-message">
+                        ⚠️ @errorMessage
+                    </div>
+                }
+            </div>
+            
+            <div class="modal-footer-modern">
+                <button type="button" class="btn-modal btn-modal-cancel" @onclick="HandleCancel">
+                    Cancel
+                </button>
+                <button type="button" 
+                        class="btn-modal btn-modal-confirm" 
+                        @onclick="HandleConfirm"
+                        disabled="@(!IsValidQuantity())">
+                    Confirm
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public string Title { get; set; } = "Enter Quantity";
+    [Parameter] public string MaterialName { get; set; } = "";
+    [Parameter] public int? MaxQuantity { get; set; }
+    [Parameter] public EventCallback<int> OnConfirm { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    
+    private int quantity = 1;
+    private string errorMessage = "";
+    
+    protected override void OnParametersSet()
+    {
+        if (IsVisible)
+        {
+            // Reset state when modal becomes visible
+            quantity = 1;
+            errorMessage = "";
+        }
+    }
+    
+    private void Increment()
+    {
+        if (!MaxQuantity.HasValue || quantity < MaxQuantity.Value)
+        {
+            quantity++;
+            ValidateQuantity();
+        }
+    }
+    
+    private void Decrement()
+    {
+        if (quantity > 1)
+        {
+            quantity--;
+            ValidateQuantity();
+        }
+    }
+    
+    private bool IsValidQuantity()
+    {
+        if (quantity <= 0)
+            return false;
+            
+        if (MaxQuantity.HasValue && quantity > MaxQuantity.Value)
+            return false;
+            
+        return true;
+    }
+    
+    private void ValidateQuantity()
+    {
+        errorMessage = "";
+        
+        if (quantity <= 0)
+        {
+            errorMessage = "Quantity must be greater than 0";
+        }
+        else if (MaxQuantity.HasValue && quantity > MaxQuantity.Value)
+        {
+            errorMessage = $"Quantity cannot exceed {MaxQuantity.Value}";
+        }
+    }
+    
+    private async Task HandleConfirm()
+    {
+        ValidateQuantity();
+        
+        if (IsValidQuantity())
+        {
+            await OnConfirm.InvokeAsync(quantity);
+        }
+    }
+    
+    private async Task HandleCancel()
+    {
+        await OnCancel.InvokeAsync();
+    }
+    
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && IsValidQuantity())
+        {
+            await HandleConfirm();
+        }
+        else if (e.Key == "Escape")
+        {
+            await HandleCancel();
+        }
+    }
+}
+
+<style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        animation: fadeIn 0.2s ease-in-out;
+    }
+    
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    
+    .modern-modal {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 480px;
+        width: 90%;
+        animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        overflow: hidden;
+    }
+    
+    @@keyframes slideUp {
+        from {
+            transform: translateY(30px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    .modal-header-modern {
+        padding: 1.5rem;
+        border-bottom: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+    
+    .modal-title-modern {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+    
+    .modal-close-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        line-height: 1;
+    }
+    
+    .modal-close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+    }
+    
+    .modal-body-modern {
+        padding: 2rem;
+    }
+    
+    .material-name-display {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: #f3f4f6;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .material-icon {
+        font-size: 1.5rem;
+    }
+    
+    .text-muted-modern {
+        color: #6b7280;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    .quantity-input-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+    
+    .qty-btn {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        border: 2px solid #e5e7eb;
+        background: white;
+        color: #374151;
+        font-size: 1.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .qty-btn:hover:not(:disabled) {
+        background: #10b981;
+        color: white;
+        border-color: #10b981;
+        transform: scale(1.05);
+    }
+    
+    .qty-btn:active:not(:disabled) {
+        transform: scale(0.95);
+    }
+    
+    .qty-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+    
+    .qty-input {
+        flex: 1;
+        height: 56px;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 0 1rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        transition: all 0.2s;
+    }
+    
+    .qty-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+    
+    .qty-input::-webkit-inner-spin-button,
+    .qty-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    .modal-error-message {
+        background: #fee2e2;
+        color: #991b1b;
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .modal-footer-modern {
+        padding: 1.5rem;
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        background: #f9fafb;
+    }
+    
+    .btn-modal {
+        padding: 0.75rem 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+    }
+    
+    .btn-modal-cancel {
+        background: #e5e7eb;
+        color: #374151;
+    }
+    
+    .btn-modal-cancel:hover {
+        background: #d1d5db;
+    }
+    
+    .btn-modal-confirm {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+        min-width: 120px;
+    }
+    
+    .btn-modal-confirm:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-modal-confirm:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    @@media (max-width: 640px) {
+        .modern-modal {
+            width: 95%;
+            margin: 1rem;
+        }
+        
+        .modal-body-modern {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer-modern {
+            flex-direction: column;
+        }
+        
+        .btn-modal {
+            width: 100%;
+        }
+    }
+</style>

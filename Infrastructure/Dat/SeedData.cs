@@ -7,13 +7,14 @@ namespace Infrastructure.Dat
     {
         public static void Seed(AppDbContext db)
         {
+            // Create only master user if no users exist
             if (!db.Users.Any())
             {
                 var master = new User
                 {
-                    UserName = "admin",
-                    Email = "admin@local",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
+                    UserName = "alphaadmin",
+                    Email = "admin@alphadental.com",
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("Abacate@2025"),
                     Role = UserRole.Master
                 };
 
@@ -21,6 +22,7 @@ namespace Infrastructure.Dat
                 db.SaveChanges();
             }
 
+            // Create the three clinics if no clinics exist
             if (!db.Clinics.Any())
             {
                 var clinics = new[]
@@ -35,7 +37,4 @@ namespace Infrastructure.Dat
             }
         }
     }
-
-
-
 }
