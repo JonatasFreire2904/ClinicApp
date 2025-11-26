@@ -161,8 +161,8 @@ public class MaterialsController(AppDbContext db) : ControllerBase
 
         if (existingMaterial != null)
         {
-            return BadRequest($"O material '{dto.Name}' já está cadastrado na categoria '{dto.Category}'. " +
-                            $"Por favor, vá ao estoque geral e adicione a quantidade desejada ao material existente.");
+            return BadRequest($"The material '{dto.Name}' is already listed under the category'{dto.Category}'. " +
+                            $"Please go to the general stock and add the desired quantity to the existing material.");
         }
 
         var material = new Material
@@ -238,8 +238,8 @@ public class MaterialsController(AppDbContext db) : ControllerBase
 
             if (existingMaterial != null)
             {
-                errors.Add($"O material '{item.Name}' já está cadastrado na categoria '{item.Category}'. " +
-                          $"Por favor, vá ao estoque geral e adicione a quantidade desejada ao material existente.");
+errors.Add($"The material '{item.Name}' is already listed under the category '{item.Category}'. " +
+           $"Please go to the main inventory and add the required quantity to the existing item.");
                 continue;
             }
 

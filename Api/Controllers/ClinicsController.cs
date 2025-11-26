@@ -145,8 +145,15 @@ public class ClinicsController(AppDbContext db) : ControllerBase
         var material = await _db.Materials.FindAsync(request.MaterialId);
         if (material == null) return NotFound("Material not found.");
 
+        // Check if there's enough quantity in the warehouse
+        if (material.Quantity < request.Quantity)
+            return BadRequest("Insufficient quantity in warehouse.");
+
         if (!Guid.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var userId))
             return Unauthorized("Unidentified user.");
+
+        // Subtract from warehouse
+        material.Quantity -= request.Quantity;
 
         var clinicStock = await _db.ClinicStocks
             .FirstOrDefaultAsync(cs => cs.ClinicId == clinicId && cs.MaterialId == material.Id);
