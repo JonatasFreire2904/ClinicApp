@@ -1,0 +1,521 @@
+@page "/financial-transactions"
+@using Microsoft.AspNetCore.Authorization
+@using Shared.DTOs
+@using Core.Entities.Enums
+@attribute [Authorize]
+@inject HttpClient Http
+@inject IJSRuntime JS
+@inject AuthenticationStateProvider AuthStateProvider
+
+<div class="page-header-modern">
+    <h3>💵 Financial Transactions</h3>
+    <p>Daily income and expense management per clinic</p>
+</div>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert-modern alert-danger-modern">
+        <span class="alert-icon">⚠️</span>
+        @errorMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="alert-modern alert-success-modern">
+        <span class="alert-icon">✅</span>
+        @successMessage
+    </div>
+}
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <label class="label-modern">Clinic</label>
+        <select class="input-modern" @bind="selectedClinicId" @bind:after="LoadTransactions">
+            <option value="">Select a clinic...</option>
+            @foreach (var clinic in availableClinics)
+            {
+                <option value="@clinic.ClinicId">@clinic.ClinicName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="label-modern">Date</label>
+        <input type="date" class="input-modern" @bind="selectedDate" @bind:after="LoadTransactions" />
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+        <button class="btn-modern btn-primary-modern w-100" @onclick="LoadTransactions">
+            <span>🔍</span> Reload
+        </button>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(selectedClinicId))
+{
+    <!-- Summary Cards -->
+    @if (dailyBalance != null)
+    {
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="stats-card stats-card-income">
+                    <div class="stats-card-icon">💰</div>
+                    <div class="stats-card-label">Total Income</div>
+                    <div class="stats-card-value">$ @dailyBalance.TotalIncome.ToString("N2")</div>
+                    <small class="text-muted-modern">Money received</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card stats-card-expense">
+                    <div class="stats-card-icon">💸</div>
+                    <div class="stats-card-label">Total Expenses</div>
+                    <div class="stats-card-value">$ @dailyBalance.TotalExpenses.ToString("N2")</div>
+                    <small class="text-muted-modern">Money spent</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card @(dailyBalance.Balance >= 0 ? "stats-card-balance-positive" : "stats-card-balance-negative")">
+                    <div class="stats-card-icon">@(dailyBalance.Balance >= 0 ? "📈" : "📉")</div>
+                    <div class="stats-card-label">Daily Balance</div>
+                    <div class="stats-card-value">$ @dailyBalance.Balance.ToString("N2")</div>
+                    <small class="text-muted-modern">Income - Expenses</small>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Transaction Form -->
+    <div class="modern-card mb-4">
+        <div class="modern-card-header">
+            <h5 class="modern-card-title">
+                <span class="modern-card-icon">➕</span>
+                Register New Transaction
+            </h5>
+        </div>
+        <div class="modern-card-body">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label class="label-modern">Transaction Type</label>
+                    <div class="transaction-type-toggle">
+                        <button type="button" 
+                                class="transaction-type-btn @(newTransaction.TransactionType == TransactionType.Income ? "active income" : "")"
+                                @onclick="@(() => newTransaction.TransactionType = TransactionType.Income)">
+                            <span>💰</span> Income
+                        </button>
+                        <button type="button" 
+                                class="transaction-type-btn @(newTransaction.TransactionType == TransactionType.Expense ? "active expense" : "")"
+                                @onclick="@(() => newTransaction.TransactionType = TransactionType.Expense)">
+                            <span>💸</span> Expense
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="label-modern">Amount ($)</label>
+                    <input type="number" step="0.01" min="0" class="input-modern" 
+                           @bind="newTransaction.Amount" placeholder="0.00" />
+                </div>
+                <div class="col-md-4">
+                    <label class="label-modern">Description</label>
+                    <input type="text" class="input-modern" 
+                           @bind="newTransaction.Description" placeholder="E.g., Patient consultation" />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button class="btn-modern btn-success-modern w-100" @onclick="CreateTransaction">
+                        <span>💾</span> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions List -->
+    <div class="modern-card">
+        <div class="modern-card-header">
+            <h5 class="modern-card-title">
+                <span class="modern-card-icon">📋</span>
+                Transactions for @selectedDate.ToString("dd/MM/yyyy")
+            </h5>
+            @if (dailyBalance != null)
+            {
+                <span class="badge-modern @(dailyBalance.Balance >= 0 ? "badge-success" : "badge-danger")">
+                    $ @dailyBalance.Balance.ToString("N2")
+                </span>
+            }
+        </div>
+
+        @if (isLoading)
+        {
+            <div class="text-center py-5">
+                <div class="spinner-modern"></div>
+                <p class="mt-3 text-muted">Loading transactions...</p>
+            </div>
+        }
+        else if (dailyBalance != null && dailyBalance.Transactions.Any())
+        {
+            <div class="table-responsive">
+                <table class="table-modern">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th class="text-end">Amount</th>
+                            <th>Registered By</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var transaction in dailyBalance.Transactions)
+                        {
+                            <tr>
+                                <td>@transaction.CreatedAt.ToLocalTime().ToString("HH:mm")</td>
+                                <td>
+                                    @if (transaction.TransactionType == TransactionType.Income)
+                                    {
+                                        <span class="badge-modern badge-success">
+                                            <span>💰</span> Income
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-modern badge-danger">
+                                            <span>💸</span> Expense
+                                        </span>
+                                    }
+                                </td>
+                                <td>@transaction.Description</td>
+                                <td class="text-end">
+                                    <strong class="@(transaction.TransactionType == TransactionType.Income ? "text-success-modern" : "text-danger-modern")">
+                                        @(transaction.TransactionType == TransactionType.Income ? "+" : "-")$ @transaction.Amount.ToString("N2")
+                                    </strong>
+                                </td>
+                                <td><small class="text-muted-modern">@transaction.CreatedByUserName</small></td>
+                                <td class="text-center">
+                                    @if (canDeleteTransaction(transaction))
+                                    {
+                                        <button class="btn-icon-modern btn-danger-modern" 
+                                                @onclick="@(() => DeleteTransaction(transaction.Id))"
+                                                title="Delete transaction">
+                                            🗑️
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="modern-card-body">
+                <p class="text-muted-modern text-center py-4">
+                    <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">📊</span>
+                    No transactions registered for this date yet.
+                </p>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="modern-card">
+        <div class="modern-card-body text-center py-5">
+            <span style="font-size: 4rem; display: block; margin-bottom: 1rem;">🏥</span>
+            <h5>Please select a clinic to begin</h5>
+            <p class="text-muted-modern">Choose a clinic from the dropdown above to view and manage financial transactions.</p>
+        </div>
+    </div>
+}
+
+@code {
+    private List<ClinicSummaryDto> availableClinics = new();
+    private string selectedClinicId = "";
+    private DateTime selectedDate = DateTime.Now.Date;
+    
+    private DailyBalanceDto? dailyBalance;
+    private TransactionForm newTransaction = new TransactionForm();
+    
+    private string? errorMessage;
+    private string? successMessage;
+    private bool isLoading = false;
+    
+    private string? currentUserRole;
+    private Guid currentUserId;
+
+    // Mutable class for form binding
+    private class TransactionForm
+    {
+        public TransactionType TransactionType { get; set; } = TransactionType.Income;
+        public decimal Amount { get; set; } = 0;
+        public string Description { get; set; } = "";
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            currentUserRole = user.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+            var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (Guid.TryParse(userIdClaim, out var userId))
+            {
+                currentUserId = userId;
+            }
+        }
+        
+        await LoadClinics();
+    }
+
+    private async Task LoadClinics()
+    {
+        try
+        {
+            // Load clinics based on user role
+            if (currentUserRole == "Master")
+            {
+                var allClinics = await Http.GetFromJsonAsync<List<ClinicDto>>("clinics");
+                availableClinics = allClinics?.Select(c => new ClinicSummaryDto 
+                { 
+                    ClinicId = c.Id, 
+                    ClinicName = c.Name 
+                }).ToList() ?? new();
+            }
+            else
+            {
+                // Load only user's clinics
+                var userClinics = await Http.GetFromJsonAsync<List<ClinicSummaryDto>>("clinics/my-clinics");
+                availableClinics = userClinics ?? new();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading clinics: {ex.Message}";
+        }
+    }
+
+    private async Task LoadTransactions()
+    {
+        if (string.IsNullOrEmpty(selectedClinicId))
+        {
+            dailyBalance = null;
+            return;
+        }
+
+        isLoading = true;
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var url = $"financial-transactions/daily-balance?clinicId={selectedClinicId}&date={selectedDate:yyyy-MM-dd}";
+            dailyBalance = await Http.GetFromJsonAsync<DailyBalanceDto>(url);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading transactions: {ex.Message}";
+            dailyBalance = null;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task CreateTransaction()
+    {
+        if (string.IsNullOrEmpty(selectedClinicId))
+        {
+            errorMessage = "Please select a clinic first";
+            return;
+        }
+
+        if (newTransaction.Amount <= 0)
+        {
+            errorMessage = "Amount must be greater than zero";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(newTransaction.Description))
+        {
+            errorMessage = "Please enter a description";
+            return;
+        }
+
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var request = new FinancialTransactionCreateRequest(
+                Guid.Parse(selectedClinicId),
+                newTransaction.TransactionType,
+                newTransaction.Amount,
+                newTransaction.Description,
+                selectedDate
+            );
+
+            var response = await Http.PostAsJsonAsync("financial-transactions", request);
+            
+            if (response.IsSuccessStatusCode)
+            {
+                successMessage = "Transaction registered successfully!";
+                
+                // Reset form
+                newTransaction = new TransactionForm();
+                
+                // Reload transactions
+                await LoadTransactions();
+                
+                // Clear success message after 3 seconds
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(3000);
+                    successMessage = null;
+                    StateHasChanged();
+                });
+            }
+            else
+            {
+                errorMessage = $"Error: {response.ReasonPhrase}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error creating transaction: {ex.Message}";
+        }
+    }
+
+    private async Task DeleteTransaction(Guid transactionId)
+    {
+        if (!await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete this transaction?"))
+        {
+            return;
+        }
+
+        errorMessage = null;
+        successMessage = null;
+
+        try
+        {
+            var response = await Http.DeleteAsync($"financial-transactions/{transactionId}");
+            
+            if (response.IsSuccessStatusCode)
+            {
+                successMessage = "Transaction deleted successfully!";
+                await LoadTransactions();
+                
+                // Clear success message after 3 seconds
+                _ = Task.Run(async () =>
+                {
+                    await Task.Delay(3000);
+                    successMessage = null;
+                    StateHasChanged();
+                });
+            }
+            else
+            {
+                errorMessage = $"Error deleting transaction: {response.ReasonPhrase}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error: {ex.Message}";
+        }
+    }
+
+    private bool canDeleteTransaction(FinancialTransactionDto transaction)
+    {
+        // Master can delete any transaction
+        if (currentUserRole == "Master")
+            return true;
+        
+        // Users can only delete their own transactions
+        return transaction.CreatedByUserId == currentUserId;
+    }
+}
+
+<style>
+    .transaction-type-toggle {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .transaction-type-btn {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e0e0e0;
+        background: white;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #666;
+    }
+
+    .transaction-type-btn:hover {
+        border-color: #ccc;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .transaction-type-btn.active.income {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        border-color: #56ab2f;
+        color: white;
+        box-shadow: 0 4px 12px rgba(86, 171, 47, 0.4);
+    }
+
+    .transaction-type-btn.active.expense {
+        background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        border-color: #e74c3c;
+        color: white;
+        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    }
+
+    .stats-card-income {
+        border-left: 4px solid #56ab2f;
+    }
+
+    .stats-card-expense {
+        border-left: 4px solid #e74c3c;
+    }
+
+    .stats-card-balance-positive {
+        border-left: 4px solid #3498db;
+    }
+
+    .stats-card-balance-negative {
+        border-left: 4px solid #e67e22;
+    }
+
+    .btn-icon-modern {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+        transition: all 0.2s ease;
+        border-radius: 4px;
+    }
+
+    .btn-icon-modern:hover {
+        background: rgba(0,0,0,0.05);
+        transform: scale(1.2);
+    }
+
+    .btn-icon-modern.btn-danger-modern:hover {
+        background: rgba(231, 76, 60, 0.1);
+    }
+
+    .text-success-modern {
+        color: #56ab2f;
+        font-weight: 600;
+    }
+
+    .text-danger-modern {
+        color: #e74c3c;
+        font-weight: 600;
+    }
+</style>

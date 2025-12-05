@@ -11,6 +11,7 @@ namespace Infrastructure.Dat
         public DbSet<Material> Materials => Set<Material>();
         public DbSet<ClinicStock> ClinicStocks => Set<ClinicStock>();
         public DbSet<StockMovement> StockMovements => Set<StockMovement>();
+        public DbSet<FinancialTransaction> FinancialTransactions => Set<FinancialTransaction>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
