@@ -27,9 +27,7 @@ namespace Api.Controllers
             [FromQuery] Guid? clinicId,
             [FromQuery] DateTime? date)
         {
-            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var userRole = User.FindFirstValue(ClaimTypes.Role);
-
+            // System design: All users can view transactions from any clinic
             var query = _context.FinancialTransactions
                 .Include(t => t.Clinic)
                 .Include(t => t.CreatedByUser)
@@ -46,17 +44,6 @@ namespace Api.Controllers
             {
                 var dateOnly = date.Value.Date;
                 query = query.Where(t => t.TransactionDate.Date == dateOnly);
-            }
-
-            // Authorization: Users can only see transactions from their clinics
-            if (userRole != "Master")
-            {
-                var userClinicIds = await _context.UserClinics
-                    .Where(uc => uc.UserId == userId)
-                    .Select(uc => uc.ClinicId)
-                    .ToListAsync();
-
-                query = query.Where(t => userClinicIds.Contains(t.ClinicId));
             }
 
             var transactions = await query
@@ -85,20 +72,7 @@ namespace Api.Controllers
             [FromQuery] Guid clinicId,
             [FromQuery] DateTime date)
         {
-            var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var userRole = User.FindFirstValue(ClaimTypes.Role);
-
-            // Authorization: Users can only see balance from their clinics
-            if (userRole != "Master")
-            {
-                var hasAccess = await _context.UserClinics
-                    .AnyAsync(uc => uc.UserId == userId && uc.ClinicId == clinicId);
-
-                if (!hasAccess)
-                {
-                    return Forbid();
-                }
-            }
+            // System design: Users can access any clinic without UserClinics association
 
             var dateOnly = date.Date;
             var transactions = await _context.FinancialTransactions
@@ -209,19 +183,8 @@ namespace Api.Controllers
             [FromBody] FinancialTransactionCreateRequest request)
         {
             var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            var userRole = User.FindFirstValue(ClaimTypes.Role);
 
-            // Authorization: Users can only create transactions for their clinics
-            if (userRole != "Master")
-            {
-                var hasAccess = await _context.UserClinics
-                    .AnyAsync(uc => uc.UserId == userId && uc.ClinicId == request.ClinicId);
-
-                if (!hasAccess)
-                {
-                    return Forbid();
-                }
-            }
+            // System design: Users can create transactions for any clinic
 
             // Validate clinic exists
             var clinic = await _context.Clinics.FindAsync(request.ClinicId);

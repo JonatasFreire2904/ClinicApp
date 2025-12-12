@@ -271,9 +271,15 @@ public class ClinicsController(AppDbContext db) : ControllerBase
     [Authorize(Roles = "User, Master")]
     public async Task<IActionResult> GetMyClinics()
     {
-        // Usuários podem ver todas as clínicas e transitar entre elas
+        // Users can see all clinics and navigate between them
         var clinics = await _db.Clinics
-            .Select(c => new ClinicDto(c.Id, c.Name))
+            .Select(c => new ClinicSummaryDto
+            {
+                ClinicId = c.Id,
+                ClinicName = c.Name,
+                DistinctMaterials = 0,
+                TotalQuantity = 0
+            })
             .ToListAsync();
 
         return Ok(clinics);

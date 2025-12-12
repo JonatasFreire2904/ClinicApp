@@ -18,9 +18,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-
-
-
 // Adiciona suporte a Controllers
 builder.Services.AddControllers();
 

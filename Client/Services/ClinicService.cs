@@ -24,8 +24,8 @@ public class ClinicService(HttpClient http)
     public Task<HttpResponseMessage> SetStockOpen(Guid clinicId, Guid materialId, bool isOpen) =>
         _http.PostAsJsonAsync($"clinics/{clinicId}/stock/{materialId}/open", new ClinicStockOpenRequest(isOpen));
 
-    public Task<List<ClinicDto>> GetMyClinics() =>
-        _http.GetFromJsonAsync<List<ClinicDto>>("clinics/my-clinics")!;
+    public Task<List<ClinicSummaryDto>> GetMyClinics() =>
+        _http.GetFromJsonAsync<List<ClinicSummaryDto>>("clinics/my-clinics")!;
 
     public Task<HttpResponseMessage> ConsumeMaterial(Guid clinicId, ClinicConsumeRequest request) =>
         _http.PostAsJsonAsync($"clinics/{clinicId}/consume", request);

@@ -38,7 +38,7 @@
                             <div class="clinic-icon mb-3">
                                 <span style="font-size: 3rem;">🏥</span>
                             </div>
-                            <h5 class="card-title mb-3">@clinic.Name</h5>
+                            <h5 class="card-title mb-3">@clinic.ClinicName</h5>
                             <button class="btn-modern btn-primary-modern w-100" @onclick="() => ViewClinicStock(clinic)">
                                 <span>📊</span> Check Inventory
                             </button>
@@ -50,7 +50,7 @@
     }
 
     @code {
-        List<ClinicDto>? clinics;
+        List<ClinicSummaryDto>? clinics;
         string? errorMessage;
 
         protected override async Task OnInitializedAsync()
@@ -71,9 +71,9 @@
             }
         }
 
-        void ViewClinicStock(ClinicDto clinic)
+        void ViewClinicStock(ClinicSummaryDto clinic)
         {
-            Nav.NavigateTo($"/clinica/{clinic.Id}/estoque");
+            Nav.NavigateTo($"/clinica/{clinic.ClinicId}/estoque");
         }
     }
 

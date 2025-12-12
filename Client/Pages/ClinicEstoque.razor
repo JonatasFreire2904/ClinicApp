@@ -39,7 +39,7 @@ else
                 <button class="btn btn-sm btn-dark toggle-collapse"
                         title="@(isInsertSectionCollapsed ? "Expand section" : "Collapse section")"
                         @onclick="ToggleInsertSection">
-                    @(isInsertSectionCollapsed ? "+" : "−")
+                    @(isInsertSectionCollapsed ? "+"  : "−")
                 </button>
                 <h5 class="mb-0">➕ Insert Material into Clinic Inventory</h5>
             </div>
@@ -168,7 +168,7 @@ else
         }
         else
         {
-        <table class="table table-striped">
+        <table class="table">
             <thead>
                 <tr>
                     <th>Material</th>
@@ -183,7 +183,7 @@ else
                 @foreach (var stock in filteredStocks)
                 {
                     var isLowStock = stock.QuantityAvailable <= 1;
-                    <tr class="@(isLowStock ? "table-danger" : string.Empty)">
+                    <tr class="@(isLowStock ? "table-danger" : "")">
                         <td>@stock.MaterialName</td>
                         <td>@stock.Category</td>
                         <td class="text-center">@stock.QuantityAvailable</td>
@@ -540,8 +540,7 @@ else
         font-weight: 600;
         font-size: 0.8rem;
         display: inline-flex;
-        align-items: center;
+        align-items-center;
         gap: 0.35rem;
     }
 </style>
-
