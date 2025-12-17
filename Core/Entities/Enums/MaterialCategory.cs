@@ -9,7 +9,7 @@
         CementationMaterials = 5,
         RestorationMaterials = 6,
         Disponsabols = 7,
-        Extracion = 8,
+        Extraction = 8,
         Burs = 9,
         ImplantAcessories = 10,
         Ortodontics = 11,
