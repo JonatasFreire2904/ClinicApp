@@ -113,7 +113,7 @@ public class DashboardController(AppDbContext db) : ControllerBase
         if (clinic == null) return NotFound();
 
         var stocks = clinic.ClinicStocks
-            .Where(s => s.QuantityAvailable > 0)
+            //.Where(s => s.QuantityAvailable > 0) // Allow zero quantity items to be listed
             .Select(s => new ClinicStockDto(s.MaterialId, s.Material.Name, s.QuantityAvailable, s.Material.Category.ToString(), s.IsOpen, s.OpenedAt))
             .ToList();
 

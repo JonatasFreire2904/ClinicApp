@@ -87,28 +87,38 @@ else
                         <tbody>
                             @foreach (var material in filteredMaterials)
                             {
-                                var isLowStock = material.WarehouseQuantity <= 1;
-                                <tr class="@(isLowStock ? "table-danger" : string.Empty)">
+                                var isZeroStock = material.WarehouseQuantity == 0;
+                                var isLowStock = material.WarehouseQuantity == 1;
+                                var stockClass = isZeroStock ? "zero-stock" : (isLowStock ? "low-stock-user" : string.Empty);
+                                <tr class="@stockClass">
                                     <td>@material.Name</td>
                                     <td>@material.Category</td>
                                     <td class="text-center">
-                                        @if (material.WarehouseQuantity > 0)
+                                        @if (material.WarehouseQuantity > 1)
                                         {
                                             <strong>@material.WarehouseQuantity</strong>
                                         }
+                                        else if (material.WarehouseQuantity == 1)
+                                        {
+                                            <span class="low-stock-text">@material.WarehouseQuantity</span>
+                                        }
                                         else
                                         {
-                                            <span class="text-muted">0</span>
+                                            <span class="zero-stock-text">⚠️ 0</span>
                                         }
                                     </td>
                                     <td class="text-center">
-                                        @if (material.TotalQuantity > 0)
+                                        @if (material.TotalQuantity > 1)
                                         {
                                             <strong>@material.TotalQuantity</strong>
                                         }
+                                        else if (material.TotalQuantity == 1)
+                                        {
+                                            <span class="low-stock-text">@material.TotalQuantity</span>
+                                        }
                                         else
                                         {
-                                            <span class="text-muted">0</span>
+                                            <span class="zero-stock-text">⚠️ 0</span>
                                         }
                                     </td>
                                     <td class="align-middle">
@@ -174,6 +184,7 @@ else
                     <th>Material</th>
                     <th>Category</th>
                     <th class="text-center">Available Quantity</th>
+                    <th class="text-center">In Use</th>
                     <th class="text-center">Open</th>
                     <th class="text-center">Open Since</th>
                     <th class="text-end">Actions</th>
@@ -182,36 +193,47 @@ else
             <tbody>
                 @foreach (var stock in filteredStocks)
                 {
-                    var isLowStock = stock.QuantityAvailable <= 1;
-                    <tr class="@(isLowStock ? "table-danger" : "")">
+                    var isZeroStock = stock.QuantityAvailable == 0;
+                    var isLowStock = stock.QuantityAvailable == 1;
+                    var stockClass = isZeroStock ? "zero-stock" : (isLowStock ? "low-stock-user" : "");
+                    <tr class="@stockClass">
                         <td>@stock.MaterialName</td>
                         <td>@stock.Category</td>
-                        <td class="text-center">@stock.QuantityAvailable</td>
                         <td class="text-center">
-                            @if (stock.Category == "UsageMaterials" || stock.Category == "Disposables")
+                            @if (stock.QuantityAvailable > 1)
                             {
-                                <div class="form-check form-switch d-inline-block">
-                                    <input class="form-check-input" 
-                                           type="checkbox" 
-                                           checked="@stock.IsOpen" 
-                                           @onchange="(e) => ToggleOpen(stock, e)"
-                                           title="@(stock.IsOpen ? "Marcado como aberto" : "Marcar como aberto")" />
-                                    <label class="form-check-label ms-2">
-                                        @if (stock.IsOpen)
-                                        {
-                                            <span class="badge bg-success">Aberto</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">Fechado</span>
-                                        }
-                                    </label>
-                                </div>
+                                <strong>@stock.QuantityAvailable</strong>
+                            }
+                            else if (stock.QuantityAvailable == 1)
+                            {
+                                <span class="low-stock-text">@stock.QuantityAvailable</span>
                             }
                             else
                             {
-                                <span>-</span>
+                                <span class="zero-stock-text">⚠️ 0</span>
                             }
+                        </td>
+                        <td class="text-center">
+                            <strong>@(stock.IsOpen ? "1" : "0")</strong>
+                        </td>
+                        <td class="text-center">
+                            <div class="form-check form-switch d-inline-block">
+                                <input class="form-check-input" 
+                                       type="checkbox" 
+                                       checked="@stock.IsOpen" 
+                                       @onchange="(e) => ToggleOpen(stock, e)"
+                                       title="@(stock.IsOpen ? "Mark as closed" : "Mark as open")" />
+                                <label class="form-check-label ms-2">
+                                    @if (stock.IsOpen)
+                                    {
+                                        <span class="badge bg-success">Open</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Closed</span>
+                                    }
+                                </label>
+                            </div>
                         </td>
                         <td class="text-center">
                             @if (stock.IsOpen && stock.OpenedAt is not null)
@@ -264,7 +286,7 @@ else
     string? successMessage;
     string materialSearchTerm = string.Empty;
     string clinicInventorySearchTerm = string.Empty;
-    bool isInsertSectionCollapsed;
+    private bool isInsertSectionCollapsed = true;
     
     // Modal state
     bool showAddModal = false;
@@ -456,12 +478,6 @@ else
         errorMessage = null;
         successMessage = null;
 
-        if (stock.Category != "UsageMaterials" && stock.Category != "Disposables")
-        {
-            errorMessage = "Only usage and disposable materials can be marked as open.";
-            return;
-        }
-
         if (!Guid.TryParse(ClinicIdString, out var clinicId))
         {
             errorMessage = "Invalid clinic ID.";
@@ -542,5 +558,25 @@ else
         display: inline-flex;
         align-items-center;
         gap: 0.35rem;
+    }
+
+    /* Enhanced Stock Color Coding */
+    .low-stock-user {
+        background-color: #ffd3d6 !important;
+    }
+
+    .low-stock-text {
+        color: #9c1a23;
+        font-weight: 700;
+    }
+
+    .zero-stock {
+        background-color: #8B0000 !important;
+    }
+
+    .zero-stock-text {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.1rem;
     }
 </style>

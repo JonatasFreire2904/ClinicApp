@@ -101,7 +101,7 @@ public class MaterialsController(AppDbContext db) : ControllerBase
                         clinicName ?? "Clínica desconhecida",
                         group.Sum(x => x.QuantityAvailable));
                 })
-                .Where(dto => dto.Quantity > 0)
+                //.Where(dto => dto.Quantity > 0) // Allow zero quantity items to be listed
                 .OrderByDescending(dto => dto.Quantity)
                 .ToList();
 

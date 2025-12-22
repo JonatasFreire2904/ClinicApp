@@ -34,7 +34,7 @@ public class ClinicsController(AppDbContext db) : ControllerBase
         if (clinic == null) return NotFound();
 
         var stocks = clinic.ClinicStocks
-            .Where(s => s.QuantityAvailable > 0)
+            //.Where(s => s.QuantityAvailable > 0) // Allow zero quantity items to be listed
             .OrderBy(s => s.Material.Name)
             .Select(s => new ClinicStockDto(
                 s.MaterialId,
@@ -209,9 +209,10 @@ public class ClinicsController(AppDbContext db) : ControllerBase
         if (clinicStock == null)
             return NotFound("Registro de estoque não encontrado.");
 
-        if (clinicStock.Material.Category != MaterialCategory.UsageMaterials && 
-            clinicStock.Material.Category != MaterialCategory.Disposables)
-            return BadRequest("Only consumable and disposable materials can be marked as opened.");
+        // REMOVED: Category restriction. Now all materials can be opened/closed.
+        // if (clinicStock.Material.Category != MaterialCategory.UsageMaterials && 
+        //     clinicStock.Material.Category != MaterialCategory.Disposables)
+        //     return BadRequest("Only consumable and disposable materials can be marked as opened.");
 
         if (request.IsOpen && !clinicStock.IsOpen)
         {

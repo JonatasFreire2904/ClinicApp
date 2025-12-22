@@ -86,8 +86,10 @@ else
                 {
                     @foreach (var material in filteredMaterials)
                     {
-                        var isLowStock = material.TotalQuantity < 1;
-                        <tr class="@(isLowStock ? "low-stock" : string.Empty)">
+                        var isZeroStock = material.TotalQuantity == 0;
+                        var isLowStock = material.TotalQuantity == 1;
+                        var stockClass = isZeroStock ? "zero-stock" : (isLowStock ? "low-stock" : string.Empty);
+                        <tr class="@stockClass">
                             <td class="align-middle">@material.Name</td>
                             <td class="align-middle"><span class="badge-modern badge-primary">@material.Category</span></td>
                             <td class="text-center align-middle">
@@ -97,20 +99,24 @@ else
                                 }
                                 else
                                 {
-                                    <span class="text-muted">0</span>
+                                    <span class="text-muted">⚠️ 0</span>
                                 }
                             </td>
                             <td class="text-center align-middle">@material.Cost.ToString("F2")</td>
                             <td class="text-center align-middle">@material.Cost.ToString("F2")</td>
                             <td class="text-center align-middle">@material.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy") (@material.LastAddedQuantity)</td>
                             <td class="text-center align-middle">
-                                @if (!isLowStock)
+                                @if (material.TotalQuantity > 1)
                                 {
                                     <strong>@material.TotalQuantity</strong>
                                 }
+                                else if (material.TotalQuantity == 1)
+                                {
+                                    <span class="low-stock-text">@material.TotalQuantity</span>
+                                }
                                 else
                                 {
-                                    <span class="low-stock-text">0</span>
+                                    <span class="zero-stock-text">⚠️ 0</span>
                                 }
                             </td>
                             <td class="align-middle">
@@ -119,7 +125,8 @@ else
                                     <div class="clinic-badges">
                                         @foreach (var clinic in material.Clinics)
                                         {
-                                            <span class="badge-modern badge-success" title="@($"{clinic.ClinicName}: {clinic.Quantity} unidade(s)")">
+                                            var badgeClass = clinic.Quantity == 0 ? "badge-danger" : "badge-success";
+                                            <span class="badge-modern @badgeClass" title="@($"{clinic.ClinicName}: {clinic.Quantity} unidade(s)")">
                                                 @clinic.ClinicName: @clinic.Quantity
                                             </span>
                                         }
@@ -551,6 +558,16 @@ else
     .low-stock-text {
         color: #9c1a23;
         font-weight: 700;
+    }
+
+    .zero-stock {
+        background-color: #8B0000 !important;
+    }
+
+    .zero-stock-text {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.1rem;
     }
 
     /* Modern Modal Styles */
