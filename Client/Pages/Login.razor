@@ -11,7 +11,7 @@
 <div class="login-container">
     <div class="login-card">
         <h3>🔐 Inventory Management System </h3>
-        
+
         @if (!string.IsNullOrEmpty(errorMessage))
         {
             <div class="alert-modern alert-danger-modern">
@@ -22,16 +22,22 @@
 
         <EditForm Model="@loginRequest" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
-            
+
             <div class="mb-3">
                 <label class="label-modern">User</label>
                 <InputText @bind-Value="loginRequest.UserName" class="input-modern" />
                 <ValidationMessage For="@(() => loginRequest.UserName)" />
             </div>
 
-            <div class="mb-3">
+            <div class="mb-3" style="position: relative;">
                 <label class="label-modern">Password</label>
-                <InputText @bind-Value="loginRequest.Password" type="password" class="input-modern" />
+                <InputText @bind-Value="loginRequest.Password" type="@passwordInputType" class="input-modern" />
+
+                @* --- Ícone do olho para mostrar/esconder a senha --- *@
+                <span @onclick="TogglePasswordVisibility" style="position: absolute; right: 10px; top: 40px; cursor: pointer;">
+                    @(showPassword ? "👁️" : "🙈")
+                </span>
+
                 <ValidationMessage For="@(() => loginRequest.Password)" />
             </div>
 
@@ -54,6 +60,17 @@
     private string? errorMessage;
     private bool isLoading = false;
 
+    // --- Novas variáveis para controlar a visibilidade da senha ---
+    private bool showPassword = false;
+    private string passwordInputType = "password";
+
+    private void TogglePasswordVisibility()
+    {
+        showPassword = !showPassword;
+        passwordInputType = showPassword ? "text" : "password";
+    }
+    // -----------------------------------------------------------
+
     private async Task HandleLogin()
     {
         isLoading = true;
@@ -66,7 +83,7 @@
             if (token != null)
             {
                 await Task.Delay(100);
-                
+
                 var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 var user = authState.User;
 
