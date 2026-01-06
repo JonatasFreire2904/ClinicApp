@@ -98,14 +98,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
-using Infrastructure.Dat;
-using Api.Services;
+using Infrastructure.Dat; // Confirme se o namespace está correto conforme seu projeto
+using Api.Services;       // Confirme se o namespace está correto conforme seu projeto
 
 var builder = WebApplication.CreateBuilder(args);
 
 // --- 1. CONFIGURAÇÃO DE SERVIÇOS ---
 
-// Configurar CORS (Importante estar no topo)
+// Configurar CORS (Deve estar no topo)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
@@ -120,11 +120,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configurar DbContext com verificação de segurança
+// --- CONFIGURAÇÃO DO BANCO DE DADOS ---
+// O .NET busca automaticamente em "ConnectionStrings:DefaultConnection"
+// No Azure, certifique-se que a Connection String se chama "DefaultConnection"
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
 if (string.IsNullOrEmpty(connectionString))
 {
-    throw new Exception("ERRO: A ConnectionString 'DefaultConnection' não foi configurada no Azure.");
+    // Esse erro vai aparecer no Log Stream do Azure se a string não for encontrada
+    throw new Exception("ERRO CRÍTICO: A ConnectionString 'DefaultConnection' não foi encontrada. Verifique as configurações do Azure App Service.");
 }
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -134,14 +138,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<TokenService>();
 
-// Configuração JWT com verificação de erro 500 comum
+// --- CONFIGURAÇÃO DO JWT ---
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var jwtKey = jwtSettings["Key"];
 
-if (string.IsNullOrEmpty(jwtKey))
-{
-    throw new Exception("ERRO: A chave 'Jwt:Key' não foi encontrada nas configurações do Azure.");
-}
+// Verificações de segurança para evitar Erro 500 genérico
+if (string.IsNullOrEmpty(jwtKey)) throw new Exception("ERRO JWT: A chave 'Jwt:Key' está vazia.");
+if (string.IsNullOrEmpty(jwtSettings["Issuer"])) throw new Exception("ERRO JWT: O 'Jwt:Issuer' está vazio.");
+if (string.IsNullOrEmpty(jwtSettings["Audience"])) throw new Exception("ERRO JWT: O 'Jwt:Audience' está vazio.");
 
 var key = Encoding.ASCII.GetBytes(jwtKey);
 
@@ -158,10 +162,15 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(key),
+        
         ValidateIssuer = true,
-        ValidIssuer = jwtSettings["Jwt__Issuer"],
+        // CORREÇÃO: Usar apenas a chave simples. O .NET resolve o "Jwt__" do Azure automaticamente.
+        ValidIssuer = jwtSettings["Issuer"], 
+        
         ValidateAudience = true,
-        ValidAudience = jwtSettings["Jwt__Audience"],
+        // CORREÇÃO: Usar apenas a chave simples.
+        ValidAudience = jwtSettings["Audience"], 
+        
         ClockSkew = TimeSpan.Zero
     };
 });
@@ -176,25 +185,30 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var db = services.GetRequiredService<AppDbContext>();
-        // Tenta rodar o Seed. Se falhar, o erro aparecerá nos Logs, mas a API continuará rodando.
+        // Opcional: Aplica migrações pendentes automaticamente ao iniciar
+        // db.Database.Migrate(); 
+        
         SeedData.Seed(db);
         Console.WriteLine("Banco de dados inicializado com sucesso.");
     }
     catch (Exception ex)
     {
+        // Esse log é vital para ver erros de conexão SQL no Azure Log Stream
         Console.WriteLine($"ERRO AO INICIALIZAR BANCO: {ex.Message}");
+        // Não damos throw aqui para a API subir mesmo se o banco falhar temporariamente
     }
 }
 
 // --- 3. MIDDLEWARES ---
 
-// Habilitar Swagger em todos os ambientes para facilitar o seu teste no Azure
+// Mantido fora do "IsDevelopment" para você conseguir testar no Azure
 app.UseSwagger();   
 app.UseSwaggerUI(c => {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alpha Dental API v1");
-    c.RoutePrefix = string.Empty; // Swagger abre na raiz da URL da API
+    c.RoutePrefix = string.Empty; 
 });
 
+// A ordem aqui é importante: CORS -> Auth -> Controllers
 app.UseCors("CorsPolicy");
 
 app.UseAuthentication();
