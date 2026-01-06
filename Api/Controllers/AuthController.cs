@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared.DTOs.Auth;
 using Infrastructure.Dat;
@@ -16,27 +16,40 @@ namespace Api.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(x => x.UserName == request.UserName);
-
-            if (user == null)
-                return Unauthorized("Usuário não encontrado");
-
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
-                return Unauthorized("Senha inválida");
-
-            var token = _tokenService.GenerateToken(user);
-
-            return Ok(new LoginResponse
+            try
             {
-                Token = token,
-                UserName = user.UserName,
-                Role = user.Role.ToString()
-            });
+                if (request == null)
+                    return BadRequest("Dados de login não informados.");
+
+                if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
+                    return BadRequest("Usuário e senha são obrigatórios.");
+
+                var user = await _db.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.UserName == request.UserName);
+
+                if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+                    return Unauthorized("Usuário ou senha inválidos.");
+
+                var token = _tokenService.GenerateToken(user);
+
+                return Ok(new LoginResponse
+                {
+                    Token = token,
+                    UserName = user.UserName,
+                    Role = user.Role.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                // Ideal: logar o erro com ILogger
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um erro ao realizar o login. Tente novamente mais tarde. " + ex.Message + " " + ex.StackTrace);
+            }
         }
     }
-
 }
 
 
