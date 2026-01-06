@@ -49,6 +49,21 @@ namespace Api.Controllers
                     "Ocorreu um erro ao realizar o login. Tente novamente mais tarde. " + ex.Message + " " + ex.StackTrace);
             }
         }
+
+        [HttpPost("getconfig")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Getconfig(string name)
+        {
+            try
+            {
+                return Ok(config[name]);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    ex.Message + " " + ex.StackTrace);
+            }
+        }
     }
 }
 
