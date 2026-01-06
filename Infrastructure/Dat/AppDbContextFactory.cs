@@ -9,7 +9,7 @@ namespace Infrastructure.Dat
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
 
-            optionsBuilder.UseSqlite("Data Source=Data/myclinicapp.db");
+            optionsBuilder.UseSqlServer("Server=tcp:clinic-app-db-server.database.windows.net,1433;Initial Catalog=clinic-app-db;Persist Security Info=False;User ID=clinic-app-db-user;Password=3PvC2rkJx5Qj@6v;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
             return new AppDbContext(optionsBuilder.Options);
         }
