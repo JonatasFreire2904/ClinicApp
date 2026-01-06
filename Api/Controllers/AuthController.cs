@@ -9,7 +9,7 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/auth")]
-    public class AuthController(AppDbContext db, TokenService tokenService) : ControllerBase
+    public class AuthController(AppDbContext db, TokenService tokenService, IConfiguration config) : ControllerBase
     {
         private readonly AppDbContext _db = db;
         private readonly TokenService _tokenService = tokenService;
