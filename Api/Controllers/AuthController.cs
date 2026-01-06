@@ -64,7 +64,20 @@ namespace Api.Controllers
                     ex.Message + " " + ex.StackTrace);
             }
         }
+
+        [HttpGet("db-test")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DbTest([FromServices] AppDbContext db)
+        {
+            await db.Database.OpenConnectionAsync();
+            return Ok("Conectou no SQL Server");
+        }
+
+        [HttpGet("ping")]
+        [AllowAnonymous]
+        public IActionResult Ping()
+        {
+            return Ok("API OK");
+        }
     }
 }
-
-
