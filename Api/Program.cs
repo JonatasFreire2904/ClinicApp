@@ -28,7 +28,7 @@ builder.Services.AddSwaggerGen();
 // Configurar DbContext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(connectionString, b => b.MigrationsAssembly("Infrastructure")));
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")));
 
 // Registrar TokenService
 builder.Services.AddScoped<TokenService>();
@@ -63,14 +63,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    
-    // Criar pasta Data se não existir
-    var dataPath = Path.Combine(builder.Environment.ContentRootPath, "Data");
-    if (!Directory.Exists(dataPath))
-    {
-        Directory.CreateDirectory(dataPath);
-    }
-    
+        
     db.Database.Migrate();
     SeedData.Seed(db);
 }
