@@ -64,8 +64,16 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         
+try
+{
     db.Database.Migrate();
     SeedData.Seed(db);
+}
+catch (Exception ex)
+{
+    app.Logger.LogError(ex, "Erro ao aplicar migrations ou seed");
+    throw;
+}
 }
 
 // Adiciona o middleware do Swagger em ambiente de desenvolvimento
@@ -79,5 +87,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseDeveloperExceptionPage();
 
 app.Run();
