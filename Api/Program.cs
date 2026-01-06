@@ -1,93 +1,132 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.Dat;
 using Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar CORS para o Blazor
+// ==============================
+// LOGGING (Azure-friendly)
+// ==============================
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
+
+// ==============================
+// CORS (Blazor)
+// ==============================
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
-// Adiciona suporte a Controllers
+// ==============================
+// Controllers + Swagger
+// ==============================
 builder.Services.AddControllers();
-
-// Adiciona os servios do Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configurar DbContext
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("Infrastructure")));
+// ==============================
+// Database
+// ==============================
+var connectionString =
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("ConnectionString DefaultConnection não configurada.");
 
-// Registrar TokenService
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        connectionString,
+        b => b.MigrationsAssembly("Infrastructure"))
+);
+
+// ==============================
+// Services
+// ==============================
 builder.Services.AddScoped<TokenService>();
 
-// Recupera a chave secreta do JWT
-var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key não configurada");
+// ==============================
+// JWT
+// ==============================
+var jwtKey =
+    builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("Jwt:Key não configurada.");
+
 var key = Encoding.ASCII.GetBytes(jwtKey);
 
-// Configuracao de autenticacao JWT
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ClockSkew = TimeSpan.Zero
-    };
-});
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
+// ==============================
+// Build
+// ==============================
 var app = builder.Build();
 
-// Inicializar banco de dados e seed data
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        
-try
-{
-    //db.Database.Migrate();
-    //SeedData.Seed(db);
-}
-catch (Exception ex)
-{
-    app.Logger.LogError(ex, "Erro ao aplicar migrations ou seed");
-    throw;
-}
-}
-
-// Adiciona o middleware do Swagger em ambiente de desenvolvimento
+// ==============================
+// Error Handling
+// ==============================
+app.UseDeveloperExceptionPage();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// ==============================
+// Database Migration + Seed
+// ==============================
+using (var scope = app.Services.CreateScope())
+{
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    try
+    {
+        logger.LogInformation("Iniciando migrations...");
+        db.Database.Migrate();
+
+        logger.LogInformation("Executando seed...");
+        SeedData.Seed(db);
+
+        logger.LogInformation("Banco inicializado com sucesso.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogCritical(ex, "Erro ao inicializar o banco de dados.");
+        throw; // força o Azure mostrar erro nos logs
+    }
+}
+
+// ==============================
+// Middlewares
+// ==============================
+app.UseHttpsRedirection();
 app.UseCors("CorsPolicy");
 
-// Middleware de autenticacao e autorizacao
 app.UseAuthentication();
 app.UseAuthorization();
 
+// ==============================
+// Endpoints
+// ==============================
 app.MapControllers();
-
-app.UseDeveloperExceptionPage();
 
 app.Run();
