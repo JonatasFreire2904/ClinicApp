@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Infrastructure.Dat;
 using Api.Services;
+using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 // ==============================
 // Database
@@ -88,7 +90,12 @@ var app = builder.Build();
 // ==============================
 app.UseDeveloperExceptionPage();
 app.UseSwagger();
-app.UseSwaggerUI();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Alpha Dental API v1");
+    c.RoutePrefix = "swagger"; // padrão
+});
 
 // ==============================
 // Database Migration + Seed
