@@ -66,8 +66,8 @@ using (var scope = app.Services.CreateScope())
         
 try
 {
-    db.Database.Migrate();
-    SeedData.Seed(db);
+    //db.Database.Migrate();
+    //SeedData.Seed(db);
 }
 catch (Exception ex)
 {
