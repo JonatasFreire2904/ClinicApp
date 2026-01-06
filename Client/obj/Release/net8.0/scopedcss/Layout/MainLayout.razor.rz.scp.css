@@ -1,0 +1,109 @@
+.page[b-tmopy668it] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    /* Adicionando altura total para evitar scroll no layout principal */
+    min-height: 100vh;
+}
+
+main[b-tmopy668it] {
+    flex: 1;
+    /* Adicionando flexbox para que o conte�do ocupe o espa�o restante */
+    display: flex;
+    flex-direction: column;
+    /* Garantindo que o main ocupe o espa�o restante e n�o cause scroll */
+    min-height: 0;
+}
+
+.sidebar[b-tmopy668it] {
+    background: linear-gradient(135deg, #006B3C 0%, #005A2B 100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.top-row[b-tmopy668it] {
+    background: linear-gradient(90deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom: 1px solid #e9ecef;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0; /* Impede que o top-row encolha */
+}
+
+    .top-row[b-tmopy668it]  a, .top-row[b-tmopy668it]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+        .top-row[b-tmopy668it]  a:hover, .top-row[b-tmopy668it]  .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-row[b-tmopy668it]  a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+.content[b-tmopy668it] {
+    flex-grow: 1; /* Permite que o conte�do ocupe o espa�o restante */
+    overflow-y: auto; /* Adiciona scroll apenas se o conte�do da p�gina for maior que o espa�o dispon�vel */
+    padding-top: 0; /* Removendo padding superior para evitar scroll desnecess�rio */
+    padding-bottom: 0; /* Removendo padding inferior para evitar scroll desnecess�rio */
+}
+
+@media (max-width: 640.98px) {
+    .top-row[b-tmopy668it] {
+        justify-content: space-between;
+    }
+
+        .top-row[b-tmopy668it]  a, .top-row[b-tmopy668it]  .btn-link {
+            margin-left: 0;
+        }
+}
+
+@media (min-width: 641px) {
+    .page[b-tmopy668it] {
+        flex-direction: row;
+        /* Adicionando overflow: hidden para garantir que o scroll n�o seja global */
+        overflow: hidden;
+    }
+
+    .sidebar[b-tmopy668it] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+        flex-shrink: 0; /* Impede que o sidebar encolha */
+    }
+
+    .top-row[b-tmopy668it] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+        .top-row.auth[b-tmopy668it]  a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+        }
+
+    .top-row[b-tmopy668it], article[b-tmopy668it] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    main[b-tmopy668it] {
+        /* Garante que o main ocupe o espa�o restante e permita o scroll apenas no conte�do */
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .content[b-tmopy668it] {
+        /* Ocupa o espa�o restante verticalmente */
+        height: 100%;
+        overflow-y: auto;
+    }
+}

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Client\\Client.csproj": {}
+    "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Client\\Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Client\\Client.csproj": {
+    "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Client\\Client.csproj",
+        "projectUniqueName": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Client\\Client.csproj",
         "projectName": "Client",
-        "projectPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Client\\Client.csproj",
-        "packagesPath": "C:\\Users\\jonat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Client\\obj\\",
+        "projectPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Client\\Client.csproj",
+        "packagesPath": "C:\\Users\\login\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jonat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\login\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,15 +26,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\Shared.csproj": {
-                "projectPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\Shared.csproj"
+              "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\Shared.csproj": {
+                "projectPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\Shared.csproj"
               }
             }
           }
@@ -120,20 +119,20 @@
         }
       }
     },
-    "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\Core.csproj": {
+    "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\jonat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\obj\\",
+        "projectPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\login\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jonat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\login\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -142,7 +141,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -186,20 +184,20 @@
         }
       }
     },
-    "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\Shared.csproj": {
+    "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\Shared.csproj",
+        "projectUniqueName": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\Shared.csproj",
         "projectName": "Shared",
-        "projectPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\Shared.csproj",
-        "packagesPath": "C:\\Users\\jonat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Shared\\obj\\",
+        "projectPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\Shared.csproj",
+        "packagesPath": "C:\\Users\\login\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\jonat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\login\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -208,15 +206,14 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\jonat\\Downloads\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\ClinicApp-c7ac10645270a7097c15123f2d0ba630b479c279\\Core\\Core.csproj"
+              "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\Core.csproj": {
+                "projectPath": "C:\\Users\\login\\OneDrive\\Documentos\\Projetinhos\\ClinicApp\\Core\\Core.csproj"
               }
             }
           }

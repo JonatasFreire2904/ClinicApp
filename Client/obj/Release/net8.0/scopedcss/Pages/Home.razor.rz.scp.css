@@ -1,0 +1,51 @@
+/* Ajustando o content apenas para a página Home usando seletor mais específico */
+[b-mlpx6l4j4s] article.content {
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.home-hero-wrapper[b-mlpx6l4j4s] {
+    /* Garantindo que o wrapper ocupe todo o espaço disponível na área de conteúdo */
+    width: 100%;
+    /* Ocupa 100% da altura disponível (content já está configurado para 100% do main) */
+    height: 100%;
+    min-height: 100vh;
+    /* Adicionando overflow: hidden para garantir que não haja scrollbar */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    /* Posicionamento relativo para conter o hero */
+    position: relative;
+}
+
+.home-hero[b-mlpx6l4j4s] {
+    /* Ocupa 100% da largura e altura do seu container (home-hero-wrapper) */
+    width: 100%;
+    height: 100%;
+    /* Usando a imagem como background no container principal */
+    background-image: url('/imagens/LogoLogin.jpeg');
+    background-size: cover; /* Garante que a imagem cubra toda a área, cortando se necessário */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita repetição */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .home-hero-wrapper[b-mlpx6l4j4s] {
+        width: 100%;
+        height: 100vh;
+        min-height: 100vh;
+    }
+
+    .home-hero[b-mlpx6l4j4s] {
+        /* Mantendo o mesmo comportamento em mobile */
+    }
+}
